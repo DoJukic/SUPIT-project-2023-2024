@@ -3,13 +3,40 @@ class Header extends HTMLElement {
         super();
     }
 
+    // We can use lit-html to see html formatting in strings like this one
     connectedCallback() {
-        this.innerHTML = `
-            <a class="navElement centered" href="home.html"><div>Home</div></a>
-            <a class="navElement centered" href="news.html"><div>News</div></a>
-            <a class="navElement centered" href="contact_us.html"><div>Contact us</div></a>
-            <a class="navElement centered" href="about_us.html"><div">About us</div></a>
-        `;
+        this.innerHTML = 
+            html`
+            <header>
+                <nav-element class="navElement selectableNavElement defaultMarginHalf defaultPaddingHalf"
+                    onclick="location.href = '../wsite/home.html';"
+                    tabindex="0">
+
+                    <div>Home</div>
+                </nav-element>
+
+                <nav-element class="navElement selectableNavElement defaultMarginHalf defaultPaddingHalf"
+                    onclick="location.href = '../wsite/news.html';"
+                    tabindex="0">
+
+                    <div>News</div>
+                </nav-element>
+                
+                <nav-element class="navElement selectableNavElement defaultMarginHalf defaultPaddingHalf"
+                    onclick="location.href = '../wsite/about_us.html';"
+                    tabindex="0">
+
+                    <div>About us</div>
+                </nav-element>
+
+                <nav-element class="navElement selectableNavElement defaultMarginHalf defaultPaddingHalf"
+                    onclick="location.href = '../wsite/contact_us.html';"
+                    tabindex="0">
+
+                    <div>Contact us</div>
+                </nav-element>
+            </header>
+            `;
     }
 }
 

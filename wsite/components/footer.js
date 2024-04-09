@@ -4,7 +4,8 @@ class Footer extends HTMLElement {
     }
 
     connectedCallback() {
-        this.innerHTML = `
+        this.innerHTML =
+        html`
             <footer class="centered">
                 &copy; Algebra something something
             </footer>

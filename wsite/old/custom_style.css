@@ -117,7 +117,7 @@ This will obviously break if we change how login/login.html works. :has() is ver
 }
 [tabindex] { /* <-- Evil */
 	outline: none !important;
- }
+}
 
 /* Shows nicely since onclick does things on click release */
 .selectableNavElement:active{

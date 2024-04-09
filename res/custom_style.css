@@ -27,44 +27,162 @@ main {
     justify-content: center;
 }
 
-/* HEADER */
-header-component {
-    height: 50px;
-
+.row{
+    flex: 1 0 0;
     display: flex;
     flex-direction: row;
-    align-items: stretch;
-    justify-content: flex-start;
-
-    background-color: #0a0a0a;
-    border-bottom: 5px solid orange;
 }
 
-.navElement {
-    font-weight: 700;
-    padding: 0 25px;
-    color: #fff;
-    text-decoration: none;
+/* POV: No code regions :( */
+/* -------------------- STANDARDISED VALUES -------------------- */
+
+.defaultSpacing{
+	/* Show at least X font sizes, wraps things very nicely */
+	flex-basis: 23em;
 }
 
-.navElement:hover {
-    background-color: orange;
+.defaultPadding{
+	padding: 1em;
+}
+.defaultPaddingHalf{
+	padding: 0.5em;
 }
 
-/* FOOTER */
+.defaultMargin{
+	margin: 2em;
+}
+.defaultMarginHalf{
+	margin: 1em;
+}
+.defaultMarginDouble{
+	margin: 4em;
+}
+
+.defaultGap{
+	gap: 2em;
+}
+.defaultGapHalf{
+	gap: 1em;
+}
+.defaultGapDouble{
+	gap: 4em;
+}
+
+/* -------------------- HEADER -------------------- */
+header {
+	display: flex;
+	flex-grow: 0;
+	flex-wrap: nowrap;
+    
+	justify-content: center;
+	align-items: start; /* Align vertical */
+
+	background-color: rgb(0, 0, 0);
+	color: white;
+
+	text-align: center;
+	vertical-align: middle;
+}
+
+/* Seperate the visuals from the behaviour */
+nav-element {
+	border-radius: 5px;
+	text-align: center;
+    
+    align-items: center;
+    justify-content: center;
+	
+	cursor: default;
+	font-weight: bold;
+	vertical-align: middle;
+	text-transform: uppercase;
+	
+	/* Makes sure navElements don't look off next to selectableNavElements */
+	border: 1px solid rgba(255, 255, 255, 0);
+}
+.navElement{
+	flex: 1 1 7em;
+	min-width: 7em;
+	white-space: nowrap;
+}
+
+.selectableNavElement{
+	cursor: pointer !important;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.selectableNavElement:hover{
+	color:#e27526;
+	border-color: #e27526;
+}
+.selectableNavElement:focus{
+	color:#e27526;
+	border-color: #e27526;
+}
+/* Is triggered at the same time as :hover, so !important should be used */
+/* Otherwise color seems to be whatever is last in the .css file */
+/* (I don't want to rely on that) */
+.selectableNavElement:active{
+	color:#c21b67 !important;
+	border-color: #c21b67 !important;
+}
+
+/* -------------------- SCROLL TO TOP -------------------- */
+
+.observerRotateOnNavbar {
+	transform: rotate(-180deg);
+	transition: transform 0.2s;
+	will-change: auto !important;
+}
+.observerRotateOnNavbar.observerReportsNavbarInvisible {
+	transform: rotate(0deg);
+}
+
+/* -------------------- FOOTER -------------------- */
+
 footer{
-    background-color: #0a0a0a;
-    color: #fff;
-    padding: 5px 0;
-    border-top: 5px solid orange;
+	margin-top: auto;
+	padding-top: 10px;
+	font-size: 70%;
+	
+	flex-wrap: nowrap;
+
+	text-align: center;
+
+	background-color: rgb(0, 0, 0);
+	color: white;
+	padding: 2em;
 }
 
-/* ANIMATIONS */
+/* -------------------- ANIMATIONS -------------------- */
+
 @keyframes fadeInAnimation {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+/* -------------------- OVERRIDES -------------------- */
+
+[tabindex] { /* <-- Evil */
+	outline: none !important;
+}
+
+input[type=text], input[type=email], input[type=password] {
+	min-height: 2.5em;
+	outline: none !important;
+	border: 0.5px solid black !important;
+}
+
+textarea:focus, input[type=text]:focus, input[type=email]:focus, input[type=password]:focus {
+	box-shadow: 0 0 3px 1px rgb(94, 158, 214); /* Mirrors jquery UI shadow so they don't look out of place */
+}
+
+textarea{
+	outline: none !important;
+	border: 0.5px solid black !important;
 }
