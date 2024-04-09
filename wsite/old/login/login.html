@@ -1,0 +1,26 @@
+<!-- Using double margin so mobile users can easily tap out of the modal -->
+<div class="row flexDefaultExplicit marginDefaultDouble" style="align-items: center; justify-content: space-around;" style="flex-grow: 0 !important;">
+    <form class="paddingDefault centered algebraBG simpleBlackBorder roundedBorder" action="javascript:tryLogIn($('#loginFormUsername').value, $('#loginFormPassword').value)">
+        <div class="column marginDefaultHalf flexDefaultExplicit defaultGap">
+            <h1>
+                ALGEBRA UNIVERSITY LOGIN
+            </h1>
+            
+            <div class="column flexDefaultExplicit defaultGapHalf">
+                <input id="loginFormUsername" class="flexDefaultExplicit roundedBorderHalf" type="text" placeholder="Username" required>
+                <input id="loginFormPassword" class="flexDefaultExplicit roundedBorderHalf" type="password" placeholder="Password" required>
+            </div>
+
+            <div class="row flexDefaultExplicit defaultGapHalf">
+                <button class="ui-button ui-widget ui-corner-all flexDefaultExplicit" type="submit" style="min-height: 2.5em !important;">
+                    <div class="row centered" style="gap: 1em;">
+                        <div id="javascriptLogInMsgTarget" class="column centered">
+                            Log In
+                        </div>
+                        <div id="javascriptLogInLoaderTarget" class="loader" style="display: none;"></div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

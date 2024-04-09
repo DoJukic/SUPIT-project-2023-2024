@@ -1,0 +1,70 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
+    color: #333;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    
+    animation: fadeInAnimation ease 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+	transition: none;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.centered{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* HEADER */
+header-component {
+    height: 50px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    background-color: #0a0a0a;
+    border-bottom: 5px solid orange;
+}
+
+.navElement {
+    font-weight: 700;
+    padding: 0 25px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.navElement:hover {
+    background-color: orange;
+}
+
+/* FOOTER */
+footer{
+    background-color: #0a0a0a;
+    color: #fff;
+    padding: 5px 0;
+    border-top: 5px solid orange;
+}
+
+/* ANIMATIONS */
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

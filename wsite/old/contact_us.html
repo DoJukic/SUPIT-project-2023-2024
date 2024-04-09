@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+
+	<!--Filled up during document.ready()-->
+	<div id="logInPopup" class ="column">
+	</div>
+
+	<body class="fadeInQuick">
+	
+	<head>
+		<title>
+			Algebra University - Contact Us
+		</title>
+		
+		<link rel="icon" type="image/png" href="../res/img/favicon.png" />
+		<link rel="stylesheet" type="text/css" href="../res/custom_style.css" />
+        <script src="generic_functions_script.js"></script>
+
+        <script src="../res/jquery-3.7.1.min.js"></script>
+
+		<link rel="stylesheet" href="../res/jquery-ui-1.13.2.custom/jquery-ui.css">
+		<script src="../res/jquery-ui-1.13.2.custom/external/jquery/jquery.js"></script>
+		<script src="../res/jquery-ui-1.13.2.custom/jquery-ui.js"></script>
+
+		<script>
+            var collapsibleFormIsHidden = true;
+            var collapsibleFormIsBusy = false;
+
+			$(document).ready(function () {
+				var startupScript = document.createElement('script');
+				startupScript.src = 'generic_startup_script.js';
+				var head = document.getElementsByTagName("head")[0];
+				head.appendChild(startupScript);
+
+                console.log(document.getElementById('dropdownFormTrigger'));
+
+                document.getElementById('dropdownFormTrigger').addEventListener('click', function(){
+                    toggleDropdownForm();
+                });
+
+                $('#dropdownFormPrioritySelectMenu').selectmenu();
+                $('#dropdownFormPrioritySelectMenu').addClass("flexDefaultExplicit");
+                $("#dropdownFormPrioritySelectMenu").position({
+                    my: "center",
+                    at: "center",
+                    of: window
+                });
+                
+                $('#dropdownFormNewsletterSelect').checkboxradio();
+                $('#dropdownFormNewsletterSelect').removeAttr('checked');
+                
+			});
+
+            function toggleDropdownForm(){
+                if (collapsibleFormIsBusy) {
+                    return;
+                }
+
+                collapsibleFormIsBusy = true;
+
+                if (collapsibleFormIsHidden) {
+                    $('#dropdownForm').slideDown(500, function() { 
+                        collapsibleFormIsBusy = false;
+                    });
+                }else{
+                    $('#dropdownForm').slideUp(500, function() { 
+                        collapsibleFormIsBusy = false;
+                    });
+                }
+
+                collapsibleFormIsHidden = !collapsibleFormIsHidden;
+            };
+		</script>
+
+	</head>
+	
+	
+	<!-- Filled up during $(document).ready -->
+	<div id="navBar">
+	</div>
+	
+	<!--Filled up during document.ready()-->
+	<div id="scrollToTop" class="column">
+	</div>
+
+
+	<div id="content" class="column">
+
+		<div class="row marginDefault defaultGapDouble">
+            <!-- Using the normal and inverted BG like this gives us a neat effect no matter if they're above or next to one another -->
+            <div class="flexDefaultExplicit spacingDefaultExplicit centered column paddingDefault algebraInvertedBG roundedBorder">
+                <h1>
+                    Algebra University
+                </h1>
+    
+                <p style=" text-indent: 0em !important;">
+                    Email: email@algebra.com
+                </p>
+    
+                <p style=" text-indent: 0em !important; margin-top: 0;">
+                    Phone number: [PHONE NUMBER]
+                </p>
+    
+                <p style=" text-indent: 0em !important;">
+                    Working Hours:
+                </p>
+    
+                <p style=" text-indent: 0em !important; margin-top: 0;">
+                    09:00 - 09:01 (Mon, Wed, Fri)
+                </p>
+    
+                <p style=" text-indent: 0em !important; margin-top: 0;">
+                    21:00 - 21:01 (Tue, Thu, Sat)
+                </p>
+            </div>
+
+            <div class="flexDefaultExplicit spacingDefaultExplicit centered column paddingDefault algebraBG roundedBorder">
+                <h1>
+                    Student Office
+                </h1>
+    
+                <p style=" text-indent: 0em !important;">
+                    Email: email@algebra.com
+                </p>
+    
+                <p style=" text-indent: 0em !important; margin-top: 0;">
+                    Phone number: [PHONE NUMBER]
+                </p>
+    
+                <p style=" text-indent: 0em !important;">
+                    Working Hours:
+                </p>
+    
+                <p style=" text-indent: 0em !important; margin-top: 0;">
+                    09:00 - 09:01 (Mon, Wed, Fri)
+                </p>
+    
+                <p style=" text-indent: 0em !important; margin-top: 0;">
+                    21:00 - 21:01 (Tue, Thu, Sat)
+                </p>
+            </div>
+        
+        </div>
+
+        <div class="column flexDefaultExplicit" style=" border-bottom: 1px solid black;">
+            <div class = "row centered flexDefaultExplicit blackBG">
+                <div class="simpleSpacer"></div>
+                <div id="dropdownFormTrigger" class ="navElement centered marginDefault paddingDefault selectableNavElement roundedBorder"  tabindex="0">
+                    <h1>
+                        Send a form; Contact us directly
+                    </h1>
+                </div>
+                <div class="simpleSpacer"></div>
+            </div>
+
+            <div id="dropdownForm" class ="centered paddingDefault blackTranBG" style="display:none;">
+
+                <form class="column" action="https://www.fulek.com/mvc/supit/project-contact-form" method="get" style="width:100vw;"
+                onsubmit="FullName.value = fname.value + ' ' + lname.value; ReceiveNewsletter.value = true;">
+                <!-- ReceiveNewsletter does not exist at all if false so we can just set it and let it fail -->
+                    
+                    <div class="row">
+                        <div class="column marginDefaultHalf flexDefaultExplicit" style="max-width: 20em;">
+                            <input class="marginDefaultHalf roundedBorderHalf" type="text" name="fname" placeholder="First Name" required>
+                            <input class="marginDefaultHalf roundedBorderHalf" type="text" name="lname" placeholder="Last Name" required>
+                            <input type="text" name="FullName" style="display:none;"> <!-- Exclusively for combining fname and lname -->
+
+                            <input class="marginDefaultHalf roundedBorderHalf" type="email" name="Email" placeholder="Email@example.com" required>
+
+                            <div class="centered row flexDefaultExplicit" style="flex-grow: 0;">
+
+                                <div class="marginDefaultHalf">
+                                    <select id="dropdownFormPrioritySelectMenu" class="flexDefaultExplicit" name="Importance">
+                                        <option>Low Priority</option>
+                                        <option>Medium Priority</option>
+                                        <option>High Priority</option>
+                                    </select>
+                                </div>
+
+                                <div class="marginDefaultHalf">
+                                    <label for="dropdownFormNewsletterSelect" style="width:14em;">Recieve Newsletter</label>
+                                    <input type="checkbox" id="dropdownFormNewsletterSelect" name="ReceiveNewsletter" style="height: 2em !important;">
+                                </div>
+                            </div>
+                            
+                        	<div class="simpleSpacer"></div>
+                        </div>
+                        <div class="column marginDefaultHalf flexDefaultExplicit spacingDefaultExplicit">
+                            <textarea class="marginDefaultHalf roundedBorderHalf" name="message" rows="20" cols="auto" style="resize: none;" placeholder="Write your message here:" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row marginDefault">
+                        <input class="ui-button ui-widget ui-corner-all flexDefaultExplicit" type="submit" value="Submit">
+                    </div>
+                </form> 
+            </div>
+        </div>
+
+		<div class="row defaultGapDouble marginDefault">
+            <div class="flexDefaultExplicit paddingDefault spacingDefaultExplicit blackTranBG roundedBorder">
+                <h1>
+                    Person Title
+                </h1>
+
+                <div class="marginDefault" >
+                    <img class="roundedBorder imgHeightLimitDefaultExplicit"  src= "../res/img/contact_us/anomaly_no_data_crop.jpg">
+                </div>
+
+                <h2>
+                    Contact Person Name
+                </h2>
+                
+                <p>
+                    Picanha boudin shoulder pancetta short loin filet mignon hamburger ball tip t-bone brisket bacon beef doner kevin. Pastrami beef strip steak jerky swine. Filet mignon tongue doner strip steak picanha. Ribeye pork pork chop tail sausage, cow cupim chisoptionc. Ribeye sausage venison, pork loin pork chop jerky chisoptionc turkey biltong pastrami hamburger buffalo.
+                </p>
+
+                <p>
+                    Email: email@algebra.com
+                </p>
+
+                <p>
+                    Phone number: [PHONE NUMBER]
+                </p>
+            </div>
+            
+            <div class="flexDefaultExplicit paddingDefault spacingDefaultExplicit blackTranBG roundedBorder">
+                <h1>
+                    Person Title
+                </h1>
+
+                <div class="marginDefault" >
+                    <img class="roundedBorder imgHeightLimitDefaultExplicit"  src= "../res/img/contact_us/anomaly_no_data_crop.jpg">
+                </div>
+
+                <h2>
+                    Contact Person Name
+                </h2>
+                
+                <p>
+                    Andouille venison kevin porchetta buffalo chicken corned beef chisoptionc spare ribs ribeye tail meatloaf turducken sausage. Flank alcatra doner, ball tip tail ham hock cupim shank beef. Brisket ham hock short ribs fatback, cupim rump prosciutto chicken burgdoggen turducken picanha buffalo pork loin. Pastrami leberkas sausage ribeye landjaeger bacon pig picanha chicken.
+                </p>
+
+                <p>
+                    Email: email@algebra.com
+                </p>
+
+                <p>
+                    Phone number: [PHONE NUMBER]
+                </p>
+            </div>
+
+            <div class="flexDefaultExplicit paddingDefault spacingDefaultExplicit blackTranBG roundedBorder">
+                <h1>
+                    Very Important Person Title
+                </h1>
+
+                <div class="marginDefault" >
+                    <img class="roundedBorder imgHeightLimitDefaultExplicit"  src= "../res/img/contact_us/anomaly_no_data_crop.jpg">
+                </div>
+
+                <h2>
+                    Contact Person Name
+                </h2>
+                
+                <p>
+                    Kevin jerky corned beef, shoulder shankle t-bone porchetta sirloin. Biltong tail ham hock, jowl jerky kevin flank. Pig pastrami filet mignon kielbasa. Cow shoulder burgdoggen sausage boudin buffalo pork drumstick spare ribs bacon chicken pork belly cupim. Shoulder pork chop ground round burgdoggen kielbasa porchetta meatloaf swine picanha corned beef shank short ribs strip steak. Corned beef short loin turducken chicken drumstick jowl ribeye sirloin.
+                </p>
+
+                <p>
+                    Email: email@algebra.com
+                </p>
+
+                <p>
+                    Phone number: [PHONE NUMBER]
+                </p>
+            </div>
+		</div>
+	</div>
+	
+
+	<div class="simpleSpacer"></div>
+	
+	
+	<!-- Filled up during $(document).ready -->
+	<footer id ="footer">
+	</footer>
+
+	</body>
+
+</html>
