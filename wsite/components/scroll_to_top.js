@@ -23,14 +23,14 @@ class ScrollToTop extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML =
-            `
-            <div class="row" style="align-items: flex-end;">
+            html`
+            <flex-row style="align-items: flex-end;">
             
                 <img class="sttRotateOnTopDistance scrollToTopImage" src="../res/img/scroll_to_top.png"
                     style="width: 40px; height: 40px; pointer-events: auto; opacity: 0.5; cursor: pointer;">
-                <stt-space-maker style="display:block; width:30px;"></stt-space-maker>
-            </div>
-            <stt-space-maker style="display:block; height:20px;"></stt-space-maker>
+                <stt-simple-spacer style="display:block; width:30px;"></stt-simple-spacer>
+            </flex-row>
+            <stt-simple-spacer style="display:block; height:20px;"></stt-simple-spacer>
         `;
         
 
