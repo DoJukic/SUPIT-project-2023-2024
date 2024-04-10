@@ -2,7 +2,10 @@ html,
 body {
     margin: 0;
     padding: 0;
-    height: 100%;
+}
+
+html{
+	height:100%;
 }
 
 body {
@@ -10,6 +13,8 @@ body {
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
+	
+    min-height: 100%;
     
     animation: fadeInAnimation ease 1s;
     animation-iteration-count: 1;
@@ -19,6 +24,7 @@ body {
 
 main {
     flex: 1 0 auto;
+	overflow: visible;
 }
 
 .centered{
@@ -129,13 +135,24 @@ nav-element {
 
 /* -------------------- SCROLL TO TOP -------------------- */
 
-.observerRotateOnNavbar {
-	transform: rotate(-180deg);
+scroll-to-top-component{
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	pointer-events: none;
+
+	display: flex;
+	align-items: flex-end !important;
+	flex-direction: column;
+}
+
+.sttRotateOnTopDistance {
+	transform: rotate(0deg);
 	transition: transform 0.2s;
 	will-change: auto !important;
 }
-.observerRotateOnNavbar.observerReportsNavbarInvisible {
-	transform: rotate(0deg);
+.sttRotateOnTopDistance.sttRotateOnTopDistanceTrigger {
+	transform: rotate(-180deg);
 }
 
 /* -------------------- FOOTER -------------------- */
