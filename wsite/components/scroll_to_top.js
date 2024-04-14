@@ -6,7 +6,7 @@ class ScrollToTop extends HTMLElement {
     static targetClass = "sttRotateOnTopDistanceTrigger";
     
     static scrollToTopCheckDisplay(element){
-        if (($("body").height() - 200) > $(window).height()) {
+        if (($("body").height() - 300) > $(window).height()) {
             $(element).css("display", "flex");
             return;
         }
@@ -14,7 +14,7 @@ class ScrollToTop extends HTMLElement {
     }
     
     static scrollToTopCheckRotation(element){
-        if (window.scrollY > 100) {
+        if (window.scrollY > 150) {
             element.classList.remove(ScrollToTop.targetClass)
             return;
         }

@@ -89,7 +89,10 @@ flex-column{
 /* -------------------- HEADER -------------------- */
 header {
 	display: flex;
+	flex-grow: 1;
 	flex-direction: row;
+
+	overflow: hidden;
     
 	justify-content: center;
 	align-items: stretch; /* Align vertical */
@@ -103,12 +106,11 @@ header {
 
 /* Seperate the visuals from the behaviour */
 nav-element {
-	flex: 1 1 7em;
-	min-width: 7em;
+	flex: 1 1 7.5em;
+	min-width: 7.5em;
 	white-space: nowrap;
 }
 .navElementVisual{
-	border-radius: 5px;
 	text-align: center;
     
 	display: flex;
@@ -125,10 +127,10 @@ nav-element {
 }
 
 .selectableNavElement{
+	border-radius: 6px;
 	cursor: pointer !important;
 	border: 1px solid rgba(255, 255, 255, 0.5);
 }
-
 .selectableNavElement:hover{
 	color:#e27526;
 	border-color: #e27526;
@@ -143,6 +145,23 @@ nav-element {
 .selectableNavElement:active{
 	color:#c21b67 !important;
 	border-color: #c21b67 !important;
+}
+
+.selectableNavElementAlt{
+	cursor: pointer !important;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+}
+.selectableNavElementAlt:hover{
+	background-color:#e27526;
+	border-color: black;
+}
+.selectableNavElementAlt:focus{
+	background-color:#e27526;
+	border-color: black;
+}
+.selectableNavElementAlt:active{
+	background-color:#c21b67 !important;
+	border-color: black !important;
 }
 
 /* -------------------- SCROLL TO TOP -------------------- */
@@ -222,4 +241,5 @@ textarea{
 .ui-icon.ui-white
 {
     background-image: url("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png") !important;
+	margin-top: 0px;
 }
