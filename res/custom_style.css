@@ -35,7 +35,13 @@ main {
 }
 
 flex-row{
-    flex: 1 0 0;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: row;
+}
+
+flex-row-balanced{
+    flex: 1 1 auto;
     display: flex;
     flex-direction: row;
 }
@@ -43,6 +49,11 @@ flex-row{
 flex-column{
     display: flex;
     flex-direction: column;
+}
+
+flex-spacer{
+	display: block;
+	flex-grow: 1;
 }
 
 /* No code regions */
@@ -90,7 +101,6 @@ flex-column{
 header {
 	display: flex;
 	flex-grow: 1;
-	flex-direction: row;
 
 	overflow: hidden;
     
@@ -124,6 +134,16 @@ nav-element {
 	
 	/* Makes sure navElements don't look off next to selectableNavElements */
 	border: 1px solid rgba(255, 255, 255, 0);
+}
+
+.sneBorderRight{
+	border-right: 1px solid rgba(255, 255, 255, 0.5);
+}
+.sneBorderLeft{
+	border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+.sneBorderBottom{
+	border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .selectableNavElement{
