@@ -1,19 +1,21 @@
 class ScrollToTop extends HTMLElement {
     constructor() {
         super();
+
+        this.overflowResizeObserver = null;
     }
 
     static targetClass = "sttRotateOnTopDistanceTrigger";
     
-    static scrollToTopCheckDisplay(element){
+    checkDisplay(){
         if (($("body").height() - 300) > $(window).height()) {
-            $(element).css("display", "flex");
+            $(this).css("display", "flex");
             return;
         }
-        $(element).css("display", "none");
+        $(this).css("display", "none");
     }
     
-    static scrollToTopCheckRotation(element){
+    checkRotation(element){
         if (window.scrollY > 150) {
             element.classList.remove(ScrollToTop.targetClass)
             return;
@@ -32,22 +34,26 @@ class ScrollToTop extends HTMLElement {
             </flex-row>
             <stt-simple-spacer style="display:block; height:20px;"></stt-simple-spacer>
         `;
-        
 
-        // If the page is too small there is no use for this button, so we hide it.
-        var me_myself = this;
+        // If the page is too small there is no use for this button, so we simply hide it.
+        var _this = this;
+
         $(window).on('resize', function(){
-            ScrollToTop.scrollToTopCheckDisplay(me_myself);
+            _this.checkDisplay();
         });
-        ScrollToTop.scrollToTopCheckDisplay(me_myself);
+        _this.overflowResizeObserver = new ResizeObserver((entries) => {
+            _this.checkDisplay();
+        });
+        _this.overflowResizeObserver.observe(document.getElementsByTagName("body")[0]);
+
+        _this.checkDisplay(_this);
 
         // If we're already at the top, turn us into a scroll-to-bottom button.
-        var targetElement = this.getElementsByClassName("scrollToTopImage")[0];
+        var targetElement = _this.getElementsByClassName("scrollToTopImage")[0];
         $(window).on('scroll', function(){
-            ScrollToTop.scrollToTopCheckRotation(targetElement);
+            _this.checkRotation(targetElement);
         });
-        ScrollToTop.scrollToTopCheckRotation(targetElement);
-
+        _this.checkRotation(targetElement);
 
         // The actual functionality is here
         $(targetElement).on("click", function(){

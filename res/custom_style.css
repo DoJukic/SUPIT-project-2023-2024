@@ -56,45 +56,107 @@ flex-spacer{
 	flex-grow: 1;
 }
 
-/* No code regions */
-/* -------------------- STANDARDISED VALUES -------------------- */
+/*
+https://www.w3schools.com/howto/howto_css_loader.asp
+animation will stutter when display is changed to flex from css, or maybe it's caused by the fade in animation?
+*/
+simple-loader {
+	border: 0.3em solid rgba(100, 100, 100, 1);
+	border-radius: 50%;
+	border-top: 0.3em solid rgba(194, 27, 103, 1);
+	border-bottom: 0.3em solid rgba(226, 117, 38, 1);
+	width: 1em;
+	height: 1em;
+	-webkit-animation: spin 2s linear infinite; /* Safari */
+	animation: spin 2s linear infinite;
+}
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+/* -------------------- "STANDARDS" -------------------- */
 
 .defaultSpacing{
 	/* Show at least X font sizes, wraps things very nicely */
-	flex-basis: 23em;
+	flex-basis: 23rem;
 }
 
 .defaultPadding{
-	padding: 1em;
+	padding: 1rem;
 }
 .defaultPaddingHalf{
-	padding: 0.5em;
+	padding: 0.5rem;
 }
 .defaultPaddingDouble{
-	padding: 2em;
+	padding: 2rem;
 }
 
 .defaultMargin{
-	margin: 2em;
+	margin: 2rem;
 }
 .defaultMarginHalf{
-	margin: 1em;
+	margin: 1rem;
 }
 .defaultMarginDouble{
-	margin: 4em;
+	margin: 4rem;
 }
 
 .defaultGap{
-	gap: 1em;
+	gap: 1rem;
 }
 .defaultGapHalf{
-	gap: 0.5em;
+	gap: 0.5rem;
 }
 .defaultGapQuarter{
-	gap: 0.25em;
+	gap: 0.25rem;
 }
 .defaultGapDouble{
-	gap: 2em;
+	gap: 2rem;
+}
+
+/* -------------------- BACKGROUNDS -------------------- */
+
+.blackBG{
+	Color: white;
+	background-color: rgb(0, 0, 0);
+}
+
+.blackTranBG{
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.falseBlackBG{
+	Color: white;
+	background-color: rgb(25, 25, 25);
+}
+
+.algebraBG{
+	Color: white;
+	background-image: linear-gradient(-135deg, rgba(194, 27, 103, 1), rgba(226, 117, 38, 1));
+}
+
+.algebraInvertedBG{
+	Color: white;
+	background-image: linear-gradient(45deg, rgba(194, 27, 103, 1), rgba(226, 117, 38, 1));
+}
+
+/* -------------------- BORDERS -------------------- */
+
+.roundedBorder{
+	border-radius: 10px;
+}
+
+.roundedBorderHalf{
+	border-radius: 5px;
+}
+
+.whiteBorder{
+	border: 1px solid white;
+}
+
+.blackBorder{
+	border: 1px solid black;
 }
 
 /* -------------------- HEADER -------------------- */
@@ -136,6 +198,7 @@ nav-element {
 	border: 1px solid rgba(255, 255, 255, 0);
 }
 
+/* sne -> selectable nav element, the name was getting a touch too long */
 .sneBorderRight{
 	border-right: 1px solid rgba(255, 255, 255, 0.5);
 }
@@ -159,9 +222,11 @@ nav-element {
 	color:#e27526;
 	border-color: #e27526;
 }
-/* Is triggered at the same time as :hover, so !important should be used */
-/* Otherwise color seems to be whatever is last in the .css file */
-/* (I don't want to rely on that) */
+/*
+:active can be triggered at the same time as :hover, so !important should be used
+Otherwise color seems to be whatever is last in the .css file
+(I don't want to rely on that)
+*/
 .selectableNavElement:active{
 	color:#c21b67 !important;
 	border-color: #c21b67 !important;
@@ -182,6 +247,30 @@ nav-element {
 .selectableNavElementAlt:active{
 	background-color:#c21b67 !important;
 	border-color: black !important;
+}
+
+custom-modal{
+	position: fixed;
+	z-index: 2000; /* Makes sure it appears above JqueryUI stuff */
+	
+	height: 100vh;
+	width: 100vw;
+
+	overflow-y: auto;
+	transition: background-color 0.25s;
+
+	background: rgba(0,0,0,0.6);
+	
+	opacity: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+	vertical-align: middle;
+}
+/* Not the best browser support, but it runs on everything that matters, aka not libre wolf :( */
+custom-modal:not(:has(flex-column:hover)):hover{
+	background: rgba(0,0,0,0.4);
+	transition: background-color 0.25s;
 }
 
 /* -------------------- SCROLL TO TOP -------------------- */
@@ -241,7 +330,7 @@ footer{
 }
 
 input[type=text], input[type=email], input[type=password] {
-	min-height: 2.5em;
+	min-height: 2.5rem;
 	outline: none !important;
 	border: 0.5px solid black !important;
 }

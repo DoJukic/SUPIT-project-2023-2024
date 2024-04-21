@@ -1,6 +1,7 @@
 /* ---------------------------------------- INIT ---------------------------------------- */
 
-var subscribedFunctions = [];
+var tokenChangeSubscriberFuncs = [];
+var tokenTimeout = null;
 
 // https://stackoverflow.com/questions/13637223/how-do-you-make-a-div-tabbable (awokeKnowing's answer, slightly modified to avoid depreciated methods)
 $(document).on('keydown',function(e){
@@ -10,15 +11,8 @@ $(document).on('keydown',function(e){
   }
 });
 
-// This is here in case of vars which we don't want to hang onto after init.
-initFunc();
-function initFunc(){
-  var accessToken = getAccessToken();
-  if (Boolean(accessToken)) {
-    var tokenExpiration = parseJwt(accessToken).get("exp") - getSecondsSinceEpoch();
-    setTimeout(removeAccessToken(), tokenExpiration * 1000);
-  }
-}
+subscribeToAccessTokenChange(checkTokenTimeout);
+checkTokenTimeout();
 
 /* ---------------------------------------- FUNCTIONS ---------------------------------------- */
 
@@ -37,28 +31,37 @@ function isOverflownRow(element) {
   return element.scrollWidth > element.clientWidth;
 }
 
+/*
 function setBooleanAttribute(element, attribute, inputBoolean){
-  element.setAttribute(attribute, inputBoolean ? "y" : "n")
+  element.setAttribute("data-" + attribute, inputBoolean ? "y" : "n")
 }
 function getBooleanAttribute(element, attribute){
-  if (element.getAttribute(attribute) == "y") return true;
+  if (element.getAttribute("data-" + attribute) == "y") return true;
   return false;
 }
+*/
 
 /* -------------------- ACCESS TOKEN -------------------- */
 
-function subscribeToAccessToken(funct){
-  subscribedFunctions.push(funct);
+function subscribeToAccessTokenChange(funct){
+  tokenChangeSubscriberFuncs.push(funct);
 }
 
 function notifyAccessTokenChanged(){
-  $(subscribedFunctions).each(function(){
+  $(tokenChangeSubscriberFuncs).each(function(){
     this();
   });
 }
 
-//Access token: Once set, reload site. Once loaded, read its expiration and set a timer for auto-logout.
 function setAccessToken(accessToken){
+  // If multiple logins were attempted we want to ignore all but the first one.
+  if(Boolean(getAccessToken())){
+    return;
+  }
+  forceSetAccessToken(accessToken);
+}
+
+function forceSetAccessToken(accessToken){
   sessionStorage.setItem("accessToken", accessToken);
   notifyAccessTokenChanged();
 }
@@ -68,7 +71,7 @@ function getAccessToken(){
 }
 
 function removeAccessToken(){
-  setAccessToken("");
+  forceSetAccessToken("");
 }
 
 // https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript-without-using-a-library
@@ -85,4 +88,17 @@ function parseJwt (token) {
 // https://stackoverflow.com/questions/9456138/how-can-i-get-seconds-since-epoch-in-javascript
 function getSecondsSinceEpoch(){
   return Math.ceil( Date.now() / 1000 )
+}
+
+function checkTokenTimeout(){
+  if(tokenTimeout !== null){
+    clearTimeout(tokenTimeout);
+    tokenTimeout = null;
+  }
+
+  var accessToken = getAccessToken();
+  if (Boolean(accessToken)) {
+    var tokenExpiration = parseJwt(accessToken).get("exp") - getSecondsSinceEpoch();
+    tokenTimeout = setTimeout(removeAccessToken(), tokenExpiration * 1000);
+  }
 }

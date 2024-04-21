@@ -26,8 +26,8 @@ function showLogin(){
     setLoginTextDefault();
     $('#logInPopup').addClass('fadeInQuick');
     $('#loginFormUsername').focus(); // Can't be in the startup script because of this one
-  }
-  
+}
+
 function hideLogin(){
     $('#logInPopup').removeClass('fadeInQuick');
     // Not sure what happens here, but the fadeInQuick class breaks jQuery's animation unless we set opacity to 1 beforehand.

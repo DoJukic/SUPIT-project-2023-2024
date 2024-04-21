@@ -1,113 +1,87 @@
 class Header extends HTMLElement {
     constructor() {
         super();
+
+        this.collapsibleIsHidden = true;
+        this.collapsibleIsBusy = false;
+
+        this.modalLock = false;
     }
 
     static collapsibleImgXPath = "../res/img/navbar/X-symbol-white.png";
-
     static collapsibleImgMenuPath = "../res/img/navbar/icons8.com-hamburger-menu-50-white.png";
 
     // We can use lit-html to see html formatting in strings like this one (hence the "html" in front of the string)
     // Note: We are using backticks, not double or single quotes - this is important for multiline strings
     static normalHeaderData = 
     html`
-        <header class="javascriptNormalHeaderTarget defaultGapHalf sneBorderBottom">
+        <header class="jsNormalHeaderTarget defaultGapHalf sneBorderBottom">
             <flex-column class="defaultGapHalf centered defaultPaddingHalf sneBorderRight"
-                style="flex-grow:0; min-width:7em; margin-right: 0em;"
+                style="flex-grow:0; margin-right: 0em;"
                 onclick="location.href = '../wsite/home.html';">
 
                 <img src= "../res/img/navbar/FB_Algebra-logo-mini.png"
-                    style="max-width: 6em; max-height: 6em; margin-bottom: -1em; margin-top: -1em;">
-
-                <div class="navElementVisual" style="max-width:6em;">
-                    ALGEBRA UNIVERSITY
-                </div>
+                    style="max-width: 5em; max-height: 5em; margin-top: -0.25em;">
             </flex-column>
-            
-            <flex-column class="defaultGapHalf defaultMarginHalf"
-                style="flex-grow:1;">
 
-                <flex-row class="defaultGapHalf">
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
-                        onclick="location.href = '../wsite/home.html';"
-                        tabindex="0">
+            <flex-row class="defaultGapHalf defaultPadding centered">
+                <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
+                    onclick="location.href = '../wsite/home.html';"
+                    tabindex="0">
 
-                        <div class="ui-icon ui-white ui-icon-home"></div>
-                        Home
-                    </nav-element>
+                    <div class="ui-icon ui-white ui-icon-home"></div>
+                    Home
+                </nav-element>
 
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
-                        onclick="location.href = '../wsite/news.html';"
-                        tabindex="0">
+                <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
+                    onclick="location.href = '../wsite/news.html';"
+                    tabindex="0">
 
-                        <div class="ui-icon ui-white ui-icon-note"
-                            style="margin-top: -2px;"></div>
-                        News
-                    </nav-element>
+                    <div class="ui-icon ui-white ui-icon-note"
+                        style="margin-top: -2px;"></div>
+                    News
+                </nav-element>
 
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
-                        onclick="location.href = '../wsite/about_us.html';"
-                        tabindex="0">
+                <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
+                    onclick="location.href = '../wsite/about_us.html';"
+                    tabindex="0">
 
-                        <div class="ui-icon ui-white ui-icon-search"></div>
-                        About us
-                    </nav-element>
+                    <div class="ui-icon ui-white ui-icon-search"></div>
+                    About us
+                </nav-element>
 
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
-                        onclick="location.href = '../wsite/contact_us.html';"
-                        tabindex="0">
+                <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
+                    onclick="location.href = '../wsite/contact_us.html';"
+                    tabindex="0">
 
-                        <div class="ui-icon ui-white ui-icon-transferthick-e-w"
-                            style="transform: rotate(90deg);"></div>
-                        Contact us
-                    </nav-element>
-                </flex-row>
-
-                <flex-row class="defaultGapHalf centered javascriptHeaderChapterTarget"
-                    style="font-size: small;">
-
-                    <nav-element class="navElementVisual selectableNavElement defaultPadding"
-                        onclick="location.href = '../wsite/home.html';"
-                        tabindex="0">
-
-                        CHAPTER1
-                    </nav-element>
-
-                    <nav-element class="navElementVisual selectableNavElement defaultPadding"
-                        onclick="location.href = '../wsite/news.html';"
-                        tabindex="0">
-
-                        CHAPTER2
-                    </nav-element>
-
-                    <nav-element class="navElementVisual selectableNavElement defaultPadding"
-                        onclick="location.href = '../wsite/about_us.html';"
-                        tabindex="0">
-
-                        CHAPTER3
-                    </nav-element>
-                </flex-row>
-            </flex-column>
-            
+                    <div class="ui-icon ui-white ui-icon-transferthick-e-w"
+                        style="transform: rotate(90deg);"></div>
+                    Contact us
+                </nav-element>
+            </flex-row>
 
             <flex-column style="flex-grow:0;">
                 <flex-row>
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPaddingHalf"
-                        onclick="location.href = '../wsite/home.html';"
+                    <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElementAlt defaultPaddingHalf"
                         tabindex="0">
-
-                        <div class="ui-icon ui-white ui-icon-unlocked"></div>
-                        Log In
+                        
+                        <flex-row class="jsLogInHideOnBusyTarget centered">
+                            <div class="ui-icon ui-white ui-icon-unlocked"></div>
+                            <div>Log In</div>
+                        </flex-row>
+                        <simple-loader class="jsLogInShowOnBusyTarget"></simple-loader>
                     </nav-element>
                 </flex-row>
 
                 <flex-row>
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPaddingHalf"
-                        onclick="location.href = '../wsite/home.html';"
+                    <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElementAlt defaultPaddingHalf"
                         tabindex="0">
 
-                        <div class="ui-icon ui-white ui-icon-person"></div>
-                        Register
+                        <flex-row class="jsRegisterHideOnBusyTarget centered">
+                            <div class="ui-icon ui-white ui-icon-person"></div>
+                            <div>Register</div>
+                        </flex-row>
+                        <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
                     </nav-element>
                 </flex-row>
             </flex-column>
@@ -116,34 +90,34 @@ class Header extends HTMLElement {
 
     static burgerHeaderData =
     html`
-        <header class="javascriptBurgerHeaderTarget"
+        <header class="jsBurgerHeaderTarget"
             style="flex-direction: column;">
 
             <flex-row class="sneBorderBottom">
                 <flex-column onclick="location.href = '../wsite/home.html';">
-                    <img class="javascriptHeaderBurgerImgTarget"
+                    <img class="jsHeaderBurgerImgTarget"
                         src= "../res/img/navbar/FB_Algebra-logo-mini.png"
-                        style="max-width: 6em; max-height: 6em; margin-top: -0.25em;">
+                        style="max-width: 5em; max-height: 5em;">
                 </flex-column>
 
                 <flex-column class="navElementVisual"
                     style="flex-grow:1;">
 
-                    <flex-row class="javascriptHeaderTextTarget sneBorderLeft sneBorderRight centered"
+                    <flex-row class="jsHeaderCollapsibleTrigger jsHeaderTextTarget sneBorderLeft sneBorderRight centered"
                         style="width: 100%;">
 
                         ALGEBRA UNIVERSITY
                     </flex-row>
                 </flex-column>
                 
-                <flex-column class="javascriptHeaderCollapsibleTrigger centered defaultPadding">
-                    <img class="javascriptHeaderImageTarget"
+                <flex-column class="jsHeaderCollapsibleTrigger centered defaultPadding">
+                    <img class="jsHeaderImageTarget"
                         src="../res/img/navbar/icons8.com-hamburger-menu-50-white.png"
                         style="max-height: 3em;">
                 </flex-column>
             </flex-row>
 
-            <flex-column class="javascriptHeaderCollapsibleTarget"
+            <flex-column class="jsHeaderCollapsibleTarget"
                 style="display: none;">
                 
                 <flex-row style="flex-wrap: wrap;">
@@ -186,76 +160,114 @@ class Header extends HTMLElement {
                     </flex-row>
 
                     <flex-row style="flex-wrap: wrap; flex-basis: 20em;">
-                        <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
-                            onclick="location.href = '../wsite/about_us.html';"
+                        <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElementAlt defaultPadding"
                             tabindex="0">
-
-                            <div class="ui-icon ui-white ui-icon-unlocked"></div>
-                            Log In
+                            
+                            <flex-row class="jsLogInHideOnBusyTarget centered">
+                                <div class="ui-icon ui-white ui-icon-unlocked"></div>
+                                <div>Log In</div>
+                            </flex-row>
+                            <simple-loader class="jsLogInShowOnBusyTarget"></simple-loader>
                         </nav-element>
                         
-                        <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
-                            onclick="location.href = '../wsite/contact_us.html';"
+                        <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElementAlt defaultPadding"
                             tabindex="0">
 
-                            <div class="ui-icon ui-white ui-icon-person"></div>
-                            Register
+                            <flex-row class="jsRegisterHideOnBusyTarget centered">
+                                <div class="ui-icon ui-white ui-icon-person"></div>
+                                <div>Register</div>
+                            </flex-row>
+                            <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
                         </nav-element>
                     </flex-row>
                 </flex-row>
-                
-                <flex-column class="defaultMarginHalf defaultGap"
-                    style="font-size: small;">
-
-                    <flex-row class="defaultGap"
-                        style="flex-wrap: wrap;">
-
-                        <flex-row class="defaultGap"
-                            style="flex-wrap: wrap; flex-basis: 20em;">
-
-                            <nav-element class="navElementVisual selectableNavElement defaultPadding"
-                                onclick="location.href = '../wsite/home.html';"
-                                tabindex="0">
-
-                                CHAPTER1
-                            </nav-element>
-
-                            <nav-element class="navElementVisual selectableNavElement defaultPadding"
-                                onclick="location.href = '../wsite/news.html';"
-                                tabindex="0">
-
-                                CHAPTER2
-                            </nav-element>
-                            
-                            <nav-element class="navElementVisual selectableNavElement defaultPadding"
-                                onclick="location.href = '../wsite/about_us.html';"
-                                tabindex="0">
-
-                                CHAPTER3
-                            </nav-element>
-                        </flex-row>
-                    </flex-row>
-                </flex-column>
             </flex-column>
         </header>
     `;
 
+    static logInModalData =
+    html`
+        <custom-modal class="jsLogInModalTarget">
+            <flex-column class="defaultMarginDouble defaultPaddingDouble centered algebraBG roundedBorder whiteBorder"
+                style="padding-top:0em; max-width: 30rem;">
+
+                <h1 style="text-align: center; margin: 1rem 0 0 0;">
+                    Welcome back,
+                </h1>
+                <p style="text-align: center; margin: 0 0 2rem 0;">
+                    please input your credentials below.
+                </p>
+
+                <form style="width:100%; height:100%;"
+                    action="javascript:tryLogIn($('#loginFormUsername').value, $('#loginFormPassword').value)">
+
+                    <flex-column class="defaultGap centered">
+                        <input class="roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
+                        <input class="roundedBorderHalf" style="width: 100%;" type="password" placeholder="Password" required>
+                        
+                        <button class="ui-button ui-widget ui-corner-all" type="submit"
+                            style="min-height: 1.5em !important; width: 90%;">
+
+                            <flex-row class="jsRegisterHideOnBusyTarget centered">
+                                Log In
+                            </flex-row>
+                            <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
+                        </button>
+                    </flex-column>
+                </form>
+            </flex-column>
+        </custom-modal>
+    `;
+
+    static registerModalData =
+    html`
+        <custom-modal class="jsRegisterModalTarget">
+            <flex-column class="defaultMarginDouble defaultPaddingDouble centered algebraBG roundedBorder whiteBorder"
+                    style="padding-top:0em; max-width: 30rem;">
+
+                    <h1 style="text-align: center; margin: 1em 0 0 0;">
+                        Welcome,
+                    </h1>
+                    <p style="text-align: center; margin: 0 0 2em 0;">
+                        please input your credentials below.
+                    </p>
+
+                    <form style="width:100%; height:100%;"
+                        action="javascript:tryLogIn($('#loginFormUsername').value, $('#loginFormPassword').value)">
+
+                        <flex-column class="defaultGap centered">
+                            <input class="roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
+                            <input class="roundedBorderHalf" style="width: 100%;" type="password" placeholder="Password" required>
+                            
+                            <button class="ui-button ui-widget ui-corner-all" type="submit"
+                                style="min-height: 1.5em !important; width: 90%;">
+
+                                <flex-row class="jsRegisterHideOnBusyTarget centered">
+                                    Register
+                                </flex-row>
+                                <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
+                            </button>
+                        </flex-column>
+                    </form>
+                </flex-column>
+        </custom-modal>
+    `;
+
     // Simple way to check if our usual header is too wide and swap it with a hamburger.
-    static headerCheckOverflow(header_component){
-        var normalHeader = header_component.getElementsByClassName("javascriptNormalHeaderTarget")[0];
-        var burgerHeader = header_component.getElementsByClassName("javascriptBurgerHeaderTarget")[0];
+    checkOverflow(){
+        var normalHeader = this.getElementsByClassName("jsNormalHeaderTarget")[0];
+        var burgerHeader = this.getElementsByClassName("jsBurgerHeaderTarget")[0];
         
         // Testing shows negligble performance impact when doing this.
         $(normalHeader).css("display", "flex");
         $(burgerHeader).css("display", "none");
 
         if (!isOverflownRow(normalHeader)) {
-            // I don't actually know why this works I was just poking it a bit tbh. If something looks weird it's probably this.
-            Header.collapsibleSet(header_component, 0);
+            this.collapsibleSet(0);
             return;
         }
 
-        var burgerText = burgerHeader.getElementsByClassName("javascriptHeaderTextTarget")[0];
+        var burgerText = burgerHeader.getElementsByClassName("jsHeaderTextTarget")[0];
         
         $(normalHeader).css("display", "none");
         $(burgerHeader).css("display", "flex");
@@ -268,65 +280,134 @@ class Header extends HTMLElement {
         $(burgerText).css("display", "none");
     }
 
-    // ********** TODO: IT IS ALL BORKED. UNBORK IT. **********
-
-    static collapsibleToggle(header_component){
-        if (getBooleanAttribute(header_component, "headerCollapsibleIsBusy")) {
+    collapsibleToggle(){
+        if (this.collapsibleIsBusy) {
             // Button spamming can mess with things otherwise, and we don't really want that
             return;
         }
 
-        if (getBooleanAttribute(header_component, "headerCollapsibleIsHidden")) {
-            Header.collapsibleSet(header_component, 1);
+        if (this.collapsibleIsHidden) {
+            this.collapsibleSet(1);
         }else{
-            Header.collapsibleSet(header_component, 0);
+            this.collapsibleSet(0);
         }
     }
 
-    static collapsibleSet(header_component, newState){
-        setBooleanAttribute(header_component, "headerCollapsibleIsBusy", true);
+    collapsibleSet(newState){
+        this.collapsibleIsBusy = true;
 
-        var collapsible = header_component.getElementsByClassName("javascriptHeaderCollapsibleTarget")[0];
+        var collapsible = this.getElementsByClassName("jsHeaderCollapsibleTarget")[0];
+        var _this = this;
 
         if (newState) {
-            $(header_component.getElementsByClassName("javascriptHeaderImageTarget")[0]).attr("src", Header.collapsibleImgXPath);
+            $(this.getElementsByClassName("jsHeaderImageTarget")[0]).attr("src", Header.collapsibleImgXPath);
             $(collapsible).slideDown(500, function() { 
-                setBooleanAttribute(header_component, "headerCollapsibleIsBusy", false);
+                _this.collapsibleIsBusy = false;
             });
         }else{
-            $(header_component.getElementsByClassName("javascriptHeaderImageTarget")[0]).attr("src", Header.collapsibleImgMenuPath);
+            $(this.getElementsByClassName("jsHeaderImageTarget")[0]).attr("src", Header.collapsibleImgMenuPath);
             $(collapsible).slideUp(500, function() { 
-                setBooleanAttribute(header_component, "headerCollapsibleIsBusy", false);
+                _this.collapsibleIsBusy = false;
             });
         }
 
-        setBooleanAttribute(header_component, "headerCollapsibleIsHidden", !newState);
+        this.collapsibleIsHidden = !newState;
+    }
+
+    showModal(custom_modal){
+        if (this.modalLock) {
+            return;
+        }
+        this.modalLock = true;
+
+        $(custom_modal).css("display", "flex");
+        $(custom_modal).animate({
+            opacity: 1
+            }, 500
+        );
+        
+        custom_modal.getElementsByTagName("input")[0].focus();
+    }
+
+    hideModal(custom_modal){
+        this.modalLock = false;
+
+        $(custom_modal).animate({
+            opacity: 0
+            }, 250, function(){
+            $(this).css('display', 'none');
+        });
+    }
+
+    logInModalBusyTrigger(isBusy){
+        $(this.getElementsByClassName("jsLogInHideOnBusyTarget")).each(function(){
+            $(this).css("display", isBusy ? "none" : "flex");
+        });
+        $(this.getElementsByClassName("jsLogInShowOnBusyTarget")).each(function(){
+            $(this).css("display", isBusy ? "flex" : "none");
+        });
+    }
+
+    registerModalBusyTrigger(isBusy){
+        $(this.getElementsByClassName("jsRegisterHideOnBusyTarget")).each(function(){
+            $(this).css("display", isBusy ? "none" : "flex");
+        });
+        $(this.getElementsByClassName("jsRegisterShowOnBusyTarget")).each(function(){
+            $(this).css("display", isBusy ? "flex" : "none");
+        });
     }
 
     // This is the individual entry point - when the component loads into the DOM, this callback is triggered
     connectedCallback() {
-        this.innerHTML = (Header.normalHeaderData + Header.burgerHeaderData);
-
-        setBooleanAttribute(this, "headerCollapsibleIsHidden", 1);
+        this.innerHTML = (Header.logInModalData + Header.registerModalData + Header.normalHeaderData + Header.burgerHeaderData);
         
-        // "this" evaluates to something else when in a .on and similar callback functions
+        // "this" evaluates to something else when in .on and similar callback functions
         // In this case a "this" would be the window, and not the element, so we simply specify another var
-        var me_myself = this;
+        var _this = this;
         $(window).on('resize', function(){
-            Header.headerCheckOverflow(me_myself)
+            _this.checkOverflow();
         });
-        Header.headerCheckOverflow(me_myself)
+        // Must be deferred, does not work exactly right otherwise because the width gets misreported at startup at certain sizes
+        requestAnimationFrame(function(){
+            _this.checkOverflow();
+        });
         
-        var burgerCollapsibleTriggers = this.getElementsByClassName("javascriptHeaderCollapsibleTrigger");
+        var burgerCollapsibleTriggers = _this.getElementsByClassName("jsHeaderCollapsibleTrigger");
         $(burgerCollapsibleTriggers).each(function(){
             $(this).on('click', function(){
-                Header.collapsibleToggle(me_myself)
+                _this.collapsibleToggle();
             });
         });
 
-        // TODO: fetch chapters
-        $(document).ready(function () {
-                
+        // Using IDs in components feels like bad practice to me, so I am just doing this instead.
+        var logInModal = _this.getElementsByClassName("jsLogInModalTarget")[0];
+        var registerModal = _this.getElementsByClassName("jsRegisterModalTarget")[0];
+
+        $(logInModal).on("click", function(e){
+            if (e.target != this) {
+                return;
+            }
+            _this.hideModal(this);
+        });
+        $(registerModal).on("click", function(e){
+            if (e.target != this) {
+                return;
+            }
+            _this.hideModal(this);
+        });
+
+        _this.logInModalBusyTrigger(false);
+        _this.registerModalBusyTrigger(false);
+        
+        $(_this.getElementsByClassName("jsLogInShowTrigger")).each(function(){
+            $(this).on("click", function(){
+                _this.showModal(logInModal);
+            });
+        });
+        $(_this.getElementsByClassName("jsRegisterShowTrigger")).each(function(){
+            $(this).on("click", function(){
+                _this.showModal(registerModal);
+            });
         });
     }
 }
