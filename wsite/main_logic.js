@@ -31,7 +31,6 @@ function isOverflownRow(element) {
   return element.scrollWidth > element.clientWidth;
 }
 
-/*
 function setBooleanAttribute(element, attribute, inputBoolean){
   element.setAttribute("data-" + attribute, inputBoolean ? "y" : "n")
 }
@@ -39,7 +38,6 @@ function getBooleanAttribute(element, attribute){
   if (element.getAttribute("data-" + attribute) == "y") return true;
   return false;
 }
-*/
 
 /* -------------------- ACCESS TOKEN -------------------- */
 
