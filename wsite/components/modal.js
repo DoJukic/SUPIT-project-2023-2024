@@ -3,16 +3,18 @@ class Modal extends HTMLElement {
         super();
     }
 
+    static exists(){return true;}
+
     static modalLock = false;
 
-    static dataFront = 
+    static dataFront =
     html`<!-- centering with flex tends to overflow the parent scroll for some reason, so sometimes we have to use auto margins instead -->
     <div style="margin: auto;">
         <flex-column class="defaultMarginDouble defaultPaddingDouble algebraBG roundedBorder whiteBorder"
             style="padding-top:0rem; padding-bottom: 1rem; word-wrap: break-word">
     `
 
-    static dataBack = 
+    static dataBack =
     html`
         </flex-column>
     </div>

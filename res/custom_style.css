@@ -67,7 +67,17 @@ simple-loader {
 	border-bottom: 0.3em solid rgba(226, 117, 38, 1);
 	width: 1em;
 	height: 1em;
-	-webkit-animation: spin 2s linear infinite; /* Safari */
+	animation: spin 2s linear infinite;
+}
+simple-loader-m {
+	margin-top: -0.2em;
+	margin-bottom: -0.2em;
+	border: 0.3em solid rgba(100, 100, 100, 1);
+	border-radius: 50%;
+	border-top: 0.3em solid rgba(194, 27, 103, 1);
+	border-bottom: 0.3em solid rgba(226, 117, 38, 1);
+	width: 1em;
+	height: 1em;
 	animation: spin 2s linear infinite;
 }
 @keyframes spin {
@@ -75,10 +85,9 @@ simple-loader {
 	100% { transform: rotate(360deg); }
 }
 
-/* -------------------- "STANDARDS" -------------------- */
+/* -------------------- GENERIC VALUES -------------------- */
 
 .defaultSpacing{
-	/* Show at least X font sizes, wraps things very nicely */
 	flex-basis: 23rem;
 }
 
@@ -157,6 +166,31 @@ simple-loader {
 
 .blackBorder{
 	border: 1px solid black;
+}
+
+/* -------------------- MODAL -------------------- */
+modal-component{
+	position: fixed;
+	z-index: 2000; /* Makes sure it appears above JqueryUI elements too */
+	
+	height: 100vh;
+	width: 100vw;
+
+	overflow-y: auto;
+	transition: background-color 0.25s;
+
+	background: rgba(0,0,0,0.6);
+	
+	opacity: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+	vertical-align: middle;
+}
+/* Not the best browser support, but it runs on everything that matters */
+modal-component:not(:has(flex-column:hover)):hover{
+	background: rgba(0,0,0,0.4);
+	transition: background-color 0.25s;
 }
 
 /* -------------------- HEADER -------------------- */
@@ -247,30 +281,6 @@ Otherwise color seems to be whatever is last in the .css file
 .selectableNavElementAlt:active{
 	background-color:#c21b67 !important;
 	border-color: black !important;
-}
-
-modal-component{
-	position: fixed;
-	z-index: 2000; /* Makes sure it appears above JqueryUI elements too */
-	
-	height: 100vh;
-	width: 100vw;
-
-	overflow-y: auto;
-	transition: background-color 0.25s;
-
-	background: rgba(0,0,0,0.6);
-	
-	opacity: 0;
-    display: none;
-    align-items: center;
-    justify-content: center;
-	vertical-align: middle;
-}
-/* Not the best browser support, but it runs on everything that matters */
-modal-component:not(:has(flex-column:hover)):hover{
-	background: rgba(0,0,0,0.4);
-	transition: background-color 0.25s;
 }
 
 /* -------------------- SCROLL TO TOP -------------------- */

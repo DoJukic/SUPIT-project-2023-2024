@@ -1,3 +1,12 @@
+try{
+    if(!Modal.exists() || !PushNotifs.exists()){
+        throw new Error("FILES INCLUDED BUT BAD INIT");
+    }
+}catch(ex){
+    console.warn("Prerequisite scripts may be missing, please include before component.");
+    console.warn(ex);
+}
+
 class Header extends HTMLElement {
     constructor() {
         super();
@@ -194,7 +203,7 @@ class Header extends HTMLElement {
     `;
 
     // These would ideally be their own component, but since these are the only modals on the site it would likely just take more time than it would save
-    // I ate my words so hard that I'm keeping that comment as a memento
+    // I ate my words so hard that I'm keeping the above comment as a memento
     static logInModalData =
     html`
         <modal-component id="jsLogInModalTarget">
@@ -214,16 +223,22 @@ class Header extends HTMLElement {
                 ">
 
                 <flex-column class="defaultGap centered">
-                    <input class="jsLogInUsernameTarget roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
-                    <input class="jsLogInPasswordTarget roundedBorderHalf" style="width: 100%;" type="password" placeholder="Password" required>
+                    <flex-column class="defaultGapHalf centered"
+                        style="width: 100%;">
+
+                        <input class="jsLogInUsernameTarget roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
+                        <input class="jsLogInPasswordTarget roundedBorderHalf" style="width: 100%;" type="password" placeholder="Password" required>
+                    </flex-column>
                     
                     <button class="ui-button ui-widget ui-corner-all" type="submit"
                         style="min-height: 1.5rem !important; width: 103%;">
 
-                        <flex-row class="jsRegisterHideOnBusyTarget centered">
+                        <flex-row class="jsLogInHideOnBusyTarget centered">
                             Log In
                         </flex-row>
-                        <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
+                        <flex-row class="jsLogInShowOnBusyTarget centered">
+                            <simple-loader-m></simple-loader-m>
+                        </flex-row>
                     </button>
                 </flex-column>
             </form>
@@ -249,10 +264,14 @@ class Header extends HTMLElement {
                         finally{return false};
                 ">
 
-                <flex-column class="defaultGapHalf centered">
-                    <input class="jsRegisterUsernameTarget roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
-                    <input class="jsRegisterPasswordTarget roundedBorderHalf" style="width: 100%; margin-bottom: 0em;" type="password" placeholder="Password" required>
-                    <input class="jsRegisterPasswordCheckTarget roundedBorderHalf" style="width: 100%;" type="password" placeholder="Confirm Password" required>
+                <flex-column class="defaultGap centered">
+                    <flex-column class="defaultGapHalf centered"
+                        style="width: 100%;">
+
+                        <input class="jsRegisterUsernameTarget roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
+                        <input class="jsRegisterPasswordTarget roundedBorderHalf" style="width: 100%; margin-bottom: 0em;" type="password" placeholder="Password" required>
+                        <input class="jsRegisterPasswordCheckTarget roundedBorderHalf" style="width: 100%;" type="password" placeholder="Confirm Password" required>
+                    </flex-column>
                     
                     <button class="ui-button ui-widget ui-corner-all" type="submit"
                         style="min-height: 1.5rem !important; width: 103%;">
@@ -260,7 +279,9 @@ class Header extends HTMLElement {
                         <flex-row class="jsRegisterHideOnBusyTarget centered">
                             Register
                         </flex-row>
-                        <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
+                        <flex-row class="jsRegisterShowOnBusyTarget centered">
+                            <simple-loader-m></simple-loader-m>
+                        </flex-row>
                     </button>
                 </flex-column>
             </form>
@@ -270,7 +291,7 @@ class Header extends HTMLElement {
     // This is the individual entry point - when the component loads into the DOM, this callback is triggered
     connectedCallback() {
         if(Header.singleton != null){
-            console.warn("Multiple header components detected, this is not supported and will likely break everything.");
+            console.warn("Multiple header components detected, this is not supported and will likely break something.");
         }
         // "this" evaluates to something else when in .on and similar callback functions, so the singleton var fulfils a dual purpose
         Header.singleton = this;
@@ -427,9 +448,15 @@ class Header extends HTMLElement {
         })
             .done(function(data, textStatus, jqXHR){
                 console.log("DONE");
-                console.log(data);
-                console.log(textStatus);
-                console.log(jqXHR);
+                console.log(data.isSuccess);
+                console.log(data.statusCode);
+                if(data.isSuccess){
+                    console.log(data.data.token);
+                }else{
+                    $(data.errorMessages).each(function(){
+                        console.log(this);
+                    });
+                }
             })
             .fail(function(jqXHR, textStatus, errorThrown){
                 console.log("ERROR");
@@ -437,18 +464,18 @@ class Header extends HTMLElement {
                 console.log(textStatus);
                 console.log(errorThrown);
             })
-            .always(function(data, textStatus, jqXHR){
+            .always(function(data_OR_jqXHR, textStatus, jqXHR_OR_errorThrown){
                 console.log("ALWAYS");
-                console.log(data);
+                console.log(data_OR_jqXHR);
                 console.log(textStatus);
-                console.log(jqXHR);
+                console.log(jqXHR_OR_errorThrown);
 
                 Header.singleton.logInModalBusyTrigger(false);
         });
 
         console.log("GOODBYE");
         
-        this.hideModal(Header.logInModal);
+        Header.logInModal.hideModal();
     }
 
     tryRegister(form, username, password, passwordCheck){
@@ -462,28 +489,29 @@ class Header extends HTMLElement {
         })
             .done(function(data, textStatus, jqXHR){
                 console.log("DONE");
-                console.log(data);
-                console.log(textStatus);
-                console.log(jqXHR);
+                console.log(data.isSuccess);
+                console.log(data.statusCode);
+                if(data.isSuccess){
+
+                }else{
+                    $(data.errorMessages).each(function(){
+                        console.log(this);
+                    });
+                }
             })
-            .fail(function(data, textStatus, errorThrown){
+            .fail(function(jqXHR, textStatus, errorThrown){
                 console.log("ERROR");
-                console.log(data);
+                console.log(jqXHR);
                 console.log(textStatus);
                 console.log(errorThrown);
             })
-            .always(function(data, textStatus, jqXHR){
-                console.log("ALWAYS");
-                console.log(data);
-                console.log(textStatus);
-                console.log(jqXHR);
-                
+            .always(function(data_OR_jqXHR, textStatus, jqXHR_OR_errorThrown){
                 Header.singleton.registerModalBusyTrigger(false);
         });
 
         console.log("GOODBYE");
         
-        this.hideModal(Header.registerModal);
+        Header.registerModal.hideModal();
     }
 }
 
