@@ -249,7 +249,7 @@ Otherwise color seems to be whatever is last in the .css file
 	border-color: black !important;
 }
 
-custom-modal{
+modal-component{
 	position: fixed;
 	z-index: 2000; /* Makes sure it appears above JqueryUI elements too */
 	
@@ -268,8 +268,7 @@ custom-modal{
 	vertical-align: middle;
 }
 /* Not the best browser support, but it runs on everything that matters */
-/* Also works regardless of element depth, apparently */
-custom-modal:not(:has(flex-column:hover)):hover{
+modal-component:not(:has(flex-column:hover)):hover{
 	background: rgba(0,0,0,0.4);
 	transition: background-color 0.25s;
 }

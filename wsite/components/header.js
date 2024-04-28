@@ -194,89 +194,77 @@ class Header extends HTMLElement {
     `;
 
     // These would ideally be their own component, but since these are the only modals on the site it would likely just take more time than it would save
+    // I ate my words so hard that I'm keeping that comment as a memento
     static logInModalData =
     html`
-        <custom-modal id="jsLogInModalTarget">
-            <!-- centering with flex tends to overflow the parent scroll for some reason, so sometimes we have to use auto margins instead -->
-            <div style="margin: auto;">
-                <flex-column class="defaultMarginDouble defaultPaddingDouble algebraBG roundedBorder whiteBorder"
-                    style="padding-top:0rem; padding-bottom: 1rem; word-wrap: break-word">
+        <modal-component id="jsLogInModalTarget">
+            <h1 style="text-align: center; margin: 1rem 0 0 0;">
+                Welcome back,
+            </h1>
+            <p style="text-align: center; margin: 0 0 1rem 0;">
+                please input your credentials below.
+            </p>
 
-                    <h1 style="text-align: center; margin: 1rem 0 0 0;">
-                        Welcome back,
-                    </h1>
-                    <p style="text-align: center; margin: 0 0 1rem 0;">
-                        please input your credentials below.
-                    </p>
+            <form style="width:100%; height:100%;"
+                onsubmit="try{Header.singleton.tryLogIn(this,
+                                                        this.getElementsByClassName('jsLogInUsernameTarget')[0].value,
+                                                        this.getElementsByClassName('jsLogInPasswordTarget')[0].value);}
+                        catch(ex){console.error(ex)}
+                        finally{return false}; // return false to stop page refresh
+                ">
 
-                    <form style="width:100%; height:100%;"
-                        onsubmit="try{Header.singleton.tryLogIn(this,
-                                                                this.getElementsByClassName('jsLogInUsernameTarget')[0].value,
-                                                                this.getElementsByClassName('jsLogInPasswordTarget')[0].value);}
-                                catch(ex){console.error(ex)}
-                                finally{return false}; // return false to stop page refresh
-                        ">
+                <flex-column class="defaultGap centered">
+                    <input class="jsLogInUsernameTarget roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
+                    <input class="jsLogInPasswordTarget roundedBorderHalf" style="width: 100%;" type="password" placeholder="Password" required>
+                    
+                    <button class="ui-button ui-widget ui-corner-all" type="submit"
+                        style="min-height: 1.5rem !important; width: 103%;">
 
-                        <flex-column class="defaultGap centered">
-                            <input class="jsLogInUsernameTarget roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
-                            <input class="jsLogInPasswordTarget roundedBorderHalf" style="width: 100%;" type="password" placeholder="Password" required>
-                            
-                            <button class="ui-button ui-widget ui-corner-all" type="submit"
-                                style="min-height: 1.5rem !important; width: 103%;">
-
-                                <flex-row class="jsRegisterHideOnBusyTarget centered">
-                                    Log In
-                                </flex-row>
-                                <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
-                            </button>
-                        </flex-column>
-                    </form>
+                        <flex-row class="jsRegisterHideOnBusyTarget centered">
+                            Log In
+                        </flex-row>
+                        <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
+                    </button>
                 </flex-column>
-            </div>
-        </custom-modal>
+            </form>
+        </modal-component>
     `;
 
     static registerModalData =
     html`
-        <custom-modal id="jsRegisterModalTarget">
-            <div style="margin: auto;">
-                <flex-column class="defaultMarginDouble defaultPaddingDouble algebraBG roundedBorder whiteBorder"
-                    style="padding-top:0em; padding-bottom: 1rem; word-wrap: break-word">
+        <modal-component id="jsRegisterModalTarget">
+            <h1 style="text-align: center; margin: 1rem 0 0 0;">
+                Welcome,
+            </h1>
+            <p style="text-align: center; margin: 0 0 1rem 0;">
+                please input your credentials below.
+            </p>
 
-                    <h1 style="text-align: center; margin: 1rem 0 0 0;">
-                        Welcome,
-                    </h1>
-                    <p style="text-align: center; margin: 0 0 1rem 0;">
-                        please input your credentials below.
-                    </p>
+            <form style="width:100%; height:100%;"
+                onsubmit="try{Header.singleton.tryRegister(this,
+                                                            this.getElementsByClassName('jsRegisterUsernameTarget')[0].value,
+                                                            this.getElementsByClassName('jsRegisterPasswordTarget')[0].value,
+                                                            this.getElementsByClassName('jsRegisterPasswordCheckTarget')[0].value);}
+                        catch(ex){console.error(ex)}
+                        finally{return false};
+                ">
 
-                    <form style="width:100%; height:100%;"
-                        onsubmit="try{Header.singleton.tryRegister(this,
-                                                                    this.getElementsByClassName('jsRegisterUsernameTarget')[0].value,
-                                                                    this.getElementsByClassName('jsRegisterPasswordTarget')[0].value,
-                                                                    this.getElementsByClassName('jsRegisterPasswordCheckTarget')[0].value);}
-                                catch(ex){console.error(ex)}
-                                finally{return false};
-                        ">
+                <flex-column class="defaultGapHalf centered">
+                    <input class="jsRegisterUsernameTarget roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
+                    <input class="jsRegisterPasswordTarget roundedBorderHalf" style="width: 100%; margin-bottom: 0em;" type="password" placeholder="Password" required>
+                    <input class="jsRegisterPasswordCheckTarget roundedBorderHalf" style="width: 100%;" type="password" placeholder="Confirm Password" required>
+                    
+                    <button class="ui-button ui-widget ui-corner-all" type="submit"
+                        style="min-height: 1.5rem !important; width: 103%;">
 
-                        <flex-column class="defaultGapHalf centered">
-                            <input class="jsRegisterUsernameTarget roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
-                            <input class="jsRegisterPasswordTarget roundedBorderHalf" style="width: 100%; margin-bottom: 0em;" type="password" placeholder="Password" required>
-                            <input class="jsRegisterPasswordCheckTarget roundedBorderHalf" style="width: 100%;" type="password" placeholder="Confirm Password" required>
-                            
-                            <button class="ui-button ui-widget ui-corner-all" type="submit"
-                                style="min-height: 1.5rem !important; width: 103%;">
-
-                                <flex-row class="jsRegisterHideOnBusyTarget centered">
-                                    Register
-                                </flex-row>
-                                <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
-                            </button>
-                        </flex-column>
-                    </form>
+                        <flex-row class="jsRegisterHideOnBusyTarget centered">
+                            Register
+                        </flex-row>
+                        <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
+                    </button>
                 </flex-column>
-            </div>
-        </custom-modal>
+            </form>
+        </modal-component>
     `;
 
     // This is the individual entry point - when the component loads into the DOM, this callback is triggered
@@ -311,20 +299,6 @@ class Header extends HTMLElement {
         Header.logInModal = document.getElementById("jsLogInModalTarget");
         Header.registerModal = document.getElementById("jsRegisterModalTarget");
 
-        $(Header.logInModal).on("click", function(e){
-            if (e.target != this && e.target != this.children[0]) {
-                return;
-            }
-            Header.singleton.hideModal(this);
-        });
-        $(Header.registerModal).on("click", function(e){
-            if (e.target != this && e.target != this.children[0]) {
-                return;
-            }
-            Header.singleton.hideModal(this);
-        });
-
-        // Form init
         Header.logInModal.data_busyCounter = 1;
         Header.registerModal.data_busyCounter = 1;
 
@@ -333,15 +307,14 @@ class Header extends HTMLElement {
         
         $(Header.singleton.getElementsByClassName("jsLogInShowTrigger")).each(function(){
             $(this).on("click", function(){
-                Header.singleton.showModal(Header.logInModal);
+                Header.logInModal.showModal();
             });
         });
         $(Header.singleton.getElementsByClassName("jsRegisterShowTrigger")).each(function(){
             $(this).on("click", function(){
-                Header.singleton.showModal(Header.registerModal);
+                Header.registerModal.showModal();
             });
         });
-
     }
 
     // Simple way to check if our usual header is too wide and swap it with a hamburger.
@@ -402,44 +375,6 @@ class Header extends HTMLElement {
         }
 
         this.collapsibleIsHidden = !newState;
-    }
-
-    showModal(customModal){
-        if (this.modalLock || customModal.data_showAnimActive) {
-            return;
-        }
-        customModal.data_showAnimActive = true;
-        this.modalLock = true;
-
-        $(customModal).css("display", "flex");
-        $(customModal).animate({
-            opacity: 1
-        }, {
-            duration: 500,
-            complete: function(){
-                customModal.data_showAnimActive = false;
-            }
-        });
-        
-        customModal.getElementsByTagName("input")[0].focus();
-    }
-
-    hideModal(customModal){
-        if (customModal.data_hideAnimActive) {
-            return;
-        }
-        customModal.data_hideAnimActive = true;
-
-        $(customModal).animate({
-            opacity: 0
-        }, {
-            duration: 250,
-            complete: function(){
-                $(this).css('display', 'none');
-                Header.singleton.modalLock = false;
-                customModal.data_hideAnimActive = false;
-            }
-        });
     }
 
     // We must handle spam-clicking gracefully.
