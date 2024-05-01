@@ -29,9 +29,8 @@ main {
 
 .centered{
     display: flex;
-    align-items: center;
     justify-content: center;
-	vertical-align: middle;
+    align-items: center;
 }
 
 flex-row{
@@ -168,10 +167,101 @@ simple-loader-m {
 	border: 1px solid black;
 }
 
+/* -------------------- SCROLL TO TOP -------------------- */
+
+scroll-to-top-component{
+	position: fixed;
+	z-index: 1000;
+
+	width: 100vw;
+	height: 100vh;
+
+	pointer-events: none;
+
+	display: flex;
+	align-items: flex-end !important;
+	flex-direction: column;
+}
+
+.sttRotateOnTopDistance {
+	transform: rotate(0deg);
+	transition: transform 0.2s;
+	will-change: auto !important;
+}
+.sttRotateOnTopDistance.sttRotateOnTopDistanceTrigger {
+	transform: rotate(-180deg);
+}
+
+/* -------------------- PUSH NOTIFICATIONS -------------------- */
+
+push-notifications-component{
+	position: fixed;
+	z-index: 500;
+	
+	height: 100vh;
+	width: 100vw;
+
+	pointer-events: none;
+	
+    display: flex;
+	flex-direction: column;
+    justify-content: flex-end;
+
+	word-wrap: break-word;
+	
+	overflow: visible; /* necessary for the animation */
+}
+
+push-notification{
+	box-shadow: 2px 2px 4px black;
+
+	width: calc(10rem + 10%);
+	min-height: 4rem;
+
+	top: 0rem;
+	position:relative; /* Animations will rely on changing "top", which needs a specific position value */
+
+	background-color: white;
+	color: black;
+
+	border: 1px solid black;
+
+	pointer-events: auto;
+	
+	display:flex;
+	flex-direction: row;
+
+	/* Children do not have to compy with the border radii if we're using this */
+	overflow: hidden;
+}
+
+push-notification-success{
+	background-color: limegreen;
+	min-width: 1.5rem;
+}
+push-notification-info{
+	background-color: blueviolet;
+	min-width: 1.5rem;
+}
+push-notification-fail{
+	background-color: red;
+	min-width: 1.5rem;
+}
+
+push-notification-content{
+	border-left: 1px solid black;
+	
+	font-size: small;
+
+	display:block;
+	flex-grow: 1;
+}
+
 /* -------------------- MODAL -------------------- */
+
 modal-component{
 	position: fixed;
-	z-index: 2000; /* Makes sure it appears above JqueryUI elements too */
+	z-index: 2000;
 	
 	height: 100vh;
 	width: 100vw;
@@ -183,8 +273,8 @@ modal-component{
 	
 	opacity: 0;
     display: none;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 	vertical-align: middle;
 }
 /* Not the best browser support, but it runs on everything that matters */
@@ -194,20 +284,20 @@ modal-component:not(:has(flex-column:hover)):hover{
 }
 
 /* -------------------- HEADER -------------------- */
-header {
-	display: flex;
-	flex-grow: 1;
 
+header {
 	overflow: hidden;
-    
-	justify-content: center;
-	align-items: stretch; /* Align vertical */
 
 	background-color: rgb(0, 0, 0);
 	color: white;
 
+	display: flex;
 	text-align: center;
 	vertical-align: middle;
+	justify-content: center;
+	align-items: stretch;
+	
+	flex-grow: 1;
 }
 
 /* Seperate the visuals from the behaviour */
@@ -281,28 +371,6 @@ Otherwise color seems to be whatever is last in the .css file
 .selectableNavElementAlt:active{
 	background-color:#c21b67 !important;
 	border-color: black !important;
-}
-
-/* -------------------- SCROLL TO TOP -------------------- */
-
-scroll-to-top-component{
-	position: fixed;
-	width: 100vw;
-	height: 100vh;
-	pointer-events: none;
-
-	display: flex;
-	align-items: flex-end !important;
-	flex-direction: column;
-}
-
-.sttRotateOnTopDistance {
-	transform: rotate(0deg);
-	transition: transform 0.2s;
-	will-change: auto !important;
-}
-.sttRotateOnTopDistance.sttRotateOnTopDistanceTrigger {
-	transform: rotate(-180deg);
 }
 
 /* -------------------- FOOTER -------------------- */

@@ -1,6 +1,7 @@
+// KISS
 try{
-    if(!Modal.exists() || !PushNotifs.exists()){
-        throw new Error("FILES INCLUDED BUT BAD INIT");
+    if(!Modal.ready() || !PushNotifs.ready()){
+        console.warn("Prerequisite scripts report bad init!");
     }
 }catch(ex){
     console.warn("Prerequisite scripts may be missing, please include before component.");
@@ -10,12 +11,11 @@ try{
 class Header extends HTMLElement {
     constructor() {
         super();
-
-        this.collapsibleIsHidden = true;
-        this.collapsibleIsBusy = false;
-
-        this.modalLock = false;
     }
+
+    collapsibleIsHidden = true;
+    collapsibleIsBusy = false;
+    modalLock = false;
 
     static collapsibleImgXPath = "../res/img/navbar/X-symbol-white.png";
     static collapsibleImgMenuPath = "../res/img/navbar/icons8.com-hamburger-menu-50-white.png";
@@ -398,14 +398,14 @@ class Header extends HTMLElement {
         this.collapsibleIsHidden = !newState;
     }
 
-    // We must handle spam-clicking gracefully.
+    // We must handle spam-clicking gracefully, only allow the busy value to be false if the busy counter is 0.
     static checkModalBusyValue(customModal, isBusy){
         if(isBusy){
             customModal.data_busyCounter += 1;
         }else{
             customModal.data_busyCounter -= 1;
             if(customModal.data_busyCounter != 0){
-                isBusy = 1;
+                isBusy = true;
             }
             if(customModal.data_busyCounter < 0){
                 console.error("Busy counter value less than 0!");

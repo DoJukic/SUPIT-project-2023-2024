@@ -5,7 +5,7 @@ class ScrollToTop extends HTMLElement {
         this.overflowResizeObserver = null;
     }
 
-    static targetClass = "sttRotateOnTopDistanceTrigger";
+     static targetClass = "sttRotateOnTopDistanceTrigger";
     
     checkDisplay(){
         if (($("body").height() - 300) > $(window).height()) {

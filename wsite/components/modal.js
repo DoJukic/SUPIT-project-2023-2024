@@ -3,7 +3,7 @@ class Modal extends HTMLElement {
         super();
     }
 
-    static exists(){return true;}
+    static ready(){return true;}
 
     static modalLock = false;
 
