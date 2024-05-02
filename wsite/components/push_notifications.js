@@ -19,9 +19,6 @@ class PushNotifs extends HTMLElement {
             </push-notification-success>
             
             <push-notification-content class="defaultPaddingHalf">
-                TEST0
-            </push-notification-content>
-        </push-notification>
     `
 
     static pushNotifInfoData = 
@@ -34,9 +31,6 @@ class PushNotifs extends HTMLElement {
             </push-notification-info>
             
             <push-notification-content class="defaultPaddingHalf">
-                TEST1
-            </push-notification-content>
-        </push-notification>
     `
 
     static pushNotifFailData = 
@@ -49,7 +43,10 @@ class PushNotifs extends HTMLElement {
             </push-notification-fail>
             
             <push-notification-content class="defaultPaddingHalf">
-                TEST2
+    `
+
+    static pushNotifEndData =
+    html`
             </push-notification-content>
         </push-notification>
     `
@@ -60,45 +57,72 @@ class PushNotifs extends HTMLElement {
         }
         PushNotifs.singleton = this;
 
-        this.innerHTML = PushNotifs.pushNotifSuccessData + PushNotifs.pushNotifInfoData + PushNotifs.pushNotifFailData;
+        PushNotifs.pushNotificationSuccess("TEST DIVTEST DIV");
+        PushNotifs.pushNotificationFail("404 no maidens found");
+        PushNotifs.pushNotificationInfo("ALL UNITS BE ADVISED");
 
-        var calculus = 0;
-
-        Array.from(this.children).forEach(element => {
-            console.log($(element).outerHeight(true));
-            calculus += $(element).outerHeight(true);
-        });
-
-        console.log(calculus);
         // https://stackoverflow.com/questions/6065169/requestanimationframe-with-this-keyword (thanks, James World!)
-        requestAnimationFrame(() => this.animate());
-        this.style.top = "400px";
+        requestAnimationFrame(() => this.animateNotifs());
     }
 
     static pushNotificationSuccess(htmlInput){
         var _this = PushNotifs.singleton;
 
-        _this.innerHTML += pushNotifSuccessData;
+        _this.innerHTML += PushNotifs.pushNotifSuccessData + htmlInput + PushNotifs.pushNotifEndData;
 
         _this.notifAdded();
     }
 
-    static pushNotificationError(htmlInput){
+    static pushNotificationFail(htmlInput){
         var _this = PushNotifs.singleton;
+
+        _this.innerHTML += PushNotifs.pushNotifFailData + htmlInput + PushNotifs.pushNotifEndData;
+
+        _this.notifAdded();
     }
 
     static pushNotificationInfo(htmlInput){
         var _this = PushNotifs.singleton;
+
+        _this.innerHTML += PushNotifs.pushNotifInfoData + htmlInput + PushNotifs.pushNotifEndData;
+
+        _this.notifAdded();
     }
 
     notifAdded(){
         var target = this.children[this.children.length - 1];
         var height = $(target).outerHeight(true);
-
+        
         this.style.top = `${Number(this.style.top.split("px")[0]) + height}px`;
+
+        this.addEventListener("animationend", (event) => {this.remove();});
+
+        return; // Not sure why none of the thigns below work, so I'm doing this with css classes and event listeners instead.
+
+        target.animate([
+            {
+                opacity: 1
+            },
+            {
+                opacity: 0
+            }
+        ],
+        6000
+        );
+
+        return;
+
+        $(target).css("opacity", "1");
+        $(target).animate({
+            opacity: 0
+            }, 6000, function(){
+                target.remove();
+                console.log(target); // It prints the correct element but it just doesn't do anything??
+            }
+        );
     }
 
-    animate(){
+    animateNotifs(){
         var topValue = Number(this.style.top.split("px")[0]);
 
         if(topValue > 0){
@@ -106,7 +130,7 @@ class PushNotifs extends HTMLElement {
             this.style.top = `${(topValue >= 1) ? topValue : 0}px`;
         }
 
-        requestAnimationFrame(() => this.animate()); // It's probably fine
+        requestAnimationFrame(() => this.animateNotifs()); // It's probably fine
     }
 }
 

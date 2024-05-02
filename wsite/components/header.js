@@ -301,7 +301,7 @@ class Header extends HTMLElement {
         $(window).on('resize', function(){
             Header.singleton.checkOverflow();
         });
-        // Must be deferred, does not work exactly right otherwise because the width gets misreported at startup and that breaks the UI sometimes
+        // Must be deferred (only once), does not work exactly right otherwise because the width gets misreported at startup and that breaks the UI sometimes
         requestAnimationFrame(function(){
             Header.singleton.checkOverflow();
         });
