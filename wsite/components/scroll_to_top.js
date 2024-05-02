@@ -5,25 +5,16 @@ class ScrollToTop extends HTMLElement {
         this.overflowResizeObserver = null;
     }
 
-     static targetClass = "sttRotateOnTopDistanceTrigger";
-    
-    checkDisplay(){
-        if (($("body").height() - 300) > $(window).height()) {
-            $(this).css("display", "flex");
-            return;
-        }
-        $(this).css("display", "none");
-    }
-    
-    checkRotation(element){
-        if (window.scrollY > 150) {
-            element.classList.remove(ScrollToTop.targetClass)
-            return;
-        }
-        element.classList.add(ScrollToTop.targetClass);
-    }
+    static targetClass = "sttRotateOnTopDistanceTrigger";
+
+    static singleton = null;
 
     connectedCallback() {
+        if(ScrollToTop.singleton != null){
+            console.warn("Multiple scroll to top components detected, this is not supported and will likely break something.");
+        }
+        ScrollToTop.singleton = this;
+
         this.innerHTML =
             html`
             <flex-row style="align-items: flex-end;">
@@ -64,7 +55,30 @@ class ScrollToTop extends HTMLElement {
             }
         })
     }
+    
+    checkDisplay(){
+        if (($("body").height() - 300) > $(window).height()) {
+            $(this).css("display", "flex");
+            return;
+        }
+        $(this).css("display", "none");
+    }
+    
+    checkRotation(element){
+        if (window.scrollY > 150) {
+            element.classList.remove(ScrollToTop.targetClass)
+            return;
+        }
+        element.classList.add(ScrollToTop.targetClass);
+    }
 }
 
-
+// This also checks the current dom for the component and runs connectedCallback() if it finds it
 customElements.define('scroll-to-top-component', ScrollToTop);
+
+// If nothing is found, however, we assume the programmer is just being lazy and simply show ourselves in.
+if(!Boolean(ScrollToTop.singleton)){
+    // It is important that we add these safely, and not through innerHTML, as otherwise connectedCallback() will be reactivated for every component.
+    var tgt = document.createElement("scroll-to-top-component");
+    document.body.prepend(tgt);
+}

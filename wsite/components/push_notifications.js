@@ -57,10 +57,6 @@ class PushNotifs extends HTMLElement {
         }
         PushNotifs.singleton = this;
 
-        PushNotifs.pushNotificationSuccess("TEST DIVTEST DIV");
-        PushNotifs.pushNotificationFail("404 no maidens found");
-        PushNotifs.pushNotificationInfo("ALL UNITS BE ADVISED");
-
         // https://stackoverflow.com/questions/6065169/requestanimationframe-with-this-keyword (thanks, James World!)
         requestAnimationFrame(() => this.animateNotifs());
     }
@@ -95,31 +91,8 @@ class PushNotifs extends HTMLElement {
         
         this.style.top = `${Number(this.style.top.split("px")[0]) + height}px`;
 
+        // Not sure why none of the animation() methods want to work right, so I'm doing this with css classes and event listeners instead.
         this.addEventListener("animationend", (event) => {this.remove();});
-
-        return; // Not sure why none of the thigns below work, so I'm doing this with css classes and event listeners instead.
-
-        target.animate([
-            {
-                opacity: 1
-            },
-            {
-                opacity: 0
-            }
-        ],
-        6000
-        );
-
-        return;
-
-        $(target).css("opacity", "1");
-        $(target).animate({
-            opacity: 0
-            }, 6000, function(){
-                target.remove();
-                console.log(target); // It prints the correct element but it just doesn't do anything??
-            }
-        );
     }
 
     animateNotifs(){
@@ -137,6 +110,6 @@ class PushNotifs extends HTMLElement {
 customElements.define('push-notifications-component', PushNotifs);
 
 if(!Boolean(PushNotifs.singleton)){
-    // Should be at the start either way so its top isn't lower on the site than it should be
-    document.body.innerHTML = "<push-notifications-component></push-notifications-component>" + document.body.innerHTML;
+    var tgt = document.createElement("push-notifications-component");
+    document.body.prepend(tgt);
 }

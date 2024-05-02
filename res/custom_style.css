@@ -230,7 +230,7 @@ push-notification{
 	/* Children do not have to compy with the border radii if we're using this */
 	overflow: hidden;
 
-    animation: phaseOutAnim ease-in 4s;
+    animation: phaseOutAnim ease-in 5s;
     animation-fill-mode: forwards;
 }
 
