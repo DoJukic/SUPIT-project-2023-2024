@@ -7,8 +7,6 @@ class PushNotifs extends HTMLElement {
 
     static singleton = null;
 
-    totalHeight = 0;
-
     static pushNotifSuccessData = 
     html`
         <push-notification class="defaultMarginHalf roundedBorderHalf"
@@ -61,26 +59,35 @@ class PushNotifs extends HTMLElement {
         requestAnimationFrame(() => this.animateNotifs());
     }
 
-    static pushNotificationSuccess(htmlInput){
+    static pushNotificationSuccess(title, content){
         var _this = PushNotifs.singleton;
-
-        _this.innerHTML += PushNotifs.pushNotifSuccessData + htmlInput + PushNotifs.pushNotifEndData;
+        
+        _this.insertAdjacentHTML("beforeend",
+            PushNotifs.pushNotifSuccessData +
+            "<text style='color: green; font-weight: bold;'>" + title + "</text>" + "<br/><br-half></br-half>" + "<text>" + content + "</text>"
+            + PushNotifs.pushNotifEndData);
 
         _this.notifAdded();
     }
 
-    static pushNotificationFail(htmlInput){
+    static pushNotificationFail(title, content){
         var _this = PushNotifs.singleton;
-
-        _this.innerHTML += PushNotifs.pushNotifFailData + htmlInput + PushNotifs.pushNotifEndData;
+        
+        _this.insertAdjacentHTML("beforeend",
+            PushNotifs.pushNotifFailData +
+            "<text style='color: red; font-weight: bold;'>" + title + "</text>" + "<br/><br-half></br-half>" + "<text>" + content + "</text>"
+            + PushNotifs.pushNotifEndData);
 
         _this.notifAdded();
     }
 
-    static pushNotificationInfo(htmlInput){
+    static pushNotificationInfo(title, content){
         var _this = PushNotifs.singleton;
-
-        _this.innerHTML += PushNotifs.pushNotifInfoData + htmlInput + PushNotifs.pushNotifEndData;
+        
+        _this.insertAdjacentHTML("beforeend",
+            PushNotifs.pushNotifInfoData +
+            "<text style='color: blueviolet; font-weight: bold;'>" + title + "</text>" + "<br/><br-half></br-half>" + "<text>" + content + "</text>"
+            + PushNotifs.pushNotifEndData);
 
         _this.notifAdded();
     }
@@ -91,15 +98,22 @@ class PushNotifs extends HTMLElement {
         
         this.style.top = `${Number(this.style.top.split("px")[0]) + height}px`;
 
-        // Not sure why none of the animation() methods want to work right, so I'm doing this with css classes and event listeners instead.
-        this.addEventListener("animationend", (event) => {this.remove();});
+        // Not sure why none of the animation() methods want to work right.
+        // UPDATE: I was adding to innerHTML directly, which broke the references.
+        
+        $(target).delay(4000).animate({
+            opacity: 0
+            }, 500, function(){
+                target.remove();
+            }
+        );
     }
 
     animateNotifs(){
         var topValue = Number(this.style.top.split("px")[0]);
 
         if(topValue > 0){
-            topValue -= 0.05 * topValue;
+            topValue -= 0.05 * topValue; // Ease out, basically
             this.style.top = `${(topValue >= 1) ? topValue : 0}px`;
         }
 

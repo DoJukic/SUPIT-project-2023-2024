@@ -447,29 +447,23 @@ class Header extends HTMLElement {
             data: JSON.stringify({ "username": username, "password": password })
         })
             .done(function(data, textStatus, jqXHR){
-                console.log("DONE");
-                console.log(data.isSuccess);
-                console.log(data.statusCode);
                 if(data.isSuccess){
                     console.log(data.data.token);
+                    PushNotifs.pushNotificationSuccess(`LOGIN SUCCESS (${data.statusCode})`, "You are now logged in!");
                 }else{
                     $(data.errorMessages).each(function(){
-                        console.log(this);
+                        PushNotifs.pushNotificationFail(`LOGIN FAILED (${data.statusCode})`, `${this}`);
                     });
                 }
             })
             .fail(function(jqXHR, textStatus, errorThrown){
+                PushNotifs.pushNotificationFail(`LOGIN FAILED`, "[unknown error]");
                 console.log("ERROR");
                 console.log(jqXHR);
                 console.log(textStatus);
                 console.log(errorThrown);
             })
             .always(function(data_OR_jqXHR, textStatus, jqXHR_OR_errorThrown){
-                console.log("ALWAYS");
-                console.log(data_OR_jqXHR);
-                console.log(textStatus);
-                console.log(jqXHR_OR_errorThrown);
-
                 Header.singleton.logInModalBusyTrigger(false);
         });
 

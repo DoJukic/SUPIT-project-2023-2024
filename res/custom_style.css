@@ -1,3 +1,8 @@
+:root{
+	--org-primary-color: rgb(226, 117, 38);
+	--org-secondary-color: rgb(194, 27, 103);
+}
+
 html,
 body {
     margin: 0;
@@ -62,8 +67,8 @@ animation will stutter when display is changed to flex from css, or maybe it's c
 simple-loader {
 	border: 0.3em solid rgba(100, 100, 100, 1);
 	border-radius: 50%;
-	border-top: 0.3em solid rgba(194, 27, 103, 1);
-	border-bottom: 0.3em solid rgba(226, 117, 38, 1);
+	border-top: 0.3em solid var(--org-secondary-color);
+	border-bottom: 0.3em solid var(--org-primary-color);
 	width: 1em;
 	height: 1em;
 	animation: spinAnim 2s linear infinite;
@@ -73,11 +78,16 @@ simple-loader-m {
 	margin-bottom: -0.2em;
 	border: 0.3em solid rgba(100, 100, 100, 1);
 	border-radius: 50%;
-	border-top: 0.3em solid rgba(194, 27, 103, 1);
-	border-bottom: 0.3em solid rgba(226, 117, 38, 1);
+	border-top: 0.3em solid var(--org-secondary-color);
+	border-bottom: 0.3em solid var(--org-primary-color);
 	width: 1em;
 	height: 1em;
 	animation: spinAnim 2s linear infinite;
+}
+
+br-half{
+	display:block;
+	margin-top: 0.5em;
 }
 
 /* -------------------- GENERIC VALUES -------------------- */
@@ -137,12 +147,12 @@ simple-loader-m {
 
 .algebraBG{
 	Color: white;
-	background-image: linear-gradient(-135deg, rgba(194, 27, 103, 1), rgba(226, 117, 38, 1));
+	background-image: linear-gradient(-135deg, var(--org-secondary-color), var(--org-primary-color));
 }
 
 .algebraInvertedBG{
 	Color: white;
-	background-image: linear-gradient(45deg, rgba(194, 27, 103, 1), rgba(226, 117, 38, 1));
+	background-image: linear-gradient(45deg, var(--org-secondary-color), var(--org-primary-color));
 }
 
 /* -------------------- BORDERS -------------------- */
@@ -229,9 +239,6 @@ push-notification{
 
 	/* Children do not have to compy with the border radii if we're using this */
 	overflow: hidden;
-
-    animation: phaseOutAnim ease-in 5s;
-    animation-fill-mode: forwards;
 }
 
 push-notification-success{
@@ -249,8 +256,6 @@ push-notification-fail{
 
 push-notification-content{
 	border-left: 1px solid black;
-	
-	font-size: small;
 
 	display:block;
 	flex-grow: 1;
@@ -338,12 +343,12 @@ nav-element {
 	border: 1px solid rgba(255, 255, 255, 0.5);
 }
 .selectableNavElement:hover{
-	color:#e27526;
-	border-color: #e27526;
+	color:var(--org-primary-color);
+	border-color: var(--org-primary-color);
 }
 .selectableNavElement:focus{
-	color:#e27526;
-	border-color: #e27526;
+	color:var(--org-primary-color);
+	border-color: var(--org-primary-color);
 }
 /*
 :active can be triggered at the same time as :hover, so !important should be used
@@ -351,8 +356,8 @@ Otherwise color seems to be whatever is last in the .css file
 (I don't want to rely on that)
 */
 .selectableNavElement:active{
-	color:#c21b67 !important;
-	border-color: #c21b67 !important;
+	color:var(--org-secondary-color) !important;
+	border-color: var(--org-secondary-color) !important;
 }
 
 .selectableNavElementAlt{
@@ -360,15 +365,15 @@ Otherwise color seems to be whatever is last in the .css file
 	border: 1px solid rgba(255, 255, 255, 0.5);
 }
 .selectableNavElementAlt:hover{
-	background-color:#e27526;
+	background-color:var(--org-primary-color);
 	border-color: black;
 }
 .selectableNavElementAlt:focus{
-	background-color:#e27526;
+	background-color:var(--org-primary-color);
 	border-color: black;
 }
 .selectableNavElementAlt:active{
-	background-color:#c21b67 !important;
+	background-color:var(--org-secondary-color) !important;
 	border-color: black !important;
 }
 
