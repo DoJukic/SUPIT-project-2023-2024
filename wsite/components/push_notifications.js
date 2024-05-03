@@ -127,3 +127,5 @@ if(!Boolean(PushNotifs.singleton)){
     var tgt = document.createElement("push-notifications-component");
     document.body.prepend(tgt);
 }
+
+subscribeToAccessTokenExpired(() => {PushNotifs.pushNotificationInfo("TOKEN EXPIRED", "Your access token has expired, please log in again.")});

@@ -1,6 +1,7 @@
 /* ---------------------------------------- INIT ---------------------------------------- */
 
 var tokenChangeSubscriberFuncs = [];
+var tokenExpiredSubscriberFuncs = [];
 var tokenTimeout = null;
 
 // https://stackoverflow.com/questions/13637223/how-do-you-make-a-div-tabbable (awokeKnowing's answer, slightly modified to avoid depreciated methods)
@@ -10,6 +11,8 @@ $(document).on('keydown',function(e){
     e.preventDefault();
   }
 });
+
+subscribeToAccessTokenExpired(removeAccessToken);
 
 subscribeToAccessTokenChange(checkTokenTimeout);
 checkTokenTimeout();
@@ -49,6 +52,16 @@ function subscribeToAccessTokenChange(funct){
 
 function notifyAccessTokenChanged(){
   $(tokenChangeSubscriberFuncs).each(function(){
+    this();
+  });
+}
+
+function subscribeToAccessTokenExpired(funct){
+  tokenExpiredSubscriberFuncs.push(funct);
+}
+
+function notifyTokenExpired(){
+  $(tokenExpiredSubscriberFuncs).each(function(){
     this();
   });
 }
@@ -98,7 +111,7 @@ function checkTokenTimeout(){
 
   var accessToken = getAccessToken();
   if (Boolean(accessToken)) {
-    var tokenExpiration = parseJwt(accessToken).get("exp") - getSecondsSinceEpoch();
-    tokenTimeout = setTimeout(removeAccessToken(), tokenExpiration * 1000);
+    var tokenExpiration = parseJwt(accessToken)["exp"] - getSecondsSinceEpoch();
+    tokenTimeout = setTimeout(notifyTokenExpired, tokenExpiration * 1000);
   }
 }

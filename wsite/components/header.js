@@ -23,11 +23,13 @@ class Header extends HTMLElement {
     static logInModal = null;
     static registerModal = null;
 
+    static logOutLock = 0;
+
     // Since I'm using IDs for simplicity, making multiple headers will generate duplicates. This would not work correctly so we should prevent it.
     static singleton = null;
 
     // We can use lit-html to see html formatting in strings like this one (hence the "html" in front of the string)
-    // Note: We are using backticks, not double or single quotes - this is important for multiline strings
+    // Note: Use backticks, not double or single quotes - this is important for multiline strings
     static normalHeaderData = 
     html`
         <header id="jsNormalHeaderTarget"
@@ -77,7 +79,25 @@ class Header extends HTMLElement {
                 </nav-element>
             </flex-row>
 
-            <flex-column style="flex-grow:0;">
+            <flex-column class="jsHeaderShowOnLoggedInTarget">
+                
+                <flex-row>
+                    <nav-element class="navElementVisual selectableNavElementAlt defaultPaddingHalf"
+                        style="flex-basis: 0em; min-width: 0em;"
+                        tabindex="0"
+                        onclick="Header.logOut()">
+                        
+                        <flex-row class="centered">
+                            <div class="ui-icon ui-white ui-icon-locked"></div>
+                            <div>Log Out</div>
+                        </flex-row>
+                    </nav-element>
+                </flex-row>
+            </flex-column>
+
+            <flex-column class="jsHeaderHideOnLoggedInTarget"
+                style="flex-grow:0;">
+
                 <flex-row>
                     <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElementAlt defaultPaddingHalf"
                         tabindex="0">
@@ -127,7 +147,9 @@ class Header extends HTMLElement {
                     </flex-row>
                 </flex-column>
                 
-                <flex-column class="jsHeaderCollapsibleTrigger centered defaultPadding">
+                <flex-column class="jsHeaderCollapsibleTrigger glowOnFocus centered defaultPadding"
+                    tabindex="0">
+                    
                     <img class="jsHeaderImageTarget"
                         src="../res/img/navbar/icons8.com-hamburger-menu-50-white.png"
                         style="max-height: 3em;">
@@ -138,65 +160,77 @@ class Header extends HTMLElement {
                 style="display: none;">
                 
                 <flex-row style="flex-wrap: wrap;">
-                    <flex-row style="flex-wrap: wrap; flex-basis: 20em;">
-                        <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
-                            onclick="location.href = '../wsite/home.html';"
-                            tabindex="0">
+                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
+                        onclick="location.href = '../wsite/home.html';"
+                        tabindex="0">
 
-                            <div class="ui-icon ui-white ui-icon-home"></div>
-                            Home
-                        </nav-element>
+                        <div class="ui-icon ui-white ui-icon-home"></div>
+                        Home
+                    </nav-element>
 
-                        <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
-                            onclick="location.href = '../wsite/news.html';"
-                            tabindex="0">
+                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
+                        onclick="location.href = '../wsite/news.html';"
+                        tabindex="0">
 
-                            <div class="ui-icon ui-white ui-icon-note"
-                                style="margin-top: -2px;"></div>
-                            News
-                        </nav-element>
-                    </flex-row>
+                        <div class="ui-icon ui-white ui-icon-note"
+                            style="margin-top: -2px;"></div>
+                        News
+                    </nav-element>
+                </flex-row>
 
-                    <flex-row style="flex-wrap: wrap; flex-basis: 20em;">
-                        <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
-                            onclick="location.href = '../wsite/about_us.html';"
-                            tabindex="0">
+                <flex-row style="flex-wrap: wrap;">
+                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
+                        onclick="location.href = '../wsite/about_us.html';"
+                        tabindex="0">
 
-                            <div class="ui-icon ui-white ui-icon-search"></div>
-                            About us
-                        </nav-element>
+                        <div class="ui-icon ui-white ui-icon-search"></div>
+                        About us
+                    </nav-element>
+                    
+                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
+                        onclick="location.href = '../wsite/contact_us.html';"
+                        tabindex="0">
+
+                        <div class="ui-icon ui-white ui-icon-transferthick-e-w"
+                            style="transform: rotate(90deg);"></div>
+                        Contact us
+                    </nav-element>
+                </flex-row>
+                
+                <flex-row class="jsHeaderShowOnLoggedInTarget">
+                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
+                        tabindex="0"
+                        onclick="Header.logOut()">
                         
-                        <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
-                            onclick="location.href = '../wsite/contact_us.html';"
-                            tabindex="0">
+                        <flex-row class="centered">
+                            <div class="ui-icon ui-white ui-icon-locked"></div>
+                            <div>Log Out</div>
+                        </flex-row>
+                    </nav-element>
+                </flex-row>
 
-                            <div class="ui-icon ui-white ui-icon-transferthick-e-w"
-                                style="transform: rotate(90deg);"></div>
-                            Contact us
-                        </nav-element>
-                    </flex-row>
+                <flex-row class="jsHeaderHideOnLoggedInTarget"
+                    style="flex-wrap: wrap;">
 
-                    <flex-row style="flex-wrap: wrap; flex-basis: 20em;">
-                        <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElementAlt defaultPadding"
-                            tabindex="0">
-                            
-                            <flex-row class="jsLogInHideOnBusyTarget centered">
-                                <div class="ui-icon ui-white ui-icon-unlocked"></div>
-                                <div>Log In</div>
-                            </flex-row>
-                            <simple-loader class="jsLogInShowOnBusyTarget"></simple-loader>
-                        </nav-element>
+                    <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElementAlt defaultPadding"
+                        tabindex="0">
                         
-                        <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElementAlt defaultPadding"
-                            tabindex="0">
+                        <flex-row class="jsLogInHideOnBusyTarget centered">
+                            <div class="ui-icon ui-white ui-icon-unlocked"></div>
+                            <div>Log In</div>
+                        </flex-row>
+                        <simple-loader-m class="jsLogInShowOnBusyTarget"></simple-loader-m>
+                    </nav-element>
+                    
+                    <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElementAlt defaultPadding"
+                        tabindex="0">
 
-                            <flex-row class="jsRegisterHideOnBusyTarget centered">
-                                <div class="ui-icon ui-white ui-icon-person"></div>
-                                <div>Register</div>
-                            </flex-row>
-                            <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
-                        </nav-element>
-                    </flex-row>
+                        <flex-row class="jsRegisterHideOnBusyTarget centered">
+                            <div class="ui-icon ui-white ui-icon-person"></div>
+                            <div>Register</div>
+                        </flex-row>
+                        <simple-loader-m class="jsRegisterShowOnBusyTarget"></simple-loader-m>
+                    </nav-element>
                 </flex-row>
             </flex-column>
         </header>
@@ -314,6 +348,9 @@ class Header extends HTMLElement {
         });
 
         Header.singleton.initModals();
+
+        subscribeToAccessTokenChange(() => {Header.singleton.accessTokenCheck()});
+        Header.singleton.accessTokenCheck();
     }
 
     initModals(){
@@ -366,19 +403,19 @@ class Header extends HTMLElement {
     }
 
     collapsibleToggle(){
+        if (this.collapsibleIsHidden) {
+            this.collapsibleSet(true);
+        }else{
+            this.collapsibleSet(false);
+        }
+    }
+
+    collapsibleSet(newState){
         if (this.collapsibleIsBusy) {
             // Button spamming can mess with things otherwise, and we don't really want that
             return;
         }
 
-        if (this.collapsibleIsHidden) {
-            this.collapsibleSet(1);
-        }else{
-            this.collapsibleSet(0);
-        }
-    }
-
-    collapsibleSet(newState){
         this.collapsibleIsBusy = true;
 
         var collapsible = this.getElementsByClassName("jsHeaderCollapsibleTarget")[0];
@@ -437,6 +474,17 @@ class Header extends HTMLElement {
         });
     }
 
+    accessTokenCheck(){
+        var tokenExists = Boolean(getAccessToken());
+
+        $(Header.singleton.getElementsByClassName("jsHeaderHideOnLoggedInTarget")).each(function(){
+            $(this).css("display", tokenExists ? "none" : "flex");
+        });
+        $(Header.singleton.getElementsByClassName("jsHeaderShowOnLoggedInTarget")).each(function(){
+            $(this).css("display", tokenExists ? "flex" : "none");
+        });
+    }
+
     tryLogIn(form, username, password){
         this.logInModalBusyTrigger(true);
 
@@ -448,8 +496,9 @@ class Header extends HTMLElement {
         })
             .done(function(data, textStatus, jqXHR){
                 if(data.isSuccess){
-                    console.log(data.data.token);
-                    PushNotifs.pushNotificationSuccess(`LOGIN SUCCESS (${data.statusCode})`, "You are now logged in!");
+                    setAccessToken(data.data.token);
+                    Header.logOutLock = getSecondsSinceEpoch();
+                    PushNotifs.pushNotificationSuccess(`LOGIN SUCCESS (${data.statusCode})`, "You are now logged in.");
                 }else{
                     $(data.errorMessages).each(function(){
                         PushNotifs.pushNotificationFail(`LOGIN FAILED (${data.statusCode})`, `${this}`);
@@ -457,23 +506,33 @@ class Header extends HTMLElement {
                 }
             })
             .fail(function(jqXHR, textStatus, errorThrown){
-                PushNotifs.pushNotificationFail(`LOGIN FAILED`, "[unknown error]");
-                console.log("ERROR");
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
+                PushNotifs.pushNotificationFail(`LOGIN FAILED (Connection Error)`, "Please check your internet connection. The server could also be temporarily offline.");
             })
             .always(function(data_OR_jqXHR, textStatus, jqXHR_OR_errorThrown){
                 Header.singleton.logInModalBusyTrigger(false);
         });
-
-        console.log("GOODBYE");
         
         Header.logInModal.hideModal();
     }
 
+    static logOut(){
+        if(getSecondsSinceEpoch() < Header.logOutLock + 2){ // At least 1 second, prevents user from accidentally logging out as the button is in the same place.
+            Header.logOutLock = 0;
+            PushNotifs.pushNotificationInfo(`LOGOUT TIME LOCKED`, "Press log out again to confirm.");
+            return;
+        }
+
+        removeAccessToken();
+        PushNotifs.pushNotificationSuccess(`LOGOUT SUCCESS`, "You are now logged out.");
+    }
+
     tryRegister(form, username, password, passwordCheck){
-        this.registerModalBusyTrigger(true);
+        if (password != passwordCheck) {
+            PushNotifs.pushNotificationFail(`REGISTER FAILED (Input Error)`, `Passwords do not match.`);
+            return;
+        }
+        
+        Header.singleton.registerModalBusyTrigger(true);
 
         $.ajax({
             url: "https://www.fulek.com/data/api/user/register",
@@ -483,27 +542,20 @@ class Header extends HTMLElement {
         })
             .done(function(data, textStatus, jqXHR){
                 console.log("DONE");
-                console.log(data.isSuccess);
-                console.log(data.statusCode);
                 if(data.isSuccess){
-
+                    PushNotifs.pushNotificationSuccess(`REGISTER SUCCESS (${data.statusCode})`, "You can now log in.");
                 }else{
                     $(data.errorMessages).each(function(){
-                        console.log(this);
+                        PushNotifs.pushNotificationFail(`REGISTER FAILED (${data.statusCode})`, `${this}`);
                     });
                 }
             })
             .fail(function(jqXHR, textStatus, errorThrown){
-                console.log("ERROR");
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
+                PushNotifs.pushNotificationFail(`LOGIN FAILED (Connection Error)`, "Please check your internet connection. The server could also be temporarily offline.");
             })
             .always(function(data_OR_jqXHR, textStatus, jqXHR_OR_errorThrown){
                 Header.singleton.registerModalBusyTrigger(false);
         });
-
-        console.log("GOODBYE");
         
         Header.registerModal.hideModal();
     }
