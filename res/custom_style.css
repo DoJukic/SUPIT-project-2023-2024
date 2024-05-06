@@ -1,8 +1,31 @@
 :root{
-	--org-primary-color: rgb(226, 117, 38);
-	--org-secondary-color: rgb(194, 27, 103);
+	/* https://stackoverflow.com/questions/37801882/how-to-change-css-root-color-variables-in-javascript (Deadalus's answer) */
+	--theme-primary-color: rgb(226, 117, 38);
+	--theme-secondary-color: rgb(194, 27, 103);
 	
-	--faux-black: rgb(15, 15, 15);
+	/*
+	--theme-header-bg-color: rgb(255, 255, 255);
+	--theme-header-shadow-color: rgb(255, 255, 255);
+	--theme-header-border-color: rgb(100, 100, 100);
+	--theme-header-text-color: rgb(15, 15, 15);
+	*/
+	--theme-icon-path: url("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png");
+	
+	--theme-header-bg-color: rgb(15, 15, 15);
+	--theme-header-shadow-color: rgb(15, 15, 15);
+	--theme-header-border-color: rgb(100, 100, 100);
+	--theme-header-text-color: rgb(255, 255, 255);
+	
+	--theme-text-color: rgb(15, 15, 15);
+	--theme-success-color: green;
+	--theme-info-color: blue;
+	--theme-error-color: red;
+
+	--theme-padding: 1rem;
+	--theme-margin: 2rem;
+
+	--theme-gap: 1rem;
+	--theme-basis: 23rem;
 }
 
 html,
@@ -13,6 +36,8 @@ body {
 
 html{
 	height:100%;
+
+	color: var(--theme-text-color)
 }
 
 body {
@@ -67,20 +92,20 @@ https://www.w3schools.com/howto/howto_css_loader.asp
 animation will stutter when display is changed to flex from css, or maybe it's caused by the fade in animation?
 */
 simple-loader {
-	border: 0.3em solid rgba(100, 100, 100, 1);
+	border: 0.3em solid var(--theme-header-border-color);
 	border-radius: 50%;
-	border-top: 0.3em solid var(--org-secondary-color);
-	border-bottom: 0.3em solid var(--org-primary-color);
+	border-top: 0.3em solid var(--theme-secondary-color);
+	border-bottom: 0.3em solid var(--theme-primary-color);
 	width: 1em;
 	height: 1em;
 	animation: spinAnim 2s linear infinite;
 }
 simple-loader-m {
 	margin: -0.2em;
-	border: 0.3em solid rgba(100, 100, 100, 1);
+	border: 0.3em solid var(--theme-header-border-color);
 	border-radius: 50%;
-	border-top: 0.3em solid var(--org-secondary-color);
-	border-bottom: 0.3em solid var(--org-primary-color);
+	border-top: 0.3em solid var(--theme-secondary-color);
+	border-bottom: 0.3em solid var(--theme-primary-color);
 	width: 1em;
 	height: 1em;
 	animation: spinAnim 2s linear infinite;
@@ -91,68 +116,72 @@ br-half{
 	margin-top: 0.5em;
 }
 
-/* -------------------- GENERIC VALUES -------------------- */
+/* -------------------- VALUES -------------------- */
 
 .defaultSpacing{
-	flex-basis: 23rem;
+	flex-basis: var(--theme-basis);
 }
 
 .defaultPadding{
-	padding: 1rem;
+	padding: var(--theme-padding);
 }
 .defaultPaddingHalf{
-	padding: 0.5rem;
+	padding: calc(var(--theme-padding) / 2);
 }
 .defaultPaddingDouble{
-	padding: 2rem;
+	padding: calc(var(--theme-padding) * 2);
 }
 
 .defaultMargin{
-	margin: 2rem;
+	margin: var(--theme-margin);
 }
 .defaultMarginHalf{
-	margin: 1rem;
+	margin: calc(var(--theme-margin) / 2);
 }
 .defaultMarginDouble{
-	margin: 4rem;
+	margin: calc(var(--theme-margin) * 2);
 }
 
 .defaultGap{
-	gap: 1rem;
+	gap: var(--theme-gap);
 }
 .defaultGapHalf{
-	gap: 0.5rem;
+	gap: calc(var(--theme-gap) / 2);
 }
 .defaultGapQuarter{
-	gap: 0.25rem;
+	gap: calc(var(--theme-gap) / 4);
 }
 .defaultGapDouble{
-	gap: 2rem;
+	gap: calc(var(--theme-gap) * 2);
+}
+
+.textSuccess{
+	color:var(--theme-success-color);
+	font-weight: bold;
+}
+.textInfo{
+	color:var(--theme-info-color);
+	font-weight: bold;
+}
+.textError{
+	color:var(--theme-error-color);
+	font-weight: bold;
 }
 
 /* -------------------- BACKGROUNDS -------------------- */
 
-.blackBG{
+.themeBG{
 	Color: white;
-	background-color: var(--faux-black);
+	background-image: linear-gradient(-135deg, var(--theme-secondary-color), var(--theme-primary-color));
 }
 
-.blackTranBG{
-	background-color: rgba(25, 25, 25, 0.1);
-}
-
-.algebraBG{
+.themeInvertedBG{
 	Color: white;
-	background-image: linear-gradient(-135deg, var(--org-secondary-color), var(--org-primary-color));
-}
-
-.algebraInvertedBG{
-	Color: white;
-	background-image: linear-gradient(45deg, var(--org-secondary-color), var(--org-primary-color));
+	background-image: linear-gradient(45deg, var(--theme-secondary-color), var(--theme-primary-color));
 }
 
 .glowOnFocus:focus{
-	background-color: var(--org-primary-color) !important;
+	background-color: var(--theme-primary-color) !important;
 }
 
 /* -------------------- BORDERS -------------------- */
@@ -219,7 +248,7 @@ push-notifications-component{
 }
 
 push-notification{
-	box-shadow: 2px 2px 4px black;
+	box-shadow: 2px 2px 4px var(--theme-header-shadow-color);
 
 	width: calc(10rem + 10%);
 	min-height: 4rem;
@@ -230,7 +259,7 @@ push-notification{
 	background-color: white;
 	color: black;
 
-	border: 1px solid black;
+	border: 1px solid var(--theme-header-border-color);
 
 	pointer-events: auto;
 	
@@ -242,15 +271,15 @@ push-notification{
 }
 
 push-notification-success{
-	background-color: limegreen;
+	background-color: var(--theme-success-color);
 	min-width: 1.5rem;
 }
 push-notification-info{
-	background-color: blueviolet;
+	background-color: var(--theme-info-color);
 	min-width: 1.5rem;
 }
 push-notification-fail{
-	background-color: red;
+	background-color: var(--theme-error-color);
 	min-width: 1.5rem;
 }
 
@@ -292,8 +321,8 @@ modal-component:not(:has(flex-column:hover)):hover{
 header {
 	overflow: hidden;
 
-	background-color: var(--faux-black);
-	color: white;
+	background-color: var(--theme-header-bg-color);
+	color: var(--theme-header-text-color);
 
 	display: flex;
 	text-align: center;
@@ -323,32 +352,32 @@ nav-element {
 	text-transform: uppercase;
 	
 	/* Makes sure navElements don't look off next to selectableNavElements */
-	border: 1px solid rgba(255, 255, 255, 0);
+	border: 1px solid var(--theme-header-border-color);
 }
 
 /* sne -> selectable nav element, the name was getting a touch too long */
 .sneBorderRight{
-	border-right: 1px solid rgb(125, 125, 125);
+	border-right: 1px solid var(--theme-header-border-color);
 }
 .sneBorderLeft{
-	border-left: 1px solid rgb(125, 125, 125);
+	border-left: 1px solid var(--theme-header-border-color);
 }
 .sneBorderBottom{
-	border-bottom: 1px solid rgb(125, 125, 125);
+	border-bottom: 1px solid var(--theme-header-border-color);
 }
 
 .selectableNavElement{
 	border-radius: 6px;
 	cursor: pointer !important;
-	border: 1px solid rgb(125, 125, 125);
+	border: 1px solid var(--theme-header-border-color);
 }
 .selectableNavElement:hover{
-	color:var(--org-primary-color);
-	border-color: var(--org-primary-color);
+	color:var(--theme-primary-color);
+	border-color: var(--theme-primary-color);
 }
 .selectableNavElement:focus{
-	color:var(--org-primary-color);
-	border-color: var(--org-primary-color);
+	color:var(--theme-primary-color);
+	border-color: var(--theme-primary-color);
 }
 /*
 :active can be triggered at the same time as :hover, so !important should be used
@@ -356,24 +385,24 @@ Otherwise color seems to be whatever is last in the .css file
 (I don't want to rely on that)
 */
 .selectableNavElement:active{
-	color:var(--org-secondary-color) !important;
-	border-color: var(--org-secondary-color) !important;
+	color:var(--theme-secondary-color) !important;
+	border-color: var(--theme-secondary-color) !important;
 }
 
 .selectableNavElementAlt{
 	cursor: pointer !important;
-	border: 1px solid rgba(255, 255, 255, 0.5);
+	border: 1px solid var(--theme-header-border-color);
 }
 .selectableNavElementAlt:hover{
-	background-color:var(--org-primary-color);
+	background-color:var(--theme-primary-color);
 	border-color: black;
 }
 .selectableNavElementAlt:focus{
-	background-color:var(--org-primary-color);
+	background-color:var(--theme-primary-color);
 	border-color: black;
 }
 .selectableNavElementAlt:active{
-	background-color:var(--org-secondary-color) !important;
+	background-color:var(--theme-secondary-color) !important;
 	border-color: black !important;
 }
 
@@ -388,8 +417,9 @@ footer{
 
 	text-align: center;
 
-	background-color: var(--faux-black);
-	color: white;
+	background-color: var(--theme-header-bg-color);
+	color: var(--theme-header-text-color);
+	border-top: 1px solid var(--theme-header-border-color);
 	padding: 2em;
 }
 
@@ -434,8 +464,8 @@ textarea{
 /* -------------------- JQUERY IMAGES -------------------- */
 
 /* https://stackoverflow.com/questions/1821568/how-to-specify-override-jquery-icon-color */
-.ui-icon.ui-white
+.ui-icon.ui-theme
 {
-    background-image: url("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png") !important;
+    background-image: var(--theme-icon-path) !important;
 	margin-top: 0px;
 }

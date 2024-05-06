@@ -13,7 +13,7 @@ class PushNotifs extends HTMLElement {
             style="margin-top: 0rem; border-top-left-radius: 0rem; border-bottom-left-radius: 0rem;">
 
             <push-notification-success class="centered">
-                <div class="ui-icon ui-white ui-icon-check"></div>
+                <div class="ui-icon ui-theme ui-icon-check"></div>
             </push-notification-success>
             
             <push-notification-content class="defaultPaddingHalf">
@@ -25,7 +25,7 @@ class PushNotifs extends HTMLElement {
             style="margin-top: 0rem; border-top-left-radius: 0rem; border-bottom-left-radius: 0rem;">
 
             <push-notification-info class="centered">
-                <div class="ui-icon ui-white ui-icon-info"></div>
+                <div class="ui-icon ui-theme ui-icon-info"></div>
             </push-notification-info>
             
             <push-notification-content class="defaultPaddingHalf">
@@ -37,7 +37,7 @@ class PushNotifs extends HTMLElement {
             style="margin-top: 0rem; border-top-left-radius: 0rem; border-bottom-left-radius: 0rem;">
 
             <push-notification-fail class="centered">
-                <div class="ui-icon ui-white ui-icon-alert"></div>
+                <div class="ui-icon ui-theme ui-icon-alert"></div>
             </push-notification-fail>
             
             <push-notification-content class="defaultPaddingHalf">
@@ -64,18 +64,7 @@ class PushNotifs extends HTMLElement {
         
         _this.insertAdjacentHTML("beforeend",
             PushNotifs.pushNotifSuccessData +
-            "<text style='color: green; font-weight: bold;'>" + title + "</text>" + "<br/><br-half></br-half>" + "<text>" + content + "</text>"
-            + PushNotifs.pushNotifEndData);
-
-        _this.notifAdded();
-    }
-
-    static pushNotificationFail(title, content){
-        var _this = PushNotifs.singleton;
-        
-        _this.insertAdjacentHTML("beforeend",
-            PushNotifs.pushNotifFailData +
-            "<text style='color: red; font-weight: bold;'>" + title + "</text>" + "<br/><br-half></br-half>" + "<text>" + content + "</text>"
+            "<text class='textSuccess'>" + title + "</text>" + "<br/><br-half></br-half>" + "<text>" + content + "</text>"
             + PushNotifs.pushNotifEndData);
 
         _this.notifAdded();
@@ -86,7 +75,18 @@ class PushNotifs extends HTMLElement {
         
         _this.insertAdjacentHTML("beforeend",
             PushNotifs.pushNotifInfoData +
-            "<text style='color: blueviolet; font-weight: bold;'>" + title + "</text>" + "<br/><br-half></br-half>" + "<text>" + content + "</text>"
+            "<text class='textInfo'>" + title + "</text>" + "<br/><br-half></br-half>" + "<text>" + content + "</text>"
+            + PushNotifs.pushNotifEndData);
+
+        _this.notifAdded();
+    }
+
+    static pushNotificationFail(title, content){
+        var _this = PushNotifs.singleton;
+        
+        _this.insertAdjacentHTML("beforeend",
+            PushNotifs.pushNotifFailData +
+            "<text class='textError''>" + title + "</text>" + "<br/><br-half></br-half>" + "<text>" + content + "</text>"
             + PushNotifs.pushNotifEndData);
 
         _this.notifAdded();
@@ -113,11 +113,11 @@ class PushNotifs extends HTMLElement {
         var topValue = Number(this.style.top.split("px")[0]);
 
         if(topValue > 0){
-            topValue -= 0.05 * topValue; // Ease out, basically
+            topValue -= 0.05 * topValue; // Ease out, essentially
             this.style.top = `${(topValue >= 1) ? topValue : 0}px`;
         }
 
-        requestAnimationFrame(() => this.animateNotifs()); // It's probably fine
+        requestAnimationFrame(() => this.animateNotifs()); // It's probably fine if we just keep running
     }
 }
 

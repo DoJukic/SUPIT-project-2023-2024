@@ -35,7 +35,7 @@ class ScrollToTop extends HTMLElement {
         _this.overflowResizeObserver = new ResizeObserver((entries) => {
             _this.checkDisplay();
         });
-        _this.overflowResizeObserver.observe(document.getElementsByTagName("body")[0]);
+        _this.overflowResizeObserver.observe(document.body);
 
         _this.checkDisplay(_this);
 

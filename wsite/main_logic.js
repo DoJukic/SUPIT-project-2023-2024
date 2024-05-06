@@ -1,8 +1,8 @@
 /* ---------------------------------------- INIT ---------------------------------------- */
 
-var tokenChangeSubscriberFuncs = [];
+var tokenChangeSubscriberFuncs = []; // These contain functions we need to call when the appropriate trigger is activated
 var tokenExpiredSubscriberFuncs = [];
-var tokenTimeout = null;
+var tokenTimeout = null; // Holds the timeout ID which we can use to delete the timer when not necessary
 
 // https://stackoverflow.com/questions/13637223/how-do-you-make-a-div-tabbable (awokeKnowing's answer, slightly modified to avoid depreciated methods)
 $(document).on('keydown',function(e){
@@ -13,7 +13,6 @@ $(document).on('keydown',function(e){
 });
 
 subscribeToAccessTokenExpired(removeAccessToken);
-
 subscribeToAccessTokenChange(checkTokenTimeout);
 checkTokenTimeout();
 
@@ -33,6 +32,36 @@ function isOverflown(element) {
 function isOverflownRow(element) {
   return element.scrollWidth > element.clientWidth;
 }
+
+// https://stackoverflow.com/questions/5646279/get-object-class-from-string-name-in-javascript/53199720#53199720
+// Ceremcem's answer (heavily modified), should be more secure than just using eval. Optimisations removed. Regex more strict. Purpose altered.
+function interrogatePrerequisite(stringName){
+  var result = false;
+
+  // Proceed only if the name is a single word string
+  if (stringName.match(/^[a-zA-Z]+$/)) {
+    result = eval(`${stringName}.ready()`);
+  } else {
+    // Safety triggered
+    throw new Error("Who let the dogs out?");
+  }
+
+  return result;
+}
+
+function interrogatePrerequisites(stringNames){
+  $(stringNames).each(function(){
+    try{
+      if(!interrogatePrerequisite(this)){
+        console.warn(`Prerequisite script (${this}) reports bad init!`);
+      }
+    }catch(ex){
+      console.warn("Prerequisite scripts may be missing, please include before component.");
+      console.warn(ex);
+    }
+  });
+}
+
 
 /*
 function setBooleanAttribute(element, attribute, inputBoolean){

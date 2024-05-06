@@ -1,12 +1,7 @@
-// KISS
-try{
-    if(!Modal.ready() || !PushNotifs.ready()){
-        console.warn("Prerequisite scripts report bad init!");
-    }
-}catch(ex){
-    console.warn("Prerequisite scripts may be missing, please include before component.");
-    console.warn(ex);
-}
+interrogatePrerequisites([
+    "Modal",
+    "PushNotifs"
+]);
 
 class Header extends HTMLElement {
     constructor() {
@@ -15,6 +10,7 @@ class Header extends HTMLElement {
 
     collapsibleIsHidden = true;
     collapsibleIsBusy = false;
+
     modalLock = false;
 
     static collapsibleImgXPath = "../res/img/navbar/X-symbol-white.png";
@@ -48,7 +44,7 @@ class Header extends HTMLElement {
                     onclick="location.href = '../wsite/home.html';"
                     tabindex="0">
 
-                    <div class="ui-icon ui-white ui-icon-home"></div>
+                    <div class="ui-icon ui-theme ui-icon-home"></div>
                     Home
                 </nav-element>
 
@@ -56,7 +52,7 @@ class Header extends HTMLElement {
                     onclick="location.href = '../wsite/news.html';"
                     tabindex="0">
 
-                    <div class="ui-icon ui-white ui-icon-note"
+                    <div class="ui-icon ui-theme ui-icon-note"
                         style="margin-top: -2px;"></div>
                     News
                 </nav-element>
@@ -65,7 +61,7 @@ class Header extends HTMLElement {
                     onclick="location.href = '../wsite/about_us.html';"
                     tabindex="0">
 
-                    <div class="ui-icon ui-white ui-icon-search"></div>
+                    <div class="ui-icon ui-theme ui-icon-search"></div>
                     About us
                 </nav-element>
 
@@ -73,14 +69,21 @@ class Header extends HTMLElement {
                     onclick="location.href = '../wsite/contact_us.html';"
                     tabindex="0">
 
-                    <div class="ui-icon ui-white ui-icon-transferthick-e-w"
+                    <div class="ui-icon ui-theme ui-icon-transferthick-e-w"
                         style="transform: rotate(90deg);"></div>
                     Contact us
+                </nav-element>
+
+                <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElementAlt defaultPadding"
+                    onclick="location.href = '../wsite/curriculum.html';"
+                    tabindex="0">
+
+                    <div class="ui-icon ui-theme ui-icon-folder-open"></div>
+                    Curriculum
                 </nav-element>
             </flex-row>
 
             <flex-column class="jsHeaderShowOnLoggedInTarget">
-                
                 <flex-row>
                     <nav-element class="navElementVisual selectableNavElementAlt defaultPaddingHalf"
                         style="flex-basis: 0em; min-width: 0em;"
@@ -88,7 +91,7 @@ class Header extends HTMLElement {
                         onclick="Header.logOut()">
                         
                         <flex-row class="centered">
-                            <div class="ui-icon ui-white ui-icon-locked"></div>
+                            <div class="ui-icon ui-theme ui-icon-locked"></div>
                             <div>Log Out</div>
                         </flex-row>
                     </nav-element>
@@ -103,7 +106,7 @@ class Header extends HTMLElement {
                         tabindex="0">
                         
                         <flex-row class="jsLogInHideOnBusyTarget centered">
-                            <div class="ui-icon ui-white ui-icon-unlocked"></div>
+                            <div class="ui-icon ui-theme ui-icon-unlocked"></div>
                             <div>Log In</div>
                         </flex-row>
                         <simple-loader class="jsLogInShowOnBusyTarget"></simple-loader>
@@ -115,7 +118,7 @@ class Header extends HTMLElement {
                         tabindex="0">
 
                         <flex-row class="jsRegisterHideOnBusyTarget centered">
-                            <div class="ui-icon ui-white ui-icon-person"></div>
+                            <div class="ui-icon ui-theme ui-icon-person"></div>
                             <div>Register</div>
                         </flex-row>
                         <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
@@ -130,7 +133,7 @@ class Header extends HTMLElement {
         <header id="jsBurgerHeaderTarget"
             style="flex-direction: column;">
 
-            <flex-row class="sneBorderBottom">
+            <flex-row class="">
                 <flex-column onclick="location.href = '../wsite/home.html';">
                     <img class="jsHeaderBurgerImgTarget"
                         src= "../res/img/navbar/FB_Algebra-logo-mini.png"
@@ -138,7 +141,7 @@ class Header extends HTMLElement {
                 </flex-column>
 
                 <flex-column class="navElementVisual"
-                    style="flex-grow:1;">
+                    style="flex-grow:1; border: 0px;">
 
                     <flex-row class="jsHeaderCollapsibleTrigger jsHeaderTextTarget sneBorderLeft sneBorderRight centered"
                         style="width: 100%;">
@@ -164,7 +167,7 @@ class Header extends HTMLElement {
                         onclick="location.href = '../wsite/home.html';"
                         tabindex="0">
 
-                        <div class="ui-icon ui-white ui-icon-home"></div>
+                        <div class="ui-icon ui-theme ui-icon-home"></div>
                         Home
                     </nav-element>
 
@@ -172,7 +175,7 @@ class Header extends HTMLElement {
                         onclick="location.href = '../wsite/news.html';"
                         tabindex="0">
 
-                        <div class="ui-icon ui-white ui-icon-note"
+                        <div class="ui-icon ui-theme ui-icon-note"
                             style="margin-top: -2px;"></div>
                         News
                     </nav-element>
@@ -183,7 +186,7 @@ class Header extends HTMLElement {
                         onclick="location.href = '../wsite/about_us.html';"
                         tabindex="0">
 
-                        <div class="ui-icon ui-white ui-icon-search"></div>
+                        <div class="ui-icon ui-theme ui-icon-search"></div>
                         About us
                     </nav-element>
                     
@@ -191,19 +194,27 @@ class Header extends HTMLElement {
                         onclick="location.href = '../wsite/contact_us.html';"
                         tabindex="0">
 
-                        <div class="ui-icon ui-white ui-icon-transferthick-e-w"
+                        <div class="ui-icon ui-theme ui-icon-transferthick-e-w"
                             style="transform: rotate(90deg);"></div>
                         Contact us
                     </nav-element>
                 </flex-row>
                 
                 <flex-row class="jsHeaderShowOnLoggedInTarget">
+                    <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElementAlt defaultPadding"
+                        onclick="location.href = '../wsite/curriculum.html';"
+                        tabindex="0">
+
+                        <div class="ui-icon ui-theme ui-icon-folder-open"></div>
+                        Curriculum
+                    </nav-element>
+
                     <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
                         tabindex="0"
                         onclick="Header.logOut()">
                         
                         <flex-row class="centered">
-                            <div class="ui-icon ui-white ui-icon-locked"></div>
+                            <div class="ui-icon ui-theme ui-icon-locked"></div>
                             <div>Log Out</div>
                         </flex-row>
                     </nav-element>
@@ -216,7 +227,7 @@ class Header extends HTMLElement {
                         tabindex="0">
                         
                         <flex-row class="jsLogInHideOnBusyTarget centered">
-                            <div class="ui-icon ui-white ui-icon-unlocked"></div>
+                            <div class="ui-icon ui-theme ui-icon-unlocked"></div>
                             <div>Log In</div>
                         </flex-row>
                         <simple-loader-m class="jsLogInShowOnBusyTarget"></simple-loader-m>
@@ -226,7 +237,7 @@ class Header extends HTMLElement {
                         tabindex="0">
 
                         <flex-row class="jsRegisterHideOnBusyTarget centered">
-                            <div class="ui-icon ui-white ui-icon-person"></div>
+                            <div class="ui-icon ui-theme ui-icon-person"></div>
                             <div>Register</div>
                         </flex-row>
                         <simple-loader-m class="jsRegisterShowOnBusyTarget"></simple-loader-m>
@@ -329,28 +340,31 @@ class Header extends HTMLElement {
         }
         // "this" evaluates to something else when in .on and similar callback functions, so the singleton var fulfils a dual purpose
         Header.singleton = this;
+        var _this = Header.singleton;
 
         this.innerHTML = (Header.logInModalData + Header.registerModalData + Header.normalHeaderData + Header.burgerHeaderData);
         
-        $(window).on('resize', function(){
-            Header.singleton.checkOverflow();
-        });
-        // Must be deferred (only once), does not work exactly right otherwise because the width gets misreported at startup and that breaks the UI sometimes
-        requestAnimationFrame(function(){
-            Header.singleton.checkOverflow();
-        });
-        
-        var burgerCollapsibleTriggers = Header.singleton.getElementsByClassName("jsHeaderCollapsibleTrigger");
+        var burgerCollapsibleTriggers = _this.getElementsByClassName("jsHeaderCollapsibleTrigger");
         $(burgerCollapsibleTriggers).each(function(){
-            $(this).on('click', function(){
-                Header.singleton.collapsibleToggle();
+            $(this).on('click', function(event){
+                var target = event.currentTarget;
+                if(target.classList.contains("glowOnFocus")) target.blur(); // Looks kinda goofy otherwise
+                _this.collapsibleToggle();
             });
         });
 
-        Header.singleton.initModals();
+        _this.initModals();
 
-        subscribeToAccessTokenChange(() => {Header.singleton.accessTokenCheck()});
-        Header.singleton.accessTokenCheck();
+        subscribeToAccessTokenChange(() => {_this.accessTokenCheck()});
+        _this.accessTokenCheck();
+        
+        $(window).on('resize', function(){
+            _this.checkOverflow();
+        });
+        // Must be deferred, does not work exactly right otherwise because the width gets misreported at startup, which breaks the UI sometimes
+        requestAnimationFrame(function(){
+            _this.checkOverflow();
+        });
     }
 
     initModals(){
@@ -375,7 +389,7 @@ class Header extends HTMLElement {
         });
     }
 
-    // Simple way to check if our usual header is too wide and swap it with a hamburger.
+    // "Simple" way to check if our usual header is too wide and swap it with a hamburger.
     checkOverflow(){
         var normalHeader = document.getElementById("jsNormalHeaderTarget");
         var burgerHeader = document.getElementById("jsBurgerHeaderTarget");
