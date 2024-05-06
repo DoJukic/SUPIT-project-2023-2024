@@ -21,15 +21,14 @@ class Header extends HTMLElement {
 
     static logOutLock = 0;
 
-    // Since I'm using IDs for simplicity, making multiple headers will generate duplicates. This would not work correctly so we should prevent it.
     static singleton = null;
 
-    // We can use lit-html to see html formatting in strings like this one (hence the "html" in front of the string)
-    // Note: Use backticks, not double or single quotes - this is important for multiline strings
+    // We can use lit-html to see html formatting in strings like this one (hence the "html" in front of various strings)
+    // Backticks, not single quotes
     static normalHeaderData = 
     html`
         <header id="jsNormalHeaderTarget"
-            class="defaultGapHalf sneBorderBottom">
+            class="defaultGapHalf">
 
             <flex-column class="defaultGapHalf centered defaultPaddingHalf sneBorderRight"
                 style="flex-grow:0; margin-right: 0em;"
@@ -252,12 +251,14 @@ class Header extends HTMLElement {
     static logInModalData =
     html`
         <modal-component id="jsLogInModalTarget">
-            <h1 style="text-align: center; margin: 1rem 0 0 0;">
-                Welcome back,
-            </h1>
-            <p style="text-align: center; margin: 0 0 1rem 0;">
-                please input your credentials below.
-            </p>
+            <flex-column style="text-align: center;">
+                <h1 style=" margin: 0;">
+                    Welcome back,
+                </h1>
+                <p style=" margin: 0;">
+                    please input your credentials below.
+                </p>
+            </flex-column>
 
             <form style="width:100%; height:100%;"
                 onsubmit="try{Header.singleton.tryLogIn(this,
@@ -293,12 +294,14 @@ class Header extends HTMLElement {
     static registerModalData =
     html`
         <modal-component id="jsRegisterModalTarget">
-            <h1 style="text-align: center; margin: 1rem 0 0 0;">
-                Welcome,
-            </h1>
-            <p style="text-align: center; margin: 0 0 1rem 0;">
-                please input your credentials below.
-            </p>
+            <flex-column style="text-align: center;">
+                <h1 style="margin: 0;">
+                    Welcome,
+                </h1>
+                <p style="margin: 0;">
+                    please input your credentials below.
+                </p>
+            </flex-column>
 
             <form style="width:100%; height:100%;"
                 onsubmit="try{Header.singleton.tryRegister(this,
@@ -338,7 +341,7 @@ class Header extends HTMLElement {
         if(Header.singleton != null){
             console.warn("Multiple header components detected, this is not supported and will likely break something.");
         }
-        // "this" evaluates to something else when in .on and similar callback functions, so the singleton var fulfils a dual purpose
+        // "this" evaluates to something else when in .on and other callback functions, so we should define alternatives
         Header.singleton = this;
         var _this = Header.singleton;
 
@@ -348,7 +351,7 @@ class Header extends HTMLElement {
         $(burgerCollapsibleTriggers).each(function(){
             $(this).on('click', function(event){
                 var target = event.currentTarget;
-                if(target.classList.contains("glowOnFocus")) target.blur(); // Looks kinda goofy otherwise
+                if(target.classList.contains("glowOnFocus")) target.blur(); // Looks weird otherwise
                 _this.collapsibleToggle();
             });
         });
@@ -356,14 +359,12 @@ class Header extends HTMLElement {
         _this.initModals();
 
         subscribeToAccessTokenChange(() => {_this.accessTokenCheck()});
-        _this.accessTokenCheck();
-        
+
         $(window).on('resize', function(){
-            _this.checkOverflow();
+            Header.singleton.checkOverflow();
         });
-        // Must be deferred, does not work exactly right otherwise because the width gets misreported at startup, which breaks the UI sometimes
-        requestAnimationFrame(function(){
-            _this.checkOverflow();
+        $(document).ready(function(){ // Run this only once everything, images included, is loaded, or we're going to run into some issues with checkOverflow()
+            _this.accessTokenCheck();
         });
     }
 
@@ -391,6 +392,7 @@ class Header extends HTMLElement {
 
     // "Simple" way to check if our usual header is too wide and swap it with a hamburger.
     checkOverflow(){
+
         var normalHeader = document.getElementById("jsNormalHeaderTarget");
         var burgerHeader = document.getElementById("jsBurgerHeaderTarget");
         
@@ -436,12 +438,12 @@ class Header extends HTMLElement {
 
         if (newState) {
             $(this.getElementsByClassName("jsHeaderImageTarget")[0]).attr("src", Header.collapsibleImgXPath);
-            $(collapsible).slideDown(500, function() { 
+            $(collapsible).slideDown(400, function() { 
                 Header.singleton.collapsibleIsBusy = false;
             });
         }else{
             $(this.getElementsByClassName("jsHeaderImageTarget")[0]).attr("src", Header.collapsibleImgMenuPath);
-            $(collapsible).slideUp(500, function() { 
+            $(collapsible).slideUp(300, function() { 
                 Header.singleton.collapsibleIsBusy = false;
             });
         }
@@ -497,6 +499,8 @@ class Header extends HTMLElement {
         $(Header.singleton.getElementsByClassName("jsHeaderShowOnLoggedInTarget")).each(function(){
             $(this).css("display", tokenExists ? "flex" : "none");
         });
+
+        Header.singleton.checkOverflow();
     }
 
     tryLogIn(form, username, password){

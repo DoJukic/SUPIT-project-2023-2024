@@ -16,6 +16,11 @@
 	--theme-header-border-color: rgb(100, 100, 100);
 	--theme-header-text-color: rgb(255, 255, 255);
 	
+	--theme-bg-color: rgb(15, 15, 15);
+	--theme-shadow-color: rgb(15, 15, 15);
+	--theme-border-color: rgb(100, 100, 100);
+	--theme-text-color: rgb(255, 255, 255);
+	
 	--theme-text-color: rgb(15, 15, 15);
 	--theme-success-color: green;
 	--theme-info-color: blue;
@@ -172,12 +177,7 @@ br-half{
 
 .themeBG{
 	Color: white;
-	background-image: linear-gradient(-135deg, var(--theme-secondary-color), var(--theme-primary-color));
-}
-
-.themeInvertedBG{
-	Color: white;
-	background-image: linear-gradient(45deg, var(--theme-secondary-color), var(--theme-primary-color));
+	background-color: var(--theme-bg-color);
 }
 
 .glowOnFocus:focus{
@@ -194,12 +194,8 @@ br-half{
 	border-radius: 5px;
 }
 
-.whiteBorder{
-	border: 1px solid white;
-}
-
-.blackBorder{
-	border: 1px solid black;
+.themeBorder{
+	border: 1px solid var(--theme-border-color);
 }
 
 /* -------------------- SCROLL TO TOP -------------------- */
