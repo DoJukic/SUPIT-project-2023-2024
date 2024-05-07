@@ -62,16 +62,8 @@ function interrogatePrerequisites(stringNames){
   });
 }
 
+/* -------------------- CHAPTER ANIMATIONS -------------------- */
 
-/*
-function setBooleanAttribute(element, attribute, inputBoolean){
-  element.setAttribute("data-" + attribute, inputBoolean ? "y" : "n")
-}
-function getBooleanAttribute(element, attribute){
-  if (element.getAttribute("data-" + attribute) == "y") return true;
-  return false;
-}
-*/
 
 /* -------------------- ACCESS TOKEN -------------------- */
 
