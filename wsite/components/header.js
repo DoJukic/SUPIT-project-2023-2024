@@ -27,10 +27,8 @@ class Header extends HTMLElement {
     // Backticks, not single quotes
     static normalHeaderData = 
     html`
-        <header id="jsNormalHeaderTarget"
-            class="defaultGapHalf">
-
-            <flex-column class="defaultGapHalf centered defaultPaddingHalf sneBorderRight"
+        <header id="jsNormalHeaderTarget">
+            <flex-column class="defaultGapHalf centered defaultPaddingHalf sneBorderRight sneBorderBottom"
                 style="flex-grow:0; margin-right: 0em;"
                 onclick="location.href = '../wsite/home.html';">
 
@@ -38,8 +36,8 @@ class Header extends HTMLElement {
                     style="max-width: 5em; max-height: 5em; margin-top: -0.25em;">
             </flex-column>
 
-            <flex-row class="defaultGapHalf defaultPadding centered">
-                <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
+            <flex-row class="defaultGapHalf defaultPadding centered sneBorderBottom">
+                <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
                     onclick="location.href = '../wsite/home.html';"
                     tabindex="0">
 
@@ -47,7 +45,15 @@ class Header extends HTMLElement {
                     Home
                 </nav-element>
 
-                <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
+                <nav-element class="navElementVisual selectableNavElement defaultPadding"
+                    onclick="location.href = '../wsite/about_us.html';"
+                    tabindex="0">
+
+                    <div class="ui-icon ui-theme ui-icon-search"></div>
+                    About us
+                </nav-element>
+
+                <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
                     onclick="location.href = '../wsite/news.html';"
                     tabindex="0">
 
@@ -56,15 +62,7 @@ class Header extends HTMLElement {
                     News
                 </nav-element>
 
-                <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
-                    onclick="location.href = '../wsite/about_us.html';"
-                    tabindex="0">
-
-                    <div class="ui-icon ui-theme ui-icon-search"></div>
-                    About us
-                </nav-element>
-
-                <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
+                <nav-element class="navElementVisual selectableNavElement defaultPadding"
                     onclick="location.href = '../wsite/contact_us.html';"
                     tabindex="0">
 
@@ -73,7 +71,7 @@ class Header extends HTMLElement {
                     Contact us
                 </nav-element>
 
-                <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElementAlt defaultPadding"
+                <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElement defaultPadding"
                     onclick="location.href = '../wsite/curriculum.html';"
                     tabindex="0">
 
@@ -84,14 +82,14 @@ class Header extends HTMLElement {
 
             <flex-column class="jsHeaderShowOnLoggedInTarget">
                 <flex-row>
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPaddingHalf"
+                    <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf"
                         style="flex-basis: 0em; min-width: 0em;"
                         tabindex="0"
                         onclick="Header.logOut()">
                         
                         <flex-row class="centered">
                             <div class="ui-icon ui-theme ui-icon-locked"></div>
-                            <div>Log Out</div>
+                            Log Out
                         </flex-row>
                     </nav-element>
                 </flex-row>
@@ -101,7 +99,7 @@ class Header extends HTMLElement {
                 style="flex-grow:0;">
 
                 <flex-row>
-                    <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElementAlt defaultPaddingHalf"
+                    <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElement defaultPaddingHalf"
                         tabindex="0">
                         
                         <flex-row class="jsLogInHideOnBusyTarget centered">
@@ -113,7 +111,7 @@ class Header extends HTMLElement {
                 </flex-row>
 
                 <flex-row>
-                    <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElementAlt defaultPaddingHalf"
+                    <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElement defaultPaddingHalf"
                         tabindex="0">
 
                         <flex-row class="jsRegisterHideOnBusyTarget centered">
@@ -130,6 +128,7 @@ class Header extends HTMLElement {
     static burgerHeaderData =
     html`
         <header id="jsBurgerHeaderTarget"
+            class="sneBorderBottom"
             style="flex-direction: column;">
 
             <flex-row class="">
@@ -162,7 +161,7 @@ class Header extends HTMLElement {
                 style="display: none;">
                 
                 <flex-row style="flex-wrap: wrap;">
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
+                    <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
                         onclick="location.href = '../wsite/home.html';"
                         tabindex="0">
 
@@ -170,7 +169,17 @@ class Header extends HTMLElement {
                         Home
                     </nav-element>
 
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding centered"
+                    <nav-element class="navElementVisual selectableNavElement defaultPadding"
+                        onclick="location.href = '../wsite/about_us.html';"
+                        tabindex="0">
+
+                        <div class="ui-icon ui-theme ui-icon-search"></div>
+                        About us
+                    </nav-element>
+                </flex-row>
+
+                <flex-row style="flex-wrap: wrap;">
+                    <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
                         onclick="location.href = '../wsite/news.html';"
                         tabindex="0">
 
@@ -178,18 +187,8 @@ class Header extends HTMLElement {
                             style="margin-top: -2px;"></div>
                         News
                     </nav-element>
-                </flex-row>
-
-                <flex-row style="flex-wrap: wrap;">
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
-                        onclick="location.href = '../wsite/about_us.html';"
-                        tabindex="0">
-
-                        <div class="ui-icon ui-theme ui-icon-search"></div>
-                        About us
-                    </nav-element>
                     
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
+                    <nav-element class="navElementVisual selectableNavElement defaultPadding"
                         onclick="location.href = '../wsite/contact_us.html';"
                         tabindex="0">
 
@@ -200,7 +199,7 @@ class Header extends HTMLElement {
                 </flex-row>
                 
                 <flex-row class="jsHeaderShowOnLoggedInTarget">
-                    <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElementAlt defaultPadding"
+                    <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElement defaultPadding"
                         onclick="location.href = '../wsite/curriculum.html';"
                         tabindex="0">
 
@@ -208,7 +207,7 @@ class Header extends HTMLElement {
                         Curriculum
                     </nav-element>
 
-                    <nav-element class="navElementVisual selectableNavElementAlt defaultPadding"
+                    <nav-element class="navElementVisual selectableNavElement defaultPadding"
                         tabindex="0"
                         onclick="Header.logOut()">
                         
@@ -222,7 +221,7 @@ class Header extends HTMLElement {
                 <flex-row class="jsHeaderHideOnLoggedInTarget"
                     style="flex-wrap: wrap;">
 
-                    <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElementAlt defaultPadding"
+                    <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElement defaultPadding"
                         tabindex="0">
                         
                         <flex-row class="jsLogInHideOnBusyTarget centered">
@@ -232,7 +231,7 @@ class Header extends HTMLElement {
                         <simple-loader-m class="jsLogInShowOnBusyTarget"></simple-loader-m>
                     </nav-element>
                     
-                    <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElementAlt defaultPadding"
+                    <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElement defaultPadding"
                         tabindex="0">
 
                         <flex-row class="jsRegisterHideOnBusyTarget centered">

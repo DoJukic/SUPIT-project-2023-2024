@@ -12,16 +12,15 @@
 	--theme-icon-path: url("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png");
 	
 	--theme-header-bg-color: rgb(15, 15, 15);
-	--theme-header-shadow-color: rgb(15, 15, 15);
+	--theme-header-shadow-color: rgb(0, 0, 0);
 	--theme-header-border-color: rgb(100, 100, 100);
 	--theme-header-text-color: rgb(255, 255, 255);
 	
-	--theme-bg-color: rgb(15, 15, 15);
-	--theme-shadow-color: rgb(15, 15, 15);
+	--theme-bg-color: rgb(30, 30, 30);
+	--theme-shadow-color: rgb(0, 2505, 0);
 	--theme-border-color: rgb(100, 100, 100);
 	--theme-text-color: rgb(255, 255, 255);
 	
-	--theme-text-color: rgb(15, 15, 15);
 	--theme-success-color: green;
 	--theme-info-color: blue;
 	--theme-error-color: red;
@@ -46,7 +45,8 @@ html{
 }
 
 body {
-    color: #333;
+	background-color: var(--theme-bg-color);
+    color: var(--theme-text-color);
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
@@ -121,6 +121,50 @@ br-half{
 	margin-top: 0.5em;
 }
 
+.typewriterEffect{
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+	flex-grow: 0;
+	flex-wrap: wrap;
+}
+
+.typewriterEffectWord{
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+	flex-grow: 0;
+}
+
+console-mimic{
+	width: 0.7em;
+	height: 1em;
+	animation: BlackWhiteFlash 1s steps(1) infinite;
+}
+
+.fadeInSimple{
+    animation: fadeInExtraAnim ease 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+	transition: none;
+
+	will-change: auto;
+}
+
+chapter-title{
+	display:block;
+	padding: calc(var(--theme-padding) / 2);
+	margin: var(--theme-margin);
+
+	text-align: center;
+	font-size: 2rem;
+	font-weight: bold;
+
+	border-bottom: 1px solid var(--theme-primary-color);
+}
+
 /* -------------------- VALUES -------------------- */
 
 .defaultSpacing{
@@ -176,7 +220,7 @@ br-half{
 /* -------------------- BACKGROUNDS -------------------- */
 
 .themeBG{
-	Color: white;
+	Color: var(--theme-text-color);
 	background-color: var(--theme-bg-color);
 }
 
@@ -238,7 +282,9 @@ push-notifications-component{
 	flex-direction: column;
     justify-content: flex-end;
 
-	word-wrap: break-word;
+	word-wrap: break-word; /* Anim controlled by JS */
+
+	will-change: auto;
 	
 	overflow: visible; /* necessary for the animation */
 }
@@ -252,8 +298,8 @@ push-notification{
 	top: 0rem;
 	position:relative; /* Animations will rely on changing "top", which needs a specific position value */
 
-	background-color: white;
-	color: black;
+	background-color: var(--theme-bg-color);
+	color: var(--theme-text-color);
 
 	border: 1px solid var(--theme-header-border-color);
 
@@ -348,7 +394,7 @@ nav-element {
 	text-transform: uppercase;
 	
 	/* Makes sure navElements don't look off next to selectableNavElements */
-	border: 1px solid var(--theme-header-border-color);
+	border: 1px solid transparent;
 }
 
 /* sne -> selectable nav element, the name was getting a touch too long */
@@ -362,42 +408,39 @@ nav-element {
 	border-bottom: 1px solid var(--theme-header-border-color);
 }
 
-.selectableNavElement{
-	border-radius: 6px;
+.selectableNavElementChapter{
 	cursor: pointer !important;
-	border: 1px solid var(--theme-header-border-color);
+
+	font-size: small;
 }
-.selectableNavElement:hover{
+.selectableNavElementChapter:hover{
 	color:var(--theme-primary-color);
-	border-color: var(--theme-primary-color);
 }
-.selectableNavElement:focus{
+.selectableNavElementChapter:focus{
 	color:var(--theme-primary-color);
-	border-color: var(--theme-primary-color);
 }
 /*
 :active can be triggered at the same time as :hover, so !important should be used
 Otherwise color seems to be whatever is last in the .css file
 (I don't want to rely on that)
 */
-.selectableNavElement:active{
+.selectableNavElementChapter:active{
 	color:var(--theme-secondary-color) !important;
-	border-color: var(--theme-secondary-color) !important;
 }
 
-.selectableNavElementAlt{
+.selectableNavElement{
 	cursor: pointer !important;
 	border: 1px solid var(--theme-header-border-color);
 }
-.selectableNavElementAlt:hover{
+.selectableNavElement:hover{
 	background-color:var(--theme-primary-color);
 	border-color: black;
 }
-.selectableNavElementAlt:focus{
+.selectableNavElement:focus{
 	background-color:var(--theme-primary-color);
 	border-color: black;
 }
-.selectableNavElementAlt:active{
+.selectableNavElement:active{
 	background-color:var(--theme-secondary-color) !important;
 	border-color: black !important;
 }
@@ -426,6 +469,11 @@ footer{
     100% { opacity: 1; }
 }
 
+@keyframes fadeInExtraAnim {
+    0% { opacity: 0; transform: translateY(2rem); }
+    100% { opacity: 1; transform: translateY(0rem) }
+}
+
 @keyframes spinAnim {
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
@@ -434,6 +482,12 @@ footer{
 @keyframes phaseOutAnim {
     0% { opacity: 1; }
     100% { opacity: 0; }
+}
+
+@keyframes BlackWhiteFlash {
+    0% { background-color: white; }
+    50% { background-color: transparent; }
+    100% { background-color: white; }
 }
 
 /* -------------------- OVERRIDES -------------------- */

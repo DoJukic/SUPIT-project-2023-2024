@@ -4,6 +4,9 @@ var tokenChangeSubscriberFuncs = []; // These contain functions we need to call 
 var tokenExpiredSubscriberFuncs = [];
 var tokenTimeout = null; // Holds the timeout ID which we can use to delete the timer when not necessary
 
+var chapterObserver= null;
+var chapterObserverActiveElements = [];
+
 // https://stackoverflow.com/questions/13637223/how-do-you-make-a-div-tabbable (awokeKnowing's answer, slightly modified to avoid depreciated methods)
 $(document).on('keydown',function(e){
   if(Boolean(this.activeElement) && (e.code=="Enter" || e.code=="Space") && this.activeElement.hasAttribute("tabindex")){
@@ -62,8 +65,92 @@ function interrogatePrerequisites(stringNames){
   });
 }
 
+function setBooleanAttribute(element, attribute, inputBoolean){
+  element.setAttribute("data-" + attribute, inputBoolean ? "y" : "n")
+}
+function getBooleanAttribute(element, attribute){
+  if (element.getAttribute("data-" + attribute) == "y") return true;
+  return false;
+}
+
+function setIntAttribute(element, attribute, input){
+  element.setAttribute("data-" + attribute, input)
+}
+function getIntAttribute(element, attribute){
+  var result = element.getAttribute("data-" + attribute);
+  return Boolean(result) ? Number(result) : null;
+}
+
 /* -------------------- CHAPTER ANIMATIONS -------------------- */
 
+$(document).ready(function(){
+  var observerOptions = {
+    treshold: [0.0001] // If it's just 0 we can get no intersect even when the element comes into view.
+  };
+
+  var observerCallback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        console.log(entry);
+        $(entry.target).addClass("fadeInSimple");
+        observer.unobserve(entry);
+      }
+    });
+  };
+
+  chapterObserver = new IntersectionObserver(observerCallback, observerOptions);
+  $(".jsLogicChapterAnimationTarget").each(function(){
+    chapterObserver.observe(this);
+  });
+});
+
+/* -------------------- TYPEWRITER ANIMATIONS -------------------- */
+
+$(document).ready(function(){
+  $(".jsLogicTypewriterTarget").each(function(){
+    var totalDelay = 0;
+
+    var showDelay = getIntAttribute(this, "typewriter-delay-ms");
+    if(showDelay == null){
+      showDelay = 500;
+    }
+
+    var rows = this.getElementsByClassName("typewriterEffect");
+
+    $(rows).each(function(){
+      $(this).css("display", "flex");
+      $(this).children().each(function(){
+        $(this).css("display", "none");
+        if(this.classList.contains("typewriterEffectWord")){
+          $(this).css("display", "flex");
+
+          $(this).children().each(function(){
+            $(this).css("display", "none");
+
+            setTimeout(() => {
+              $(this).css("display", "flex");
+            }, totalDelay);
+
+            totalDelay += showDelay;
+          });
+
+        }else{
+          if((this.tagName == "CONSOLE-MIMIC")){
+            $(this).css("display", "flex");
+          }else{
+            $(this).css("display", "none");
+
+            setTimeout(() => {
+              $(this).css("display", "flex");
+            }, totalDelay);
+
+            totalDelay += showDelay;
+          }
+        }
+      });
+    });
+  });
+})
 
 /* -------------------- ACCESS TOKEN -------------------- */
 

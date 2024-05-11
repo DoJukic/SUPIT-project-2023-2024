@@ -3,6 +3,8 @@ class PushNotifs extends HTMLElement {
         super();
     }
 
+    lastAnimTimestamp = 0;
+
     static ready(){return(Boolean(PushNotifs.singleton))}
 
     static singleton = null;
@@ -55,6 +57,8 @@ class PushNotifs extends HTMLElement {
         }
         PushNotifs.singleton = this;
 
+        this.style.transform = "translateY(0px)"
+
         // https://stackoverflow.com/questions/6065169/requestanimationframe-with-this-keyword (thanks, James World!)
         requestAnimationFrame(() => this.animateNotifs());
     }
@@ -95,8 +99,9 @@ class PushNotifs extends HTMLElement {
     notifAdded(){
         var target = this.children[this.children.length - 1];
         var height = $(target).outerHeight(true);
-        
-        this.style.top = `${Number(this.style.top.split("px")[0]) + height}px`;
+
+        var transformValue = Number(this.style.transform.split("(")[1].split("px")[0]);
+        this.style.transform = `translateY(${transformValue + height}px)`;
 
         // Not sure why none of the animation() methods want to work right.
         // UPDATE: I was adding to innerHTML directly, which broke the references.
@@ -110,12 +115,15 @@ class PushNotifs extends HTMLElement {
     }
 
     animateNotifs(){
-        var topValue = Number(this.style.top.split("px")[0]);
+        var transformValue = Number(this.style.transform.split("(")[1].split("px")[0]);
 
-        if(topValue > 0){
-            topValue -= 0.05 * topValue; // Ease out, essentially
-            this.style.top = `${(topValue >= 1) ? topValue : 0}px`;
+        if(transformValue > 0){
+            var deltaTime = window.performance.now() - this.lastAnimTimestamp;
+            transformValue -= (Number)(deltaTime) / 200 * transformValue; // Ease out, essentially
+            this.style.transform = `translateY(${(transformValue >= 1) ? transformValue : 0}px)`;
         }
+
+        this.lastAnimTimestamp = window.performance.now();
 
         requestAnimationFrame(() => this.animateNotifs()); // It's probably fine if we just keep running
     }
