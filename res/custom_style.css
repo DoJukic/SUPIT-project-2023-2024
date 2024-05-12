@@ -70,21 +70,23 @@ main {
     align-items: center;
 }
 
-flex-row{
-    flex: 1 1 0;
+flex-row, flex-row-g{
+    flex: 0 1 0;
     display: flex;
     flex-direction: row;
 }
 
-flex-row-balanced{
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: row;
+flex-row-g{
+	flex-grow: 1 !important;
 }
 
-flex-column{
+flex-column, flex-column-g{
     display: flex;
     flex-direction: column;
+}
+
+flex-column-g{
+	flex-grow: 1 !important;
 }
 
 flex-spacer{
@@ -96,7 +98,7 @@ flex-spacer{
 https://www.w3schools.com/howto/howto_css_loader.asp
 animation will stutter when display is changed to flex from css, or maybe it's caused by the fade in animation?
 */
-simple-loader {
+simple-loader, simple-loader-m {
 	border: 0.3em solid var(--theme-header-border-color);
 	border-radius: 50%;
 	border-top: 0.3em solid var(--theme-secondary-color);
@@ -107,13 +109,6 @@ simple-loader {
 }
 simple-loader-m {
 	margin: -0.2em;
-	border: 0.3em solid var(--theme-header-border-color);
-	border-radius: 50%;
-	border-top: 0.3em solid var(--theme-secondary-color);
-	border-bottom: 0.3em solid var(--theme-primary-color);
-	width: 1em;
-	height: 1em;
-	animation: spinAnim 2s linear infinite;
 }
 
 br-half{
@@ -121,7 +116,7 @@ br-half{
 	margin-top: 0.5em;
 }
 
-.typewriterEffect{
+.typewriterEffectRow{
     display: none;
     justify-content: center;
     align-items: center;
@@ -138,9 +133,13 @@ br-half{
 	flex-grow: 0;
 }
 
-console-mimic{
+console-mimic, console-mimic-anim{
 	width: 0.7em;
 	height: 1em;
+	background-color: white;
+}
+
+console-mimic-anim{
 	animation: BlackWhiteFlash 1s steps(1) infinite;
 }
 
@@ -485,9 +484,9 @@ footer{
 }
 
 @keyframes BlackWhiteFlash {
-    0% { background-color: white; }
-    50% { background-color: transparent; }
-    100% { background-color: white; }
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
 }
 
 /* -------------------- OVERRIDES -------------------- */

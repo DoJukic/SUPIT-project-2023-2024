@@ -91,9 +91,8 @@ $(document).ready(function(){
   var observerCallback = (entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        console.log(entry);
         $(entry.target).addClass("fadeInSimple");
-        observer.unobserve(entry);
+        observer.unobserve(entry.target);
       }
     });
   };
@@ -104,53 +103,183 @@ $(document).ready(function(){
   });
 });
 
-/* -------------------- TYPEWRITER ANIMATIONS -------------------- */
+/* -------------------- TYPEWRITER ANIMATION -------------------- */
 
 $(document).ready(function(){
   $(".jsLogicTypewriterTarget").each(function(){
-    var totalDelay = 0;
+    var rowList = [];
+    var rowsActual = [];
 
-    var showDelay = getIntAttribute(this, "typewriter-delay-ms");
-    if(showDelay == null){
-      showDelay = 500;
+    var rowDelay = getIntAttribute(this, "typewriter-row-delay-ms");
+    if(rowDelay == null){
+      rowDelay = 500;
     }
 
-    var rows = this.getElementsByClassName("typewriterEffect");
+    var elementDelay = getIntAttribute(this, "typewriter-letter-delay-ms");
+    if(elementDelay == null){
+      elementDelay = 100;
+    }
+
+    var rows = this.getElementsByClassName("typewriterEffectRow");
 
     $(rows).each(function(){
+      var rowElements = [];
       $(this).css("display", "flex");
+
       $(this).children().each(function(){
-        $(this).css("display", "none");
         if(this.classList.contains("typewriterEffectWord")){
           $(this).css("display", "flex");
 
           $(this).children().each(function(){
             $(this).css("display", "none");
-
-            setTimeout(() => {
-              $(this).css("display", "flex");
-            }, totalDelay);
-
-            totalDelay += showDelay;
+            rowElements.push(this);
           });
-
         }else{
-          if((this.tagName == "CONSOLE-MIMIC")){
-            $(this).css("display", "flex");
-          }else{
-            $(this).css("display", "none");
-
-            setTimeout(() => {
-              $(this).css("display", "flex");
-            }, totalDelay);
-
-            totalDelay += showDelay;
-          }
+          $(this).css("display", "none");
+          rowElements.push(this)
         }
       });
+
+      rowsActual.push(this);
+      rowList.push(rowElements);
     });
+
+    typewriterHandleRow(rowsActual, rowList, 0, rowDelay, elementDelay)
   });
-})
+});
+
+function typewriterHandleRow(rowsActual, rowArray, rowProgress, rowDelay, elementDelay, killMe){
+  if(rowProgress >= rowArray.length){
+    return;
+  }
+
+  if(killMe != null){
+    $(killMe).css("display", "none");
+  }
+  var temp = document.createElement("console-mimic");
+  rowsActual[rowProgress].append(temp);
+
+  killMe = document.createElement("console-mimic-anim");
+  $(killMe).css("display", "none");
+  rowsActual[rowProgress].append(killMe);
+  
+  var finished = () => {
+    setTimeout(() => typewriterHandleRow(rowsActual, rowArray, rowProgress + 1, rowDelay, elementDelay, killMe), rowDelay);
+    $(temp).css("display", "none");
+    $(killMe).css("display", "flex");
+  }; // The world, at my fingertips
+
+  if(rowArray[rowProgress].constructor === Array){
+    setTimeout(() => typewriterHandleElement(rowArray[rowProgress], 0, elementDelay, finished)
+    , elementDelay);
+    return;
+  }
+
+  finished();
+}
+
+function typewriterHandleElement(elementArray, elementProgress, elementDelay, exitCallback){
+  if(elementProgress >= elementArray.length){
+    exitCallback();
+    return;
+  }
+
+  $(elementArray[elementProgress]).css("display", "flex");
+  setTimeout(() => typewriterHandleElement(elementArray, elementProgress + 1, elementDelay, exitCallback), elementDelay);
+}
+
+/*
+function typewriterHandleLetters(array, progress, letterDelay){
+  $(array[progress]).css("display", "flex");
+  progress += 1;
+
+  if(progress < array.length) setTimeout(() => typewriterHandleLetters(array, progress, letterDelay), letterDelay);
+}
+
+function typewriterHandleElements(array, progress, letterDelay){
+  $(array[progress]).css("display", "flex");
+
+  if(array[progress].constructor === Array){
+    typewriterHandleLetters(array[progress], 0, letterDelay)
+  }
+
+  progress += 1;
+
+  if(progress < array.length) setTimeout(() => typewriterHandleElements(array, progress, letterDelay), letterDelay);
+}
+
+function typewriterHandleRows(array, progress, rowDelay, letterDelay){
+  $(array[progress]).css("display", "flex");
+
+  var extraDelay;
+
+  if(array[progress].constructor === Array){
+    typewriterHandleElements(array[progress], 0, letterDelay)
+  }
+
+  progress += 1;
+
+  if(progress < array.length) setTimeout(() => typewriterHandleRows(array, progress, letterDelay), rowDelay);
+}
+*/
+
+/*
+function typewriterEffectKickOff(rowList, rowDelay, letterDelay){
+  if(rowList[0][0].constructor === Array){
+    typewriterEffectPerform(rowList, rowDelay, letterDelay, 0, 0, 0);
+    return;
+  }
+
+  typewriterEffectPerform(rowList, rowDelay, letterDelay, 0, 0, -1);
+}
+
+function typewriterEffectPerform(rowList, rowDelay, letterDelay, rowIndex, elementIndex, letterIndex){
+  var incrementElement = true;
+  var incrementRow = true;
+
+  if(letterIndex >= 0){
+    $(rowList[rowIndex][elementIndex][letterIndex]).css("display", "block");
+    letterIndex += 1;
+
+    if(letterIndex < rowList[rowIndex][elementIndex].length){
+      incrementElement = false;
+    }
+  }
+
+  if(incrementElement){
+    $(rowList[rowIndex][elementIndex]).css("display", "flex");
+    elementIndex += 1;
+
+    if(elementIndex < rowList[rowIndex].length){
+      incrementRow = false;
+
+      if(rowList[rowIndex][elementIndex].constructor === Array){
+        letterIndex = 0;
+      }else{
+        letterIndex = -1;
+      }
+    }
+  }
+
+  if(incrementRow){
+    $(rowList[rowIndex]).css("display", "flex");
+    elementIndex += 1;
+
+    if(elementIndex < rowList[rowIndex].length){
+      incrementRow = false;
+    }
+  }
+
+  if(rowIndex >= rowList.length){
+    return; // We're done!
+  }
+
+  if(elementIndex >= rowList[rowIndex].length){
+    rowIndex += 1;
+  }
+
+}
+*/
 
 /* -------------------- ACCESS TOKEN -------------------- */
 

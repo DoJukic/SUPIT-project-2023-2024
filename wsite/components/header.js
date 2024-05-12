@@ -36,7 +36,7 @@ class Header extends HTMLElement {
                     style="max-width: 5em; max-height: 5em; margin-top: -0.25em;">
             </flex-column>
 
-            <flex-row class="defaultGapHalf defaultPadding centered sneBorderBottom">
+            <flex-row-g class="defaultGapHalf defaultPadding centered sneBorderBottom">
                 <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
                     onclick="location.href = '../wsite/home.html';"
                     tabindex="0">
@@ -78,49 +78,49 @@ class Header extends HTMLElement {
                     <div class="ui-icon ui-theme ui-icon-folder-open"></div>
                     Curriculum
                 </nav-element>
-            </flex-row>
+            </flex-row-g>
 
             <flex-column class="jsHeaderShowOnLoggedInTarget">
-                <flex-row>
+                <flex-row-g>
                     <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf"
                         style="flex-basis: 0em; min-width: 0em;"
                         tabindex="0"
                         onclick="Header.logOut()">
                         
-                        <flex-row class="centered">
+                        <flex-row-g class="centered">
                             <div class="ui-icon ui-theme ui-icon-locked"></div>
                             Log Out
-                        </flex-row>
+                        </flex-row-g>
                     </nav-element>
-                </flex-row>
+                </flex-row-g>
             </flex-column>
 
             <flex-column class="jsHeaderHideOnLoggedInTarget"
                 style="flex-grow:0;">
 
-                <flex-row>
+                <flex-row-g>
                     <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElement defaultPaddingHalf"
                         tabindex="0">
                         
-                        <flex-row class="jsLogInHideOnBusyTarget centered">
+                        <flex-row-g class="jsLogInHideOnBusyTarget centered">
                             <div class="ui-icon ui-theme ui-icon-unlocked"></div>
                             <div>Log In</div>
-                        </flex-row>
+                        </flex-row-g>
                         <simple-loader class="jsLogInShowOnBusyTarget"></simple-loader>
                     </nav-element>
-                </flex-row>
+                </flex-row-g>
 
-                <flex-row>
+                <flex-row-g>
                     <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElement defaultPaddingHalf"
                         tabindex="0">
 
-                        <flex-row class="jsRegisterHideOnBusyTarget centered">
+                        <flex-row-g class="jsRegisterHideOnBusyTarget centered">
                             <div class="ui-icon ui-theme ui-icon-person"></div>
                             <div>Register</div>
-                        </flex-row>
+                        </flex-row-g>
                         <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
                     </nav-element>
-                </flex-row>
+                </flex-row-g>
             </flex-column>
         </header>
     `;
@@ -131,7 +131,7 @@ class Header extends HTMLElement {
             class="sneBorderBottom"
             style="flex-direction: column;">
 
-            <flex-row class="">
+            <flex-row-g class="">
                 <flex-column onclick="location.href = '../wsite/home.html';">
                     <img class="jsHeaderBurgerImgTarget"
                         src= "../res/img/navbar/FB_Algebra-logo-mini.png"
@@ -141,11 +141,11 @@ class Header extends HTMLElement {
                 <flex-column class="navElementVisual"
                     style="flex-grow:1; border: 0px;">
 
-                    <flex-row class="jsHeaderCollapsibleTrigger jsHeaderTextTarget sneBorderLeft sneBorderRight centered"
+                    <flex-row-g class="jsHeaderCollapsibleTrigger jsHeaderTextTarget sneBorderLeft sneBorderRight centered"
                         style="width: 100%;">
 
                         ALGEBRA UNIVERSITY
-                    </flex-row>
+                    </flex-row-g>
                 </flex-column>
                 
                 <flex-column class="jsHeaderCollapsibleTrigger glowOnFocus centered defaultPadding"
@@ -155,12 +155,12 @@ class Header extends HTMLElement {
                         src="../res/img/navbar/icons8.com-hamburger-menu-50-white.png"
                         style="max-height: 3em;">
                 </flex-column>
-            </flex-row>
+            </flex-row-g>
 
             <flex-column class="jsHeaderCollapsibleTarget"
                 style="display: none;">
                 
-                <flex-row style="flex-wrap: wrap;">
+                <flex-row-g style="flex-wrap: wrap;">
                     <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
                         onclick="location.href = '../wsite/home.html';"
                         tabindex="0">
@@ -176,9 +176,9 @@ class Header extends HTMLElement {
                         <div class="ui-icon ui-theme ui-icon-search"></div>
                         About us
                     </nav-element>
-                </flex-row>
+                </flex-row-g>
 
-                <flex-row style="flex-wrap: wrap;">
+                <flex-row-g style="flex-wrap: wrap;">
                     <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
                         onclick="location.href = '../wsite/news.html';"
                         tabindex="0">
@@ -196,9 +196,9 @@ class Header extends HTMLElement {
                             style="transform: rotate(90deg);"></div>
                         Contact us
                     </nav-element>
-                </flex-row>
+                </flex-row-g>
                 
-                <flex-row class="jsHeaderShowOnLoggedInTarget">
+                <flex-row-g class="jsHeaderShowOnLoggedInTarget">
                     <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElement defaultPadding"
                         onclick="location.href = '../wsite/curriculum.html';"
                         tabindex="0">
@@ -211,36 +211,36 @@ class Header extends HTMLElement {
                         tabindex="0"
                         onclick="Header.logOut()">
                         
-                        <flex-row class="centered">
+                        <flex-row-g class="centered">
                             <div class="ui-icon ui-theme ui-icon-locked"></div>
                             <div>Log Out</div>
-                        </flex-row>
+                        </flex-row-g>
                     </nav-element>
-                </flex-row>
+                </flex-row-g>
 
-                <flex-row class="jsHeaderHideOnLoggedInTarget"
+                <flex-row-g class="jsHeaderHideOnLoggedInTarget"
                     style="flex-wrap: wrap;">
 
                     <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElement defaultPadding"
                         tabindex="0">
                         
-                        <flex-row class="jsLogInHideOnBusyTarget centered">
+                        <flex-row-g class="jsLogInHideOnBusyTarget centered">
                             <div class="ui-icon ui-theme ui-icon-unlocked"></div>
                             <div>Log In</div>
-                        </flex-row>
+                        </flex-row-g>
                         <simple-loader-m class="jsLogInShowOnBusyTarget"></simple-loader-m>
                     </nav-element>
                     
                     <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElement defaultPadding"
                         tabindex="0">
 
-                        <flex-row class="jsRegisterHideOnBusyTarget centered">
+                        <flex-row-g class="jsRegisterHideOnBusyTarget centered">
                             <div class="ui-icon ui-theme ui-icon-person"></div>
                             <div>Register</div>
-                        </flex-row>
+                        </flex-row-g>
                         <simple-loader-m class="jsRegisterShowOnBusyTarget"></simple-loader-m>
                     </nav-element>
-                </flex-row>
+                </flex-row-g>
             </flex-column>
         </header>
     `;
@@ -278,12 +278,12 @@ class Header extends HTMLElement {
                     <button class="ui-button ui-widget ui-corner-all" type="submit"
                         style="min-height: 1.5rem !important; width: 103%;">
 
-                        <flex-row class="jsLogInHideOnBusyTarget centered">
+                        <flex-row-g class="jsLogInHideOnBusyTarget centered">
                             Log In
-                        </flex-row>
-                        <flex-row class="jsLogInShowOnBusyTarget centered">
+                        </flex-row-g>
+                        <flex-row-g class="jsLogInShowOnBusyTarget centered">
                             <simple-loader-m></simple-loader-m>
-                        </flex-row>
+                        </flex-row-g>
                     </button>
                 </flex-column>
             </form>
@@ -323,12 +323,12 @@ class Header extends HTMLElement {
                     <button class="ui-button ui-widget ui-corner-all" type="submit"
                         style="min-height: 1.5rem !important; width: 103%;">
 
-                        <flex-row class="jsRegisterHideOnBusyTarget centered">
+                        <flex-row-g class="jsRegisterHideOnBusyTarget centered">
                             Register
-                        </flex-row>
-                        <flex-row class="jsRegisterShowOnBusyTarget centered">
+                        </flex-row-g>
+                        <flex-row-g class="jsRegisterShowOnBusyTarget centered">
                             <simple-loader-m></simple-loader-m>
-                        </flex-row>
+                        </flex-row-g>
                     </button>
                 </flex-column>
             </form>
