@@ -1,7 +1,9 @@
-interrogatePrerequisites([
-    "Modal",
-    "PushNotifs"
-]);
+$(document).ready(function(){
+    interrogatePrerequisites([
+        "Modal",
+        "PushNotifs"
+    ]);
+});
 
 class Header extends HTMLElement {
     constructor() {
@@ -13,7 +15,7 @@ class Header extends HTMLElement {
 
     modalLock = false;
 
-    static collapsibleImgXPath = "../res/img/navbar/X-symbol-white.png";
+    static collapsibleImgXPath = "../res/img/navbar/X-symbol-white.png"; // There's loading problems with header images, but oh well
     static collapsibleImgMenuPath = "../res/img/navbar/icons8.com-hamburger-menu-50-white.png";
 
     static logInModal = null;
@@ -577,5 +579,8 @@ class Header extends HTMLElement {
         Header.registerModal.hideModal();
     }
 }
+
+loadImage(Header.collapsibleImgXPath);
+loadImage(Header.collapsibleImgMenuPath);
 
 customElements.define('header-component', Header);

@@ -86,6 +86,7 @@ flex-column, flex-column-g{
 }
 
 flex-column-g{
+	flex-basis: 0em;
 	flex-grow: 1 !important;
 }
 

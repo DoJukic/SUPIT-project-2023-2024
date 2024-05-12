@@ -7,6 +7,8 @@ var tokenTimeout = null; // Holds the timeout ID which we can use to delete the 
 var chapterObserver= null;
 var chapterObserverActiveElements = [];
 
+var imageLoadArray = [];
+
 // https://stackoverflow.com/questions/13637223/how-do-you-make-a-div-tabbable (awokeKnowing's answer, slightly modified to avoid depreciated methods)
 $(document).on('keydown',function(e){
   if(Boolean(this.activeElement) && (e.code=="Enter" || e.code=="Space") && this.activeElement.hasAttribute("tabindex")){
@@ -18,6 +20,8 @@ $(document).on('keydown',function(e){
 subscribeToAccessTokenExpired(removeAccessToken);
 subscribeToAccessTokenChange(checkTokenTimeout);
 checkTokenTimeout();
+
+loadImage("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png");
 
 /* ---------------------------------------- FUNCTIONS ---------------------------------------- */
 
@@ -65,6 +69,14 @@ function interrogatePrerequisites(stringNames){
   });
 }
 
+// Force loading so images usually hidden don't get aborted and end up having to wait for a video or something to get displayed
+function loadImage(path){
+  console.log(path);
+  var img = new Image();
+  img.src = path;
+  imageLoadArray.push(img)
+}
+
 function setBooleanAttribute(element, attribute, inputBoolean){
   element.setAttribute("data-" + attribute, inputBoolean ? "y" : "n")
 }
@@ -105,6 +117,7 @@ $(document).ready(function(){
 
 /* -------------------- TYPEWRITER ANIMATION -------------------- */
 
+// This is kind of a mess, but it does work
 $(document).ready(function(){
   $(".jsLogicTypewriterTarget").each(function(){
     var rowList = [];
@@ -112,7 +125,7 @@ $(document).ready(function(){
 
     var rowDelay = getIntAttribute(this, "typewriter-row-delay-ms");
     if(rowDelay == null){
-      rowDelay = 500;
+      rowDelay = 800;
     }
 
     var elementDelay = getIntAttribute(this, "typewriter-letter-delay-ms");
@@ -170,8 +183,7 @@ function typewriterHandleRow(rowsActual, rowArray, rowProgress, rowDelay, elemen
   }; // The world, at my fingertips
 
   if(rowArray[rowProgress].constructor === Array){
-    setTimeout(() => typewriterHandleElement(rowArray[rowProgress], 0, elementDelay, finished)
-    , elementDelay);
+    setTimeout(() => typewriterHandleElement(rowArray[rowProgress], 0, elementDelay, finished), elementDelay);
     return;
   }
 

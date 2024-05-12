@@ -10,22 +10,23 @@
         
 		<link rel="icon" type="image/png" href="../res/img/favicon.png" />
 		<link rel="stylesheet" type="text/css" href="../res/custom_style.css" />
-        
-        <script src="main_logic.js" type="text/javascript" defer></script>
     
         <script src="../res/jquery-3.7.1.min.js"></script>
+        
+        <script src="main_logic.js" type="text/javascript"></script>
 
         <!-- Jquery UI -->
 		<link rel="stylesheet" href="../res/jquery-ui-1.13.2.custom/jquery-ui.css">
 		<script src="../res/jquery-ui-1.13.2.custom/external/jquery/jquery.js"></script>
 		<script src="../res/jquery-ui-1.13.2.custom/jquery-ui.js"></script>
 
-        <!-- Components-->
+        <!-- Components -->
         <script src="components/modal.js" type="text/javascript" defer></script>
         <script src="components/push_notifications.js" type="text/javascript" defer></script>
-        <script src="components/header.js" type="text/javascript" defer></script>
         <script src="components/footer.js" type="text/javascript" defer></script>
         <script src="components/scroll_to_top.js" type="text/javascript" defer></script>
+        
+        <script src="components/header.js" type="text/javascript"></script> <!-- Header look can break if defered with lower end connection (does defer mess with ready?) -->
 
         <script>
 			$(document).ready(function () {
@@ -42,11 +43,9 @@
             <div style="overflow: hidden; background-color: black;">
                 <div class="centered">
                     <flex-column class="jsLogicTypewriterTarget navElementVisual defaultPadding"
-                        style="width: calc(100% - 1px); position: absolute; font-size: 3rem; background-color: rgba(0, 0, 0, 0.75); padding-left: 0px; padding-right: 0px;"
-                        data-typewriter-delay-ms="100">
+                        style="width: calc(100% - 1px); position: absolute; font-size: 3rem; padding-left: 0px; padding-right: 0px;">
 
-                        <flex-row class="typewriterEffectRow"
-                            style="mix-blend-mode: difference;">
+                        <flex-row class="typewriterEffectRow">
 
                             <flex-row class="typewriterEffectWord">
                                 <div>W</div><div>E</div><div>L</div><div>C</div><div>O</div><div>M</div><div>E</div>
@@ -66,7 +65,7 @@
                         </flex-row>
 
                         <flex-row class="typewriterEffectRow"
-                            style="mix-blend-mode: difference; color: var(--theme-primary-color);">
+                            style="color: var(--theme-primary-color);">
 
                             <flex-row class="typewriterEffectWord">
                                 <div>L</div><div>I</div><div>G</div><div>H</div><div>T</div>
@@ -95,62 +94,34 @@
                 </div>
             </div>
 
-            <chapter-title>ABOUT US</chapter-title>
-            <flex-column class="jsLogicChapterAnimationTarget defaultGap">
-                <div>
-                    Bacon ipsum dolor amet bacon ball tip swine fatback boudin cow ribeye ham shoulder. Boudin bresaola tri-tip pork belly brisket meatloaf cow beef sausage filet mignon. Tail beef tenderloin porchetta spare ribs kielbasa ham hock tongue. Turducken ham meatball, andouille meatloaf shankle swine ribeye spare ribs turkey porchetta.
-                </div>
-                <div>
-                    Bresaola sausage beef short ribs, tail jerky beef ribs ball tip flank venison doner jowl pork belly filet mignon tenderloin. Alcatra shankle drumstick, ball tip bresaola jowl pork loin buffalo burgdoggen meatloaf meatball tenderloin swine pork chop hamburger. Fatback pastrami tri-tip biltong chuck tenderloin corned beef bresaola. Pork chop pancetta tenderloin pastrami strip steak hamburger. Ham short ribs jerky t-bone, landjaeger pork shoulder buffalo. Sausage landjaeger frankfurter short loin shankle pig.
-                </div>
-                <div>
-                    Jowl meatball tail kielbasa swine, beef ribs porchetta alcatra ham hock. Drumstick kielbasa capicola tri-tip tail flank doner ham shankle, bacon kevin boudin chislic. Bacon bresaola beef ribs ground round, rump ball tip pork belly sirloin swine flank andouille. Prosciutto frankfurter chislic ham pig picanha. Shank strip steak burgdoggen porchetta pig pork loin pork chop chuck meatloaf ham.
-                </div>
-                <div>
-                    Beef ribs spare ribs drumstick brisket. Salami drumstick chicken beef ribs. Meatball doner tenderloin tail. Alcatra short ribs buffalo, jerky tri-tip shankle turkey shoulder. Short ribs pork belly cow t-bone andouille. Andouille cupim ribeye burgdoggen ground round corned beef kielbasa sirloin ham hock t-bone.
-                </div>
-                <div>
-                    Cupim beef sausage, shoulder burgdoggen meatloaf jowl. Spare ribs shankle meatball beef turducken. Jerky venison hamburger turkey boudin spare ribs, rump salami pork chop bacon corned beef capicola. Short loin chislic tenderloin sirloin, ham hock pork loin doner ham. Shankle tail kevin jerky.
-                </div>
-            </flex-column>
-
-            <chapter-title>NEWS</chapter-title>
-            <flex-column class="jsLogicChapterAnimationTarget defaultGap">
-                <div>
-                    Bacon ipsum dolor amet bacon ball tip swine fatback boudin cow ribeye ham shoulder. Boudin bresaola tri-tip pork belly brisket meatloaf cow beef sausage filet mignon. Tail beef tenderloin porchetta spare ribs kielbasa ham hock tongue. Turducken ham meatball, andouille meatloaf shankle swine ribeye spare ribs turkey porchetta.
-                </div>
-                <div>
-                    Bresaola sausage beef short ribs, tail jerky beef ribs ball tip flank venison doner jowl pork belly filet mignon tenderloin. Alcatra shankle drumstick, ball tip bresaola jowl pork loin buffalo burgdoggen meatloaf meatball tenderloin swine pork chop hamburger. Fatback pastrami tri-tip biltong chuck tenderloin corned beef bresaola. Pork chop pancetta tenderloin pastrami strip steak hamburger. Ham short ribs jerky t-bone, landjaeger pork shoulder buffalo. Sausage landjaeger frankfurter short loin shankle pig.
-                </div>
-                <div>
-                    Jowl meatball tail kielbasa swine, beef ribs porchetta alcatra ham hock. Drumstick kielbasa capicola tri-tip tail flank doner ham shankle, bacon kevin boudin chislic. Bacon bresaola beef ribs ground round, rump ball tip pork belly sirloin swine flank andouille. Prosciutto frankfurter chislic ham pig picanha. Shank strip steak burgdoggen porchetta pig pork loin pork chop chuck meatloaf ham.
-                </div>
-                <div>
-                    Beef ribs spare ribs drumstick brisket. Salami drumstick chicken beef ribs. Meatball doner tenderloin tail. Alcatra short ribs buffalo, jerky tri-tip shankle turkey shoulder. Short ribs pork belly cow t-bone andouille. Andouille cupim ribeye burgdoggen ground round corned beef kielbasa sirloin ham hock t-bone.
-                </div>
-                <div>
-                    Cupim beef sausage, shoulder burgdoggen meatloaf jowl. Spare ribs shankle meatball beef turducken. Jerky venison hamburger turkey boudin spare ribs, rump salami pork chop bacon corned beef capicola. Short loin chislic tenderloin sirloin, ham hock pork loin doner ham. Shankle tail kevin jerky.
-                </div>
-            </flex-column>
-
-            <chapter-title>CONTACT US</chapter-title>
-            <flex-column class="jsLogicChapterAnimationTarget defaultGap">
-                <div>
-                    Bacon ipsum dolor amet bacon ball tip swine fatback boudin cow ribeye ham shoulder. Boudin bresaola tri-tip pork belly brisket meatloaf cow beef sausage filet mignon. Tail beef tenderloin porchetta spare ribs kielbasa ham hock tongue. Turducken ham meatball, andouille meatloaf shankle swine ribeye spare ribs turkey porchetta.
-                </div>
-                <div>
-                    Bresaola sausage beef short ribs, tail jerky beef ribs ball tip flank venison doner jowl pork belly filet mignon tenderloin. Alcatra shankle drumstick, ball tip bresaola jowl pork loin buffalo burgdoggen meatloaf meatball tenderloin swine pork chop hamburger. Fatback pastrami tri-tip biltong chuck tenderloin corned beef bresaola. Pork chop pancetta tenderloin pastrami strip steak hamburger. Ham short ribs jerky t-bone, landjaeger pork shoulder buffalo. Sausage landjaeger frankfurter short loin shankle pig.
-                </div>
-                <div>
-                    Jowl meatball tail kielbasa swine, beef ribs porchetta alcatra ham hock. Drumstick kielbasa capicola tri-tip tail flank doner ham shankle, bacon kevin boudin chislic. Bacon bresaola beef ribs ground round, rump ball tip pork belly sirloin swine flank andouille. Prosciutto frankfurter chislic ham pig picanha. Shank strip steak burgdoggen porchetta pig pork loin pork chop chuck meatloaf ham.
-                </div>
-                <div>
-                    Beef ribs spare ribs drumstick brisket. Salami drumstick chicken beef ribs. Meatball doner tenderloin tail. Alcatra short ribs buffalo, jerky tri-tip shankle turkey shoulder. Short ribs pork belly cow t-bone andouille. Andouille cupim ribeye burgdoggen ground round corned beef kielbasa sirloin ham hock t-bone.
-                </div>
-                <div>
-                    Cupim beef sausage, shoulder burgdoggen meatloaf jowl. Spare ribs shankle meatball beef turducken. Jerky venison hamburger turkey boudin spare ribs, rump salami pork chop bacon corned beef capicola. Short loin chislic tenderloin sirloin, ham hock pork loin doner ham. Shankle tail kevin jerky.
-                </div>
-            </flex-column>
+            <flex-row-g>
+                <flex-column-g class="jsLogicChapterAnimationTarget defaultGap">
+                    <chapter-title>ABOUT US</chapter-title>
+                    <div>
+                        Bacon ipsum dolor amet bacon ball tip swine fatback boudin cow ribeye ham shoulder. Boudin bresaola tri-tip pork belly brisket meatloaf cow beef sausage filet mignon. Tail beef tenderloin porchetta spare ribs kielbasa ham hock tongue. Turducken ham meatball, andouille meatloaf shankle swine ribeye spare ribs turkey porchetta.
+                    </div>
+                    <div>
+                        Bresaola sausage beef short ribs, tail jerky beef ribs ball tip flank venison doner jowl pork belly filet mignon tenderloin. Alcatra shankle drumstick, ball tip bresaola jowl pork loin buffalo burgdoggen meatloaf meatball tenderloin swine pork chop hamburger. Fatback pastrami tri-tip biltong chuck tenderloin corned beef bresaola. Pork chop pancetta tenderloin pastrami strip steak hamburger. Ham short ribs jerky t-bone, landjaeger pork shoulder buffalo. Sausage landjaeger frankfurter short loin shankle pig.
+                    </div>
+                </flex-column-g>
+    
+                <flex-column-g class="jsLogicChapterAnimationTarget defaultGap">
+                    <chapter-title>NEWS</chapter-title>
+                    <div>
+                        Bacon ipsum dolor amet bacon ball tip swine fatback boudin cow ribeye ham shoulder. Boudin bresaola tri-tip pork belly brisket meatloaf cow beef sausage filet mignon. Tail beef tenderloin porchetta spare ribs kielbasa ham hock tongue. Turducken ham meatball, andouille meatloaf shankle swine ribeye spare ribs turkey porchetta.
+                    </div>
+                    <div>
+                        Bresaola sausage beef short ribs, tail jerky beef ribs ball tip flank venison doner jowl pork belly filet mignon tenderloin. Alcatra shankle drumstick, ball tip bresaola jowl pork loin buffalo burgdoggen meatloaf meatball tenderloin swine pork chop hamburger. Fatback pastrami tri-tip biltong chuck tenderloin corned beef bresaola. Pork chop pancetta tenderloin pastrami strip steak hamburger. Ham short ribs jerky t-bone, landjaeger pork shoulder buffalo. Sausage landjaeger frankfurter short loin shankle pig.
+                    </div>
+                </flex-column-g>
+    
+                <flex-column-g class="jsLogicChapterAnimationTarget defaultGap">
+                    <chapter-title>CONTACT US</chapter-title>
+                    <div>
+                        Bacon ipsum dolor amet bacon ball tip swine fatback boudin cow ribeye ham shoulder. Boudin bresaola tri-tip pork belly brisket meatloaf cow beef sausage filet mignon. Tail beef tenderloin porchetta spare ribs kielbasa ham hock tongue. Turducken ham meatball, andouille meatloaf shankle swine ribeye spare ribs turkey porchetta.
+                    </div>
+                </flex-column-g>
+            </flex-row-g>
         </main>
 
         <footer-component></footer-component>
