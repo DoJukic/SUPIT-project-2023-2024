@@ -63,7 +63,7 @@ function interrogatePrerequisites(stringNames){
         console.warn(`Prerequisite script (${this}) reports bad init!`);
       }
     }catch(ex){
-      console.warn("Prerequisite scripts may be missing, please include before component.");
+      console.warn("Prerequisite scripts may be missing.");
       console.warn(ex);
     }
   });

@@ -25,7 +25,7 @@ class Header extends HTMLElement {
 
     static singleton = null;
 
-    // We can use lit-html to see html formatting in strings like this one (hence the "html" in front of various strings)
+    // We can use lit-html to see html formatting in strings like this one - hence the "html" in front of various strings (The lit-html VSC extension, not lit components)
     // Backticks, not single quotes
     static normalHeaderData = 
     html`
