@@ -17,11 +17,13 @@ class ScrollToTop extends HTMLElement {
 
         this.innerHTML =
             html`
-            <flex-row-g style="align-items: flex-end;">
+            <flex-row class="fGrow"
+                style="align-items: flex-end;">
+                
                 <img class="sttRotateOnTopDistance scrollToTopImage" src="../res/img/scroll_to_top.png"
                     style="width: 40px; height: 40px; pointer-events: auto; opacity: 0.75; cursor: pointer;">
                 <stt-simple-spacer style="display:block; width:30px;"></stt-simple-spacer>
-            </flex-row-g>
+            </flex-row>
             <stt-simple-spacer style="display:block; height:20px;"></stt-simple-spacer>
         `;
 

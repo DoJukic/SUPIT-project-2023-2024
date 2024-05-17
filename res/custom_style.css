@@ -1,20 +1,19 @@
-:root{
-	/* https://stackoverflow.com/questions/37801882/how-to-change-css-root-color-variables-in-javascript (Deadalus's answer) */
+html{
 	--theme-primary-color: rgb(226, 117, 38);
 	--theme-secondary-color: rgb(194, 27, 103);
 	
 	/*
-	--theme-header-bg-color: rgb(255, 255, 255);
-	--theme-header-shadow-color: rgb(255, 255, 255);
-	--theme-header-border-color: rgb(100, 100, 100);
-	--theme-header-text-color: rgb(15, 15, 15);
+	--theme-alt-bg-color: rgb(255, 255, 255);
+	--theme-alt-shadow-color: rgb(255, 255, 255);
+	--theme-alt-border-color: rgb(100, 100, 100);
+	--theme-alt-text-color: rgb(15, 15, 15);
 	*/
 	--theme-icon-path: url("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png");
 	
-	--theme-header-bg-color: rgb(15, 15, 15);
-	--theme-header-shadow-color: rgb(0, 0, 0);
-	--theme-header-border-color: rgb(100, 100, 100);
-	--theme-header-text-color: rgb(255, 255, 255);
+	--theme-alt-bg-color: rgb(15, 15, 15);
+	--theme-alt-shadow-color: rgb(0, 0, 0);
+	--theme-alt-border-color: rgb(100, 100, 100);
+	--theme-alt-text-color: rgb(255, 255, 255);
 	
 	--theme-bg-color: rgb(30, 30, 30);
 	--theme-shadow-color: rgb(0, 2505, 0);
@@ -29,19 +28,26 @@
 	--theme-margin: 2rem;
 
 	--theme-gap: 1rem;
-	--theme-basis: 23rem;
+	--theme-basis: 26rem;
+}
+
+/* TODO */
+/* theme is set with JS */
+html [theme=light]{
+
+}
+
+html{
+	color: var(--theme-text-color)
 }
 
 html,
 body {
+	min-height:100vh;
     margin: 0;
     padding: 0;
-}
 
-html{
-	height:100%;
-
-	color: var(--theme-text-color)
+	overflow-x: hidden;
 }
 
 body {
@@ -51,7 +57,7 @@ body {
     display: flex;
     flex-direction: column;
 	
-    min-height: 100%;
+	overflow: auto;
     
     animation: fadeInAnim ease 1s;
     animation-iteration-count: 1;
@@ -70,24 +76,14 @@ main {
     align-items: center;
 }
 
-flex-row, flex-row-g{
-    flex: 0 1 0;
+flex-row{
     display: flex;
     flex-direction: row;
 }
 
-flex-row-g{
-	flex-grow: 1 !important;
-}
-
-flex-column, flex-column-g{
+flex-column{
     display: flex;
     flex-direction: column;
-}
-
-flex-column-g{
-	flex-basis: 0em;
-	flex-grow: 1 !important;
 }
 
 flex-spacer{
@@ -100,7 +96,7 @@ https://www.w3schools.com/howto/howto_css_loader.asp
 animation will stutter when display is changed to flex from css, or maybe it's caused by the fade in animation?
 */
 simple-loader, simple-loader-m {
-	border: 0.3em solid var(--theme-header-border-color);
+	border: 0.3em solid var(--theme-alt-border-color);
 	border-radius: 50%;
 	border-top: 0.3em solid var(--theme-secondary-color);
 	border-bottom: 0.3em solid var(--theme-primary-color);
@@ -115,23 +111,6 @@ simple-loader-m {
 br-half{
 	display:block;
 	margin-top: 0.5em;
-}
-
-.typewriterEffectRow{
-    display: none;
-    justify-content: center;
-    align-items: center;
-
-	flex-grow: 0;
-	flex-wrap: wrap;
-}
-
-.typewriterEffectWord{
-    display: none;
-    justify-content: center;
-    align-items: center;
-
-	flex-grow: 0;
 }
 
 console-mimic, console-mimic-anim{
@@ -164,6 +143,45 @@ chapter-title{
 
 	border-bottom: 1px solid var(--theme-primary-color);
 }
+
+/* -------------------- SHORTHAND -------------------- */
+
+.fWrap{
+	flex-wrap: wrap;
+}
+.fGrow{
+	flex-grow: 1;
+}
+.fEqGrow{
+	flex-basis: 0em;
+	flex-grow: 1;
+}
+
+/* -------------------- TYPEWRITER -------------------- */
+
+.jsTypewriterRowTarget{
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+	flex-grow: 0;
+	flex-wrap: wrap;
+}
+
+.jsTypewriterWordTarget{
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+	flex-grow: 0;
+}
+
+/* -------------------- CHAPTER ANIMATIONS -------------------- */
+
+.jsLogicElementAnimationTarget{
+	will-change: auto;
+}
+
 
 /* -------------------- VALUES -------------------- */
 
@@ -290,7 +308,7 @@ push-notifications-component{
 }
 
 push-notification{
-	box-shadow: 2px 2px 4px var(--theme-header-shadow-color);
+	box-shadow: 2px 2px 4px var(--theme-alt-shadow-color);
 
 	width: calc(10rem + 10%);
 	min-height: 4rem;
@@ -301,7 +319,7 @@ push-notification{
 	background-color: var(--theme-bg-color);
 	color: var(--theme-text-color);
 
-	border: 1px solid var(--theme-header-border-color);
+	border: 1px solid var(--theme-alt-border-color);
 
 	pointer-events: auto;
 	
@@ -363,8 +381,8 @@ modal-component:not(:has(flex-column:hover)):hover{
 header {
 	overflow: hidden;
 
-	background-color: var(--theme-header-bg-color);
-	color: var(--theme-header-text-color);
+	background-color: var(--theme-alt-bg-color);
+	color: var(--theme-alt-text-color);
 
 	display: flex;
 	text-align: center;
@@ -399,13 +417,13 @@ nav-element {
 
 /* sne -> selectable nav element, the name was getting a touch too long */
 .sneBorderRight{
-	border-right: 1px solid var(--theme-header-border-color);
+	border-right: 1px solid var(--theme-alt-border-color);
 }
 .sneBorderLeft{
-	border-left: 1px solid var(--theme-header-border-color);
+	border-left: 1px solid var(--theme-alt-border-color);
 }
 .sneBorderBottom{
-	border-bottom: 1px solid var(--theme-header-border-color);
+	border-bottom: 1px solid var(--theme-alt-border-color);
 }
 
 .selectableNavElementChapter{
@@ -430,7 +448,7 @@ Otherwise color seems to be whatever is last in the .css file
 
 .selectableNavElement{
 	cursor: pointer !important;
-	border: 1px solid var(--theme-header-border-color);
+	border: 1px solid var(--theme-alt-border-color);
 }
 .selectableNavElement:hover{
 	background-color:var(--theme-primary-color);
@@ -456,9 +474,9 @@ footer{
 
 	text-align: center;
 
-	background-color: var(--theme-header-bg-color);
-	color: var(--theme-header-text-color);
-	border-top: 1px solid var(--theme-header-border-color);
+	background-color: var(--theme-alt-bg-color);
+	color: var(--theme-alt-text-color);
+	border-top: 1px solid var(--theme-alt-border-color);
 	padding: 2em;
 }
 

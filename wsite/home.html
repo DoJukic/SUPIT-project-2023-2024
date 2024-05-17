@@ -23,10 +23,10 @@
         <!-- Components -->
         <script src="components/modal.js" type="text/javascript" defer></script>
         <script src="components/push_notifications.js" type="text/javascript" defer></script>
+        <script src="components/header.js" type="text/javascript" defer></script>
         <script src="components/footer.js" type="text/javascript" defer></script>
         <script src="components/scroll_to_top.js" type="text/javascript" defer></script>
         
-        <script src="components/header.js" type="text/javascript"></script> <!-- Header look can break if defered with lower end connection (does defer mess with ready?) -->
 
         <script>
 			$(document).ready(function () {
@@ -40,88 +40,232 @@
         <header-component></header-component>
 
         <main>
+            <flex-row class="fEqGrow fWrap defaultGap">
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>ABOUT US</chapter-title>
+                    <div>
+                        Algebra University is part of the largest private educational organization in the Republic of Croatia and the region, present in more than 20 cities throughout Croatia. Our robust mission is to open doors for both Croatian and international students, empowering them with top-notch skills and knowledge to forge globally competitive careers in digital technologies. We are dedicated to shaping Croatia’s digital future, fostering economic growth, and advancing overall economic development. Thus, we persistently craft innovative and competitive study programmes, anticipating the careers of tomorrow.
+                    </div>
+                </flex-column>
+    
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>NEWS</chapter-title>
+                    <div>
+                        Our world is a very active place, if you intend to stay in the loop you might want to take a peek at our news section, where you can browse recent and old events at your leisure.
+                    </div>
+                </flex-column>
+    
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>CONTACT US</chapter-title>
+                    <div>
+                        Do you by any chance have a revolutionary idea that may or may not change the world for better and/or for the worse? Do you need help with your homework? Do you want to borrow some books from the library? If so, you've set your eyes upon the correct place! In the contact us section you can will your dreams into existence! Will only a few button presses, our expert paper shredder operator will immediately begin dismissing your request because this isn't the actual algebra page - that's right, with this one time offer you can reach us half the time -  all the time!
+                    </div>
+                </flex-column>
+            </flex-row>
+
             <div style="overflow: hidden; background-color: black;">
                 <div class="centered">
                     <flex-column class="jsLogicTypewriterTarget navElementVisual defaultPadding"
-                        style="width: calc(100% - 1px); position: absolute; font-size: 3rem; padding-left: 0px; padding-right: 0px;">
+                        style="width: calc(100% - 2px); position: absolute; font-size: 3rem; padding-left: 0px; padding-right: 0px; mix-blend-mode: difference;">
 
-                        <flex-row class="typewriterEffectRow">
-
-                            <flex-row class="typewriterEffectWord">
+                        <flex-row class="jsTypewriterRowTarget">
+                            <flex-row class="jsTypewriterWordTarget">
                                 <div>W</div><div>E</div><div>L</div><div>C</div><div>O</div><div>M</div><div>E</div>
                             </flex-row>
 
                             <div style="width: 0.3em"></div>
 
-                            <flex-row class="typewriterEffectWord">
+                            <flex-row class="jsTypewriterWordTarget">
                                 <div>T</div><div>O</div>
                             </flex-row>
 
                             <div style="width: 0.3em"></div>
                             
-                            <flex-row class="typewriterEffectWord">
+                            <flex-row class="jsTypewriterWordTarget">
                                 <div>A</div><div>L</div><div>G</div><div>E</div><div>B</div><div>R</div><div>A</div>
                             </flex-row>
                         </flex-row>
 
-                        <flex-row class="typewriterEffectRow"
+                        <flex-row class="jsTypewriterRowTarget"
                             style="color: var(--theme-primary-color);">
 
-                            <flex-row class="typewriterEffectWord">
+                            <flex-row class="jsTypewriterWordTarget">
                                 <div>L</div><div>I</div><div>G</div><div>H</div><div>T</div>
                             </flex-row>
 
                             <div style="width: 0.3em"></div>
 
-                            <flex-row class="typewriterEffectWord">
+                            <flex-row class="jsTypewriterWordTarget">
                                 <div>T</div><div>H</div><div>E</div>
                             </flex-row>
 
                             <div style="width: 0.3em"></div>
                             
-                            <flex-row class="typewriterEffectWord"">
+                            <flex-row class="jsTypewriterWordTarget">
                                 <div>S</div><div>P</div><div>A</div><div>R</div><div>K</div><div>.</div>
                             </flex-row>
                         </flex-row>
                     </flex-column>
 
-                    <!-- autoplay might be blocked on some browsers -->
+                    <!-- autoplay might be blocked on some browsers, and some browsers might not be able to play mp4 -->
                     <!-- I realised too late that the footage actually looks kinda bad -->
                     <!-- we could probably get a better version somewhere as this was just ripped from youtube -->
-                    <video autoplay muted loop poster="../res/video/CampusFlyover/poster_CROP.jpg" style="max-height: 85vh">
-                        <source src="../res/video/CampusFlyover/Campus_Flyover_1080pFHR_CROP_WEB.mp4" type="video/mp4">
+                    <video class="lateLoad" autoplay muted loop poster="../res/video/CampusFlyover/poster_CROP.jpg" style="max-height: 85vh"
+                        data-lateload-src="../res/video/CampusFlyover/Campus_Flyover_1080pFHR_CROP_WEB.mp4">
                     </video>
                 </div>
             </div>
 
-            <flex-row-g>
-                <flex-column-g class="jsLogicChapterAnimationTarget defaultGap">
+            <flex-row class="fEqGrow fWrap defaultGap">
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
                     <chapter-title>ABOUT US</chapter-title>
                     <div>
-                        Bacon ipsum dolor amet bacon ball tip swine fatback boudin cow ribeye ham shoulder. Boudin bresaola tri-tip pork belly brisket meatloaf cow beef sausage filet mignon. Tail beef tenderloin porchetta spare ribs kielbasa ham hock tongue. Turducken ham meatball, andouille meatloaf shankle swine ribeye spare ribs turkey porchetta.
+                        Algebra University is part of the largest private educational organization in the Republic of Croatia and the region, present in more than 20 cities throughout Croatia. Our robust mission is to open doors for both Croatian and international students, empowering them with top-notch skills and knowledge to forge globally competitive careers in digital technologies. We are dedicated to shaping Croatia’s digital future, fostering economic growth, and advancing overall economic development. Thus, we persistently craft innovative and competitive study programmes, anticipating the careers of tomorrow.
                     </div>
                     <div>
-                        Bresaola sausage beef short ribs, tail jerky beef ribs ball tip flank venison doner jowl pork belly filet mignon tenderloin. Alcatra shankle drumstick, ball tip bresaola jowl pork loin buffalo burgdoggen meatloaf meatball tenderloin swine pork chop hamburger. Fatback pastrami tri-tip biltong chuck tenderloin corned beef bresaola. Pork chop pancetta tenderloin pastrami strip steak hamburger. Ham short ribs jerky t-bone, landjaeger pork shoulder buffalo. Sausage landjaeger frankfurter short loin shankle pig.
+                        Founded in 1998, Algebra currently boasts a workforce of over 230 permanent staff members and collaborates with more than 600 external partners. Every year, we provide education to around 15,000 participants through a diverse range of seminars and short adult education programmes. Simultaneously, we admit over 650 new full-time students annually in various higher education fields.
                     </div>
-                </flex-column-g>
+                </flex-column>
     
-                <flex-column-g class="jsLogicChapterAnimationTarget defaultGap">
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
                     <chapter-title>NEWS</chapter-title>
                     <div>
-                        Bacon ipsum dolor amet bacon ball tip swine fatback boudin cow ribeye ham shoulder. Boudin bresaola tri-tip pork belly brisket meatloaf cow beef sausage filet mignon. Tail beef tenderloin porchetta spare ribs kielbasa ham hock tongue. Turducken ham meatball, andouille meatloaf shankle swine ribeye spare ribs turkey porchetta.
+                        Our world is a very active place, if you intend to stay in the loop you might want to take a peek at our news section, where you can browse recent and old events at your leisure.
                     </div>
                     <div>
-                        Bresaola sausage beef short ribs, tail jerky beef ribs ball tip flank venison doner jowl pork belly filet mignon tenderloin. Alcatra shankle drumstick, ball tip bresaola jowl pork loin buffalo burgdoggen meatloaf meatball tenderloin swine pork chop hamburger. Fatback pastrami tri-tip biltong chuck tenderloin corned beef bresaola. Pork chop pancetta tenderloin pastrami strip steak hamburger. Ham short ribs jerky t-bone, landjaeger pork shoulder buffalo. Sausage landjaeger frankfurter short loin shankle pig.
+                        Here you can also keep an eye on various programs and similar opportuninites, as our countless partnerships and initiatives bring together the brightest minds of our generation. Why would anyone read this far? It's all gibberish anyways. don't you have better things to be doing right now? And this is why Algebra is the number one university in Croatia!
                     </div>
-                </flex-column-g>
+                </flex-column>
     
-                <flex-column-g class="jsLogicChapterAnimationTarget defaultGap">
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
                     <chapter-title>CONTACT US</chapter-title>
                     <div>
-                        Bacon ipsum dolor amet bacon ball tip swine fatback boudin cow ribeye ham shoulder. Boudin bresaola tri-tip pork belly brisket meatloaf cow beef sausage filet mignon. Tail beef tenderloin porchetta spare ribs kielbasa ham hock tongue. Turducken ham meatball, andouille meatloaf shankle swine ribeye spare ribs turkey porchetta.
+                        Do you by any chance have a revolutionary idea that may or may not change the world for better and/or for the worse? Do you need help with your homework? Do you want to borrow some books from the library? If so, you've set your eyes upon the correct place! In the contact us section you can will your dreams into existence! Will only a few button presses, our expert paper shredder operator will immediately begin dismissing your request because this isn't the actual algebra page - that's right, with this one time offer you can reach us half the time -  all the time!
                     </div>
-                </flex-column-g>
-            </flex-row-g>
+                    <div>
+                        Is this not enough for you? Do you want more? Do you want to get physical?? If so, you can also find the working hours for our student and intenational offices, free of charge! Don't believe me? Come and take a look for yourself.
+                    </div>
+                </flex-column>
+            </flex-row>
+
+            <flex-row class="fEqGrow fWrap defaultGap">
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>ABOUT US</chapter-title>
+                    <div>
+                        Algebra University is part of the largest private educational organization in the Republic of Croatia and the region, present in more than 20 cities throughout Croatia. Our robust mission is to open doors for both Croatian and international students, empowering them with top-notch skills and knowledge to forge globally competitive careers in digital technologies. We are dedicated to shaping Croatia’s digital future, fostering economic growth, and advancing overall economic development. Thus, we persistently craft innovative and competitive study programmes, anticipating the careers of tomorrow.
+                    </div>
+                    <div>
+                        Founded in 1998, Algebra currently boasts a workforce of over 230 permanent staff members and collaborates with more than 600 external partners. Every year, we provide education to around 15,000 participants through a diverse range of seminars and short adult education programmes. Simultaneously, we admit over 650 new full-time students annually in various higher education fields.
+                    </div>
+                </flex-column>
+    
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>NEWS</chapter-title>
+                    <div>
+                        Our world is a very active place, if you intend to stay in the loop you might want to take a peek at our news section, where you can browse recent and old events at your leisure.
+                    </div>
+                    <div>
+                        Here you can also keep an eye on various programs and similar opportuninites, as our countless partnerships and initiatives bring together the brightest minds of our generation. Why would anyone read this far? It's all gibberish anyways. don't you have better things to be doing right now? And this is why Algebra is the number one university in Croatia!
+                    </div>
+                </flex-column>
+    
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>CONTACT US</chapter-title>
+                    <div>
+                        Do you by any chance have a revolutionary idea that may or may not change the world for better and/or for the worse? Do you need help with your homework? Do you want to borrow some books from the library? If so, you've set your eyes upon the correct place! In the contact us section you can will your dreams into existence! Will only a few button presses, our expert paper shredder operator will immediately begin dismissing your request because this isn't the actual algebra page - that's right, with this one time offer you can reach us half the time -  all the time!
+                    </div>
+                    <div>
+                        Is this not enough for you? Do you want more? Do you want to get physical?? If so, you can also find the working hours for our student and intenational offices, free of charge! Don't believe me? Come and take a look for yourself.
+                    </div>
+                </flex-column>
+            </flex-row>
+
+            <flex-row class="fEqGrow fWrap defaultGap">
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>ABOUT US</chapter-title>
+                    <div>
+                        Algebra University is part of the largest private educational organization in the Republic of Croatia and the region, present in more than 20 cities throughout Croatia. Our robust mission is to open doors for both Croatian and international students, empowering them with top-notch skills and knowledge to forge globally competitive careers in digital technologies. We are dedicated to shaping Croatia’s digital future, fostering economic growth, and advancing overall economic development. Thus, we persistently craft innovative and competitive study programmes, anticipating the careers of tomorrow.
+                    </div>
+                    <div>
+                        Founded in 1998, Algebra currently boasts a workforce of over 230 permanent staff members and collaborates with more than 600 external partners. Every year, we provide education to around 15,000 participants through a diverse range of seminars and short adult education programmes. Simultaneously, we admit over 650 new full-time students annually in various higher education fields.
+                    </div>
+                </flex-column>
+    
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>NEWS</chapter-title>
+                    <div>
+                        Our world is a very active place, if you intend to stay in the loop you might want to take a peek at our news section, where you can browse recent and old events at your leisure.
+                    </div>
+                    <div>
+                        Here you can also keep an eye on various programs and similar opportuninites, as our countless partnerships and initiatives bring together the brightest minds of our generation. Why would anyone read this far? It's all gibberish anyways. don't you have better things to be doing right now? And this is why Algebra is the number one university in Croatia!
+                    </div>
+                </flex-column>
+    
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>CONTACT US</chapter-title>
+                    <div>
+                        Do you by any chance have a revolutionary idea that may or may not change the world for better and/or for the worse? Do you need help with your homework? Do you want to borrow some books from the library? If so, you've set your eyes upon the correct place! In the contact us section you can will your dreams into existence! Will only a few button presses, our expert paper shredder operator will immediately begin dismissing your request because this isn't the actual algebra page - that's right, with this one time offer you can reach us half the time -  all the time!
+                    </div>
+                    <div>
+                        Is this not enough for you? Do you want more? Do you want to get physical?? If so, you can also find the working hours for our student and intenational offices, free of charge! Don't believe me? Come and take a look for yourself.
+                    </div>
+                </flex-column>
+            </flex-row>
+
+            <flex-row class="fEqGrow fWrap defaultGap">
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>ABOUT US</chapter-title>
+                    <div>
+                        Algebra University is part of the largest private educational organization in the Republic of Croatia and the region, present in more than 20 cities throughout Croatia. Our robust mission is to open doors for both Croatian and international students, empowering them with top-notch skills and knowledge to forge globally competitive careers in digital technologies. We are dedicated to shaping Croatia’s digital future, fostering economic growth, and advancing overall economic development. Thus, we persistently craft innovative and competitive study programmes, anticipating the careers of tomorrow.
+                    </div>
+                    <div>
+                        Founded in 1998, Algebra currently boasts a workforce of over 230 permanent staff members and collaborates with more than 600 external partners. Every year, we provide education to around 15,000 participants through a diverse range of seminars and short adult education programmes. Simultaneously, we admit over 650 new full-time students annually in various higher education fields.
+                    </div>
+                </flex-column>
+    
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>NEWS</chapter-title>
+                    <div>
+                        Our world is a very active place, if you intend to stay in the loop you might want to take a peek at our news section, where you can browse recent and old events at your leisure.
+                    </div>
+                    <div>
+                        Here you can also keep an eye on various programs and similar opportuninites, as our countless partnerships and initiatives bring together the brightest minds of our generation. Why would anyone read this far? It's all gibberish anyways. don't you have better things to be doing right now? And this is why Algebra is the number one university in Croatia!
+                    </div>
+                </flex-column>
+    
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>CONTACT US</chapter-title>
+                    <div>
+                        Do you by any chance have a revolutionary idea that may or may not change the world for better and/or for the worse? Do you need help with your homework? Do you want to borrow some books from the library? If so, you've set your eyes upon the correct place! In the contact us section you can will your dreams into existence! Will only a few button presses, our expert paper shredder operator will immediately begin dismissing your request because this isn't the actual algebra page - that's right, with this one time offer you can reach us half the time -  all the time!
+                    </div>
+                    <div>
+                        Is this not enough for you? Do you want more? Do you want to get physical?? If so, you can also find the working hours for our student and intenational offices, free of charge! Don't believe me? Come and take a look for yourself.
+                    </div>
+                </flex-column>
+            </flex-row>
+
+            <flex-row class="fEqGrow fWrap defaultGap">
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>ABOUT US</chapter-title>
+                    <div>
+                        Algebra University is part of the largest private educational organization in the Republic of Croatia and the region, present in more than 20 cities throughout Croatia. Our robust mission is to open doors for both Croatian and international students, empowering them with top-notch skills and knowledge to forge globally competitive careers in digital technologies. We are dedicated to shaping Croatia’s digital future, fostering economic growth, and advancing overall economic development. Thus, we persistently craft innovative and competitive study programmes, anticipating the careers of tomorrow.
+                    </div>
+                </flex-column>
+    
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>NEWS</chapter-title>
+                    <div>
+                        Our world is a very active place, if you intend to stay in the loop you might want to take a peek at our news section, where you can browse recent and old events at your leisure.
+                    </div>
+                </flex-column>
+    
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow defaultGap defaultSpacing defaultPadding">
+                    <chapter-title>CONTACT US</chapter-title>
+                    <div>
+                        Do you by any chance have a revolutionary idea that may or may not change the world for better and/or for the worse? Do you need help with your homework? Do you want to borrow some books from the library? If so, you've set your eyes upon the correct place! In the contact us section you can will your dreams into existence! Will only a few button presses, our expert paper shredder operator will immediately begin dismissing your request because this isn't the actual algebra page - that's right, with this one time offer you can reach us half the time -  all the time!
+                    </div>
+                </flex-column>
+            </flex-row>
         </main>
 
         <footer-component></footer-component>
