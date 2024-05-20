@@ -1,4 +1,4 @@
-html{
+:root{
 	--theme-primary-color: rgb(226, 117, 38);
 	--theme-secondary-color: rgb(194, 27, 103);
 	
@@ -10,31 +10,43 @@ html{
 	*/
 	--theme-icon-path: url("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png");
 	
-	--theme-alt-bg-color: rgb(15, 15, 15);
+	--theme-bg-color: rgb(20, 20, 20);
+	--theme-shadow-color: rgb(0, 0, 0);
+	--theme-border-color: rgb(100, 100, 100);
+	--theme-text-color: rgb(255, 255, 255);
+	
+	--theme-alt-bg-color: rgb(30, 30, 30);
 	--theme-alt-shadow-color: rgb(0, 0, 0);
 	--theme-alt-border-color: rgb(100, 100, 100);
 	--theme-alt-text-color: rgb(255, 255, 255);
-	
-	--theme-bg-color: rgb(30, 30, 30);
-	--theme-shadow-color: rgb(0, 2505, 0);
-	--theme-border-color: rgb(100, 100, 100);
-	--theme-text-color: rgb(255, 255, 255);
+
+	--theme-icon-filter: brightness(1);
 	
 	--theme-success-color: green;
 	--theme-info-color: blue;
 	--theme-error-color: red;
 
-	--theme-padding: 1rem;
+	--theme-padding: 2rem;
 	--theme-margin: 2rem;
 
-	--theme-gap: 1rem;
+	--theme-gap: 2rem;
 	--theme-basis: 26rem;
 }
 
-/* TODO */
+/* TODO, looks like shit - seperate header with other stuff */
 /* theme is set with JS */
-html [theme=light]{
-
+[data-theme=light]{
+	--theme-bg-color: rgb(245, 245, 245);
+	--theme-shadow-color: rgb(0, 0, 0);
+	--theme-border-color: rgb(100, 100, 100);
+	--theme-text-color: rgb(0, 0, 0);
+	
+	--theme-alt-bg-color: rgb(255, 255, 255);
+	--theme-alt-shadow-color: rgb(0, 0, 0);
+	--theme-alt-border-color: rgb(100, 100, 100);
+	--theme-alt-text-color: rgb(0, 0, 0);
+	
+	--theme-icon-filter: brightness(0);
 }
 
 html{
@@ -46,8 +58,6 @@ body {
 	min-height:100vh;
     margin: 0;
     padding: 0;
-
-	overflow-x: hidden;
 }
 
 body {
@@ -63,6 +73,15 @@ body {
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 	transition: none;
+}
+
+.fadeInSimple{
+    animation: fadeInExtraAnim ease 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+	transition: none;
+
+	will-change: auto;
 }
 
 main {
@@ -123,21 +142,20 @@ console-mimic-anim{
 	animation: BlackWhiteFlash 1s steps(1) infinite;
 }
 
-.fadeInSimple{
-    animation: fadeInExtraAnim ease 1s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-	transition: none;
-
-	will-change: auto;
-}
-
 chapter-title{
 	display:block;
-	padding: calc(var(--theme-padding) / 2);
-	margin: var(--theme-margin);
 
 	text-align: center;
+	font-size: 2rem;
+	font-weight: bold;
+
+	border-bottom: 1px solid var(--theme-primary-color);
+}
+
+cta-title{
+	display:block;
+
+	text-align: left;
 	font-size: 2rem;
 	font-weight: bold;
 
@@ -155,6 +173,14 @@ chapter-title{
 .fEqGrow{
 	flex-basis: 0em;
 	flex-grow: 1;
+}
+
+.noTopMargin{
+	margin-top: 0rem !important; 
+}
+.noSideMargin{
+	margin-left: 0rem !important; 
+	margin-right: 0rem !important; 
 }
 
 /* -------------------- TYPEWRITER -------------------- */
@@ -182,7 +208,6 @@ chapter-title{
 	will-change: auto;
 }
 
-
 /* -------------------- VALUES -------------------- */
 
 .defaultSpacing{
@@ -194,6 +219,9 @@ chapter-title{
 }
 .defaultPaddingHalf{
 	padding: calc(var(--theme-padding) / 2);
+}
+.defaultPaddingQuarter{
+	padding: calc(var(--theme-padding) / 4);
 }
 .defaultPaddingDouble{
 	padding: calc(var(--theme-padding) * 2);
@@ -242,8 +270,22 @@ chapter-title{
 	background-color: var(--theme-bg-color);
 }
 
+.themeShadow{
+	box-shadow: 4px 4px 8px var(--theme-shadow-color);
+}
+
+.themeAltBG{
+	Color: var(--theme-alt-text-color);
+	background-color: var(--theme-alt-bg-color);
+}
+
 .glowOnFocus:focus{
 	background-color: var(--theme-primary-color) !important;
+}
+
+.darkImageOverlay{
+	Color: white;
+	background-color: rgba(0, 0, 0, 0.25);
 }
 
 /* -------------------- BORDERS -------------------- */
@@ -300,9 +342,9 @@ push-notifications-component{
 	flex-direction: column;
     justify-content: flex-end;
 
-	word-wrap: break-word; /* Anim controlled by JS */
+	word-wrap: break-word;
 
-	will-change: auto;
+	will-change: auto; /* Anim controlled by JS */
 	
 	overflow: visible; /* necessary for the animation */
 }
@@ -316,10 +358,9 @@ push-notification{
 	top: 0rem;
 	position:relative; /* Animations will rely on changing "top", which needs a specific position value */
 
-	background-color: var(--theme-bg-color);
-	color: var(--theme-text-color);
-
-	border: 1px solid var(--theme-alt-border-color);
+	background-color: var(--theme-alt-bg-color);
+	color: var(--theme-alt-text-color);
+	border:1px solid var(--theme-alt-border-color);
 
 	pointer-events: auto;
 	
@@ -344,7 +385,7 @@ push-notification-fail{
 }
 
 push-notification-content{
-	border-left: 1px solid black;
+	border-left: 1px solid var(--theme-alt-border-color);
 
 	display:block;
 	flex-grow: 1;
@@ -535,5 +576,6 @@ textarea{
 .ui-icon.ui-theme
 {
     background-image: var(--theme-icon-path) !important;
+	filter: var(--theme-icon-filter);
 	margin-top: 0px;
 }

@@ -136,4 +136,4 @@ if(!Boolean(PushNotifs.singleton)){
     document.body.prepend(tgt);
 }
 
-subscribeToAccessTokenExpired(() => {PushNotifs.pushNotificationInfo("TOKEN EXPIRED", "Your access token has expired, please log in again.")});
+ML.subscribeToAccessTokenExpired(() => {PushNotifs.pushNotificationInfo("TOKEN EXPIRED", "Your access token has expired, please log in again.")});

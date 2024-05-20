@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    interrogatePrerequisites([
+    ML.interrogatePrerequisites([
         "Modal",
         "PushNotifs"
     ]);
@@ -38,8 +38,8 @@ class Header extends HTMLElement {
                     style="max-width: 5em; max-height: 5em; margin-top: -0.25em;">
             </flex-column>
 
-            <flex-row class="fEqGrow defaultGapHalf defaultPadding centered sneBorderBottom">
-                <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
+            <flex-row class="fEqGrow defaultGapHalf defaultPaddingHalf centered sneBorderBottom">
+                <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf centered"
                     onclick="location.href = '../wsite/home.html';"
                     tabindex="0">
 
@@ -47,7 +47,7 @@ class Header extends HTMLElement {
                     Home
                 </nav-element>
 
-                <nav-element class="navElementVisual selectableNavElement defaultPadding"
+                <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf"
                     onclick="location.href = '../wsite/about_us.html';"
                     tabindex="0">
 
@@ -55,7 +55,7 @@ class Header extends HTMLElement {
                     About us
                 </nav-element>
 
-                <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
+                <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf centered"
                     onclick="location.href = '../wsite/news.html';"
                     tabindex="0">
 
@@ -64,7 +64,7 @@ class Header extends HTMLElement {
                     News
                 </nav-element>
 
-                <nav-element class="navElementVisual selectableNavElement defaultPadding"
+                <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf"
                     onclick="location.href = '../wsite/contact_us.html';"
                     tabindex="0">
 
@@ -73,7 +73,7 @@ class Header extends HTMLElement {
                     Contact us
                 </nav-element>
 
-                <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElement defaultPadding"
+                <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElement defaultPaddingHalf"
                     onclick="location.href = '../wsite/curriculum.html';"
                     tabindex="0">
 
@@ -98,27 +98,27 @@ class Header extends HTMLElement {
             </flex-column>
 
             <flex-column class="jsHeaderHideOnLoggedInTarget">
-                <flex-row class="fEqGrow">
+                <flex-row class="fGrow">
                     <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElement defaultPaddingHalf"
                         tabindex="0">
                         
-                        <flex-row class="jsLogInHideOnBusyTarget fEqGrow centered">
+                        <flex-row class="jsHeaderLogInHideOnBusyTarget fGrow centered">
                             <div class="ui-icon ui-theme ui-icon-unlocked"></div>
                             <div>Log In</div>
                         </flex-row>
-                        <simple-loader class="jsLogInShowOnBusyTarget"></simple-loader>
+                        <simple-loader-m class="jsHeaderLogInShowOnBusyTarget"></simple-loader-m>
                     </nav-element>
                 </flex-row>
 
-                <flex-row class="fEqGrow">
+                <flex-row class="fGrow">
                     <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElement defaultPaddingHalf"
                         tabindex="0">
 
-                        <flex-row class="jsRegisterHideOnBusyTarget fEqGrow centered">
+                        <flex-row class="jsRegisterHideOnBusyTarget fGrow centered">
                             <div class="ui-icon ui-theme ui-icon-person"></div>
                             <div>Register</div>
                         </flex-row>
-                        <simple-loader class="jsRegisterShowOnBusyTarget"></simple-loader>
+                        <simple-loader-m class="jsRegisterShowOnBusyTarget"></simple-loader-m>
                     </nav-element>
                 </flex-row>
             </flex-column>
@@ -148,7 +148,7 @@ class Header extends HTMLElement {
                     </flex-row>
                 </flex-column>
                 
-                <flex-column class="jsHeaderCollapsibleTrigger glowOnFocus centered defaultPadding"
+                <flex-column class="jsHeaderCollapsibleTrigger glowOnFocus centered defaultPaddingHalf"
                     tabindex="0">
                     
                     <img class="jsHeaderImageTarget"
@@ -163,7 +163,7 @@ class Header extends HTMLElement {
                 <flex-row class="fEqGrow"
                     style="flex-wrap: wrap;">
 
-                    <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
+                    <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf centered"
                         onclick="location.href = '../wsite/home.html';"
                         tabindex="0">
 
@@ -171,7 +171,7 @@ class Header extends HTMLElement {
                         Home
                     </nav-element>
 
-                    <nav-element class="navElementVisual selectableNavElement defaultPadding"
+                    <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf"
                         onclick="location.href = '../wsite/about_us.html';"
                         tabindex="0">
 
@@ -183,7 +183,7 @@ class Header extends HTMLElement {
                 <flex-row class="fEqGrow"
                     style="flex-wrap: wrap;">
 
-                    <nav-element class="navElementVisual selectableNavElement defaultPadding centered"
+                    <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf centered"
                         onclick="location.href = '../wsite/news.html';"
                         tabindex="0">
 
@@ -192,7 +192,7 @@ class Header extends HTMLElement {
                         News
                     </nav-element>
                     
-                    <nav-element class="navElementVisual selectableNavElement defaultPadding"
+                    <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf"
                         onclick="location.href = '../wsite/contact_us.html';"
                         tabindex="0">
 
@@ -203,7 +203,7 @@ class Header extends HTMLElement {
                 </flex-row>
                 
                 <flex-row class="jsHeaderShowOnLoggedInTarget fEqGrow">
-                    <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElement defaultPadding"
+                    <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElement defaultPaddingHalf"
                         onclick="location.href = '../wsite/curriculum.html';"
                         tabindex="0">
 
@@ -211,7 +211,7 @@ class Header extends HTMLElement {
                         Curriculum
                     </nav-element>
 
-                    <nav-element class="navElementVisual selectableNavElement defaultPadding"
+                    <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf"
                         tabindex="0"
                         onclick="Header.logOut()">
                         
@@ -225,17 +225,17 @@ class Header extends HTMLElement {
                 <flex-row class="jsHeaderHideOnLoggedInTarget fEqGrow"
                     style="flex-wrap: wrap;">
 
-                    <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElement defaultPadding"
+                    <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElement defaultPaddingHalf"
                         tabindex="0">
                         
-                        <flex-row class="jsLogInHideOnBusyTarget fEqGrow centered">
+                        <flex-row class="jsHeaderLogInHideOnBusyTarget fEqGrow centered">
                             <div class="ui-icon ui-theme ui-icon-unlocked"></div>
                             <div>Log In</div>
                         </flex-row>
-                        <simple-loader-m class="jsLogInShowOnBusyTarget"></simple-loader-m>
+                        <simple-loader-m class="jsHeaderLogInShowOnBusyTarget"></simple-loader-m>
                     </nav-element>
                     
-                    <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElement defaultPadding"
+                    <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElement defaultPaddingHalf"
                         tabindex="0">
 
                         <flex-row class="jsRegisterHideOnBusyTarget fEqGrow centered">
@@ -263,16 +263,15 @@ class Header extends HTMLElement {
                 </p>
             </flex-column>
 
-            <form style="width:100%; height:100%;"
-                onsubmit="try{Header.singleton.tryLogIn(this,
+            <form onsubmit="try{Header.singleton.tryLogIn(this,
                                                         this.getElementsByClassName('jsLogInUsernameTarget')[0].value,
                                                         this.getElementsByClassName('jsLogInPasswordTarget')[0].value);}
                         catch(ex){console.error(ex)}
                         finally{return false}; // return false to stop page refresh
                 ">
 
-                <flex-column class="defaultGap centered">
-                    <flex-column class="defaultGapHalf centered"
+                <flex-column class="defaultGapHalf centered">
+                    <flex-column class="defaultGapQuarter centered"
                         style="width: 100%;">
 
                         <input class="jsLogInUsernameTarget roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
@@ -282,10 +281,10 @@ class Header extends HTMLElement {
                     <button class="ui-button ui-widget ui-corner-all" type="submit"
                         style="min-height: 1.5rem !important; width: 103%;">
 
-                        <flex-row class="jsLogInHideOnBusyTarget fEqGrow centered">
+                        <flex-row class="jsHeaderLogInHideOnBusyTarget fEqGrow centered">
                             Log In
                         </flex-row>
-                        <flex-row class="jsLogInShowOnBusyTarget fEqGrow centered">
+                        <flex-row class="jsHeaderLogInShowOnBusyTarget fEqGrow centered">
                             <simple-loader-m></simple-loader-m>
                         </flex-row>
                     </button>
@@ -306,8 +305,7 @@ class Header extends HTMLElement {
                 </p>
             </flex-column>
 
-            <form style="width:100%; height:100%;"
-                onsubmit="try{Header.singleton.tryRegister(this,
+            <form onsubmit="try{Header.singleton.tryRegister(this,
                                                             this.getElementsByClassName('jsRegisterUsernameTarget')[0].value,
                                                             this.getElementsByClassName('jsRegisterPasswordTarget')[0].value,
                                                             this.getElementsByClassName('jsRegisterPasswordCheckTarget')[0].value);}
@@ -315,8 +313,8 @@ class Header extends HTMLElement {
                         finally{return false};
                 ">
 
-                <flex-column class="defaultGap centered">
-                    <flex-column class="defaultGapHalf centered"
+                <flex-column class="defaultGapHalf centered">
+                    <flex-column class="defaultGapQuarter centered"
                         style="width: 100%;">
 
                         <input class="jsRegisterUsernameTarget roundedBorderHalf" style="width: 100%;" type="text" placeholder="Username" required>
@@ -361,7 +359,7 @@ class Header extends HTMLElement {
 
         _this.initModals();
 
-        subscribeToAccessTokenChange(() => {_this.accessTokenCheck()});
+        ML.subscribeToAccessTokenChange(() => {_this.accessTokenCheck()});
 
         $(window).on('resize', function(){
             Header.singleton.checkOverflow();
@@ -393,17 +391,19 @@ class Header extends HTMLElement {
         });
     }
 
-    // "Simple" way to check if our usual header is too wide and swap it with a hamburger.
+    // Simple* way to check if our usual header is too wide and swap it with a hamburger.
+    // Looks like this broke scroll anchoring as we are, in fact, readjusting everything constantly when resizing.
+    // I don't really care as it's not too important, but it is annoying.
     checkOverflow(){
 
         var normalHeader = document.getElementById("jsNormalHeaderTarget");
         var burgerHeader = document.getElementById("jsBurgerHeaderTarget");
         
-        // Testing shows negligble performance impact when doing this.
+        // Testing shows negligble performance impact when doing this, so it's probably fine.
         $(normalHeader).css("display", "flex");
         $(burgerHeader).css("display", "none");
 
-        if (!isOverflownRow(normalHeader)) {
+        if (!ML.isOverflownRow(normalHeader)) {
             this.collapsibleSet(0);
             return;
         }
@@ -414,7 +414,7 @@ class Header extends HTMLElement {
         $(burgerHeader).css("display", "flex");
         $(burgerText).css("display", "flex");
 
-        if (!isOverflownRow(burgerHeader)){
+        if (!ML.isOverflownRow(burgerHeader)){
             return;
         }
 
@@ -474,10 +474,10 @@ class Header extends HTMLElement {
     logInModalBusyTrigger(isBusy){
         isBusy = Header.checkModalBusyValue(Header.logInModal, isBusy);
 
-        $(Header.singleton.getElementsByClassName("jsLogInHideOnBusyTarget")).each(function(){
+        $(document.getElementsByClassName("jsHeaderLogInHideOnBusyTarget")).each(function(){
             $(this).css("display", isBusy ? "none" : "flex");
         });
-        $(Header.singleton.getElementsByClassName("jsLogInShowOnBusyTarget")).each(function(){
+        $(document.getElementsByClassName("jsHeaderLogInShowOnBusyTarget")).each(function(){
             $(this).css("display", isBusy ? "flex" : "none");
         });
     }
@@ -494,7 +494,7 @@ class Header extends HTMLElement {
     }
 
     accessTokenCheck(){
-        var tokenExists = Boolean(getAccessToken());
+        var tokenExists = Boolean(ML.getAccessToken());
 
         $(Header.singleton.getElementsByClassName("jsHeaderHideOnLoggedInTarget")).each(function(){
             $(this).css("display", tokenExists ? "none" : "flex");
@@ -517,8 +517,8 @@ class Header extends HTMLElement {
         })
             .done(function(data, textStatus, jqXHR){
                 if(data.isSuccess){
-                    setAccessToken(data.data.token);
-                    Header.logOutLock = getSecondsSinceEpoch();
+                    ML.setAccessToken(data.data.token);
+                    Header.logOutLock = ML.getSecondsSinceEpoch();
                     PushNotifs.pushNotificationSuccess(`LOGIN SUCCESS (${data.statusCode})`, "You are now logged in.");
                 }else{
                     $(data.errorMessages).each(function(){
@@ -537,13 +537,13 @@ class Header extends HTMLElement {
     }
 
     static logOut(){
-        if(getSecondsSinceEpoch() < Header.logOutLock + 2){ // At least 1 second, prevents user from accidentally logging out as the button is in the same place.
+        if(ML.getSecondsSinceEpoch() < Header.logOutLock + 2){ // At least 1 second, prevents user from accidentally logging out as the button is in the same place.
             Header.logOutLock = 0;
             PushNotifs.pushNotificationInfo(`LOGOUT TIME LOCKED`, "Press log out again to confirm.");
             return;
         }
 
-        removeAccessToken();
+        ML.removeAccessToken();
         PushNotifs.pushNotificationSuccess(`LOGOUT SUCCESS`, "You are now logged out.");
     }
 
@@ -584,7 +584,7 @@ class Header extends HTMLElement {
 
 // Binding gets aborted when an image isn't displayed, so the images would have to wait for everything else (videos included) to load before we could display them properly
 // This ensures we don't have to worry about that at all as long as we're faster
-loadImage(Header.collapsibleImgXPath);
-loadImage(Header.collapsibleImgMenuPath);
+ML.loadImage(Header.collapsibleImgXPath);
+ML.loadImage(Header.collapsibleImgMenuPath);
 
 customElements.define('header-component', Header);
