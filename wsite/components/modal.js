@@ -5,7 +5,7 @@ class Modal extends HTMLElement {
 
     static ready(){return true;}
 
-    static modalLock = false;
+    static activeModal = null;
 
     static dataFront =
     html`<!-- centering with flex tends to overflow the parent scroll for some reason, so sometimes we have to use auto margins instead -->
@@ -23,7 +23,6 @@ class Modal extends HTMLElement {
     connectedCallback() {
         var innerData = this.innerHTML;
         this.innerHTML = Modal.dataFront + innerData + Modal.dataBack
-        
 
         $(this).on("click", function(e){
             if (e.target != this && e.target != this.children[0]) {
@@ -34,11 +33,11 @@ class Modal extends HTMLElement {
     }
 
     showModal(){
-        if (Modal.modalLock || this.data_showAnimActive) {
+        if (Boolean(Modal.activeModal) || this.data_showAnimActive) {
             return;
         }
         this.data_showAnimActive = true;
-        Modal.modalLock = true;
+        Modal.activeModal = this;
 
         $(this).css("display", "flex");
         $(this).animate({
@@ -68,11 +67,17 @@ class Modal extends HTMLElement {
             duration: 250,
             complete: function(){
                 $(this).css('display', 'none');
-                Modal.modalLock = false;
+                Modal.activeModal = null;
                 this.data_hideAnimActive = false;
             }
         });
     }
 }
+
+$(document).on('keydown',function(e){
+    if(Boolean(Modal.activeModal) && e.code=="Escape"){
+        Modal.activeModal.hideModal();
+    }
+});
 
 customElements.define('modal-component', Modal);

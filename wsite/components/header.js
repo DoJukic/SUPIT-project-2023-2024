@@ -30,7 +30,7 @@ class Header extends HTMLElement {
     static normalHeaderData = 
     html`
         <header id="jsNormalHeaderTarget">
-            <flex-column class="defaultGapHalf centered defaultPaddingHalf sneBorderRight sneBorderBottom"
+            <flex-column class="defaultGapHalf centered defaultPaddingQuarter sneBorderRight sneBorderBottom"
                 style="margin-right: 0em;"
                 onclick="location.href = '../wsite/home.html';">
 
@@ -38,7 +38,7 @@ class Header extends HTMLElement {
                     style="max-width: 5em; max-height: 5em; margin-top: -0.25em;">
             </flex-column>
 
-            <flex-row class="fEqGrow defaultGapHalf defaultPaddingHalf centered sneBorderBottom">
+            <flex-row class="fEqGrow defaultGapHalf defaultPaddingQuarter centered sneBorderBottom">
                 <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf centered"
                     onclick="location.href = '../wsite/home.html';"
                     tabindex="0">
@@ -84,7 +84,7 @@ class Header extends HTMLElement {
 
             <flex-column class="jsHeaderShowOnLoggedInTarget">
                 <flex-row class="fEqGrow">
-                    <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf"
+                    <nav-element class="navElementVisual selectableNavElement defaultPaddingQuarter"
                         style="flex-basis: 0em; min-width: 0em;"
                         tabindex="0"
                         onclick="Header.logOut()">
@@ -95,11 +95,21 @@ class Header extends HTMLElement {
                         </flex-row>
                     </nav-element>
                 </flex-row>
+                
+                <flex-row class="fEqGrow">
+                    <nav-element class="navElementVisual selectableNavElement defaultPaddingQuarter"
+                        tabindex="0"
+                        onclick="ML.cycleTheme(); this.blur();">
+                        
+                        <div class="ui-icon ui-theme ui-icon-pencil"></div>
+                        <div>Theme</div>
+                    </nav-element>
+                </flex-row>
             </flex-column>
 
             <flex-column class="jsHeaderHideOnLoggedInTarget">
                 <flex-row class="fGrow">
-                    <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElement defaultPaddingHalf"
+                    <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElement defaultPaddingQuarter"
                         tabindex="0">
                         
                         <flex-row class="jsHeaderLogInHideOnBusyTarget fGrow centered">
@@ -111,7 +121,7 @@ class Header extends HTMLElement {
                 </flex-row>
 
                 <flex-row class="fGrow">
-                    <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElement defaultPaddingHalf"
+                    <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElement defaultPaddingQuarter"
                         tabindex="0">
 
                         <flex-row class="jsRegisterHideOnBusyTarget fGrow centered">
@@ -119,6 +129,24 @@ class Header extends HTMLElement {
                             <div>Register</div>
                         </flex-row>
                         <simple-loader-m class="jsRegisterShowOnBusyTarget"></simple-loader-m>
+                    </nav-element>
+                </flex-row>
+            </flex-column>
+
+            <flex-column class="jsHeaderHideOnLoggedInTarget">
+                <flex-row class="fGrow">
+                    <nav-element class="navElementVisual selectableNavElement defaultPaddingQuarter"
+                        style="min-width: 5em;"
+                        tabindex="0"
+                        onclick="ML.cycleTheme(); this.blur();">
+                        
+                        <flex-column class="centered">
+                            <div>Cycle</div>
+                            <br-half></br-half>
+                            <div class="ui-icon ui-theme ui-icon-pencil"></div>
+                            <br-half></br-half>
+                            <div>Theme</div>
+                        </flex-column>
                     </nav-element>
                 </flex-row>
             </flex-column>
@@ -151,7 +179,7 @@ class Header extends HTMLElement {
                 <flex-column class="jsHeaderCollapsibleTrigger glowOnFocus centered defaultPaddingHalf"
                     tabindex="0">
                     
-                    <img class="jsHeaderImageTarget"
+                    <img class="jsHeaderImageTarget ui-theme"
                         src="../res/img/navbar/icons8.com-hamburger-menu-50-white.png"
                         style="max-height: 3em;">
                 </flex-column>
@@ -243,6 +271,16 @@ class Header extends HTMLElement {
                             <div>Register</div>
                         </flex-row>
                         <simple-loader-m class="jsRegisterShowOnBusyTarget"></simple-loader-m>
+                    </nav-element>
+                </flex-row>
+                
+                <flex-row class="fEqGrow">
+                    <nav-element class="navElementVisual selectableNavElement defaultPaddingHalf"
+                        tabindex="0"
+                        onclick="ML.cycleTheme(); this.blur();">
+                        
+                        <div class="ui-icon ui-theme ui-icon-pencil"></div>
+                        <div>Cycle Theme</div>
                     </nav-element>
                 </flex-row>
             </flex-column>

@@ -15,7 +15,7 @@ class PushNotifs extends HTMLElement {
             style="margin-top: 0rem; border-top-left-radius: 0rem; border-bottom-left-radius: 0rem;">
 
             <push-notification-success class="centered">
-                <div class="ui-icon ui-theme ui-icon-check"></div>
+                <div class="ui-icon ui-icon-check"></div>
             </push-notification-success>
             
             <push-notification-content class="defaultPaddingHalf">
@@ -27,7 +27,7 @@ class PushNotifs extends HTMLElement {
             style="margin-top: 0rem; border-top-left-radius: 0rem; border-bottom-left-radius: 0rem;">
 
             <push-notification-info class="centered">
-                <div class="ui-icon ui-theme ui-icon-info"></div>
+                <div class="ui-icon ui-icon-info"></div>
             </push-notification-info>
             
             <push-notification-content class="defaultPaddingHalf">
@@ -39,7 +39,7 @@ class PushNotifs extends HTMLElement {
             style="margin-top: 0rem; border-top-left-radius: 0rem; border-bottom-left-radius: 0rem;">
 
             <push-notification-fail class="centered">
-                <div class="ui-icon ui-theme ui-icon-alert"></div>
+                <div class="ui-icon ui-icon-alert"></div>
             </push-notification-fail>
             
             <push-notification-content class="defaultPaddingHalf">
@@ -137,3 +137,4 @@ if(!Boolean(PushNotifs.singleton)){
 }
 
 ML.subscribeToAccessTokenExpired(() => {PushNotifs.pushNotificationInfo("TOKEN EXPIRED", "Your access token has expired, please log in again.")});
+ML.subscribeToThemeChange(() => {PushNotifs.pushNotificationInfo("THEME CHANGED", `Your theme has been set to [${ML.getCurrentTheme()}].`)});

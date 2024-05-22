@@ -20,6 +20,7 @@ class ML{
   static tokenTimeout = null; // Holds the timeout ID which we can use to delete the timer when not necessary
 
   static themeChangeSubscriberFuncs = [];
+  static themes = ["auto", "light", "dark"];
   
   static chapterObserver= null;
   static animationObserverActiveElements = [];
@@ -103,6 +104,8 @@ class ML{
 
   static initTheme(){
     ML.subscribeToThemeChange(ML.updateTheme);
+    window.matchMedia('(prefers-color-scheme: dark)')
+          .addEventListener('change', ML.updateTheme)
     ML.updateTheme();
   }
 
@@ -114,11 +117,16 @@ class ML{
   }
 
   static getCurrentTheme(){
-    let result = localStorage.getItem("theme")
+    return localStorage.getItem("theme");
+  }
 
-    if(result == null || result =="auto"){
+  static getCurrentThemeValue(){
+    let theme = ML.getCurrentTheme();
+
+    if(theme == null || theme == "auto"){
       return ML.getSystemTheme();
     }
+    return theme;
   }
 
   static setCurrentTheme(theme){
@@ -126,16 +134,33 @@ class ML{
     ML.notifyThemeChanged();
   }
 
+  static cycleTheme(){
+    let theme = ML.getCurrentTheme();
+
+    if(!Boolean(theme)){
+      theme ="auto"
+    }
+
+    let themeIndex = ML.themes.indexOf(theme);
+    themeIndex += 1;
+
+    if(themeIndex >= ML.themes.length){
+      themeIndex = 0;
+    }
+
+    ML.setCurrentTheme(ML.themes[themeIndex]);
+  }
+
   static updateTheme(){
-    $(document.documentElement).attr("data-theme", ML.getCurrentTheme())
+    $(document.documentElement).attr("data-theme", ML.getCurrentThemeValue())
   }
 
   static subscribeToThemeChange(funct){
-    ML.tokenChangeSubscriberFuncs.push(funct);
+    ML.themeChangeSubscriberFuncs.push(funct);
   }
 
   static notifyThemeChanged(){
-    $(ML.tokenChangeSubscriberFuncs).each(function(){
+    $(ML.themeChangeSubscriberFuncs).each(function(){
       this();
     });
   }
