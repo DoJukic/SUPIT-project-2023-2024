@@ -11,7 +11,7 @@
 	--theme-icon-path: url("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png");
 	
 	--theme-bg-color: rgb(25, 25, 25);
-	--theme-tran-bg-color: rgb(20, 20, 20, 0.25);
+	--theme-tran-bg-color: rgb(20, 20, 20, 0.5);
 	--theme-shadow-color: rgb(0, 0, 0);
 	--theme-border-color: rgb(100, 100, 100);
 	--theme-text-color: rgb(255, 255, 255);
@@ -34,13 +34,16 @@
 
 	--theme-gap: 2rem;
 	--theme-basis: 26rem;
+	
+	--theme-splitter-gap: 0.5rem;
+	--theme-splitter-basis: 10rem;
 }
 
 /* TODO, looks like shit - seperate header with other stuff */
 /* theme is set with JS */
 [data-theme=light]{
 	--theme-bg-color: rgb(245, 245, 245);
-	--theme-tran-bg-color: rgb(255, 255, 255, 0.25);
+	--theme-tran-bg-color: rgb(255, 255, 255, 0.5);
 	--theme-shadow-color: rgb(0, 0, 0);
 	--theme-border-color: rgb(100, 100, 100);
 	--theme-text-color: rgb(0, 0, 0);
@@ -94,7 +97,7 @@ body {
 
 main {
 	margin: auto;
-	max-width: min(2000px, 100%); /* Widescreen? too bad */
+	max-width: min(2000px, 100%); /* Widescreen support? In THIS economy? */
     flex: 1 0 auto;
 	overflow: visible;
 }
@@ -164,7 +167,7 @@ big-title{
 	font-size: 4rem;
 	font-weight: bold;
 
-	border-bottom: 1px solid var(--theme-primary-color);
+	border-bottom: 3px solid var(--theme-primary-color);
 }
 
 medium-title{
@@ -174,7 +177,7 @@ medium-title{
 	font-size: 2rem;
 	font-weight: bold;
 
-	border-bottom: 1px solid var(--theme-primary-color);
+	border-bottom: 2px solid var(--theme-primary-color);
 }
 
 small-title{
@@ -206,6 +209,10 @@ small-title{
 .noSideMargin{
 	margin-left: 0rem !important; 
 	margin-right: 0rem !important; 
+}
+
+.blendDifference{
+	mix-blend-mode: difference;
 }
 
 /* -------------------- TYPEWRITER -------------------- */
@@ -318,7 +325,7 @@ small-title{
 
 .darkImageOverlay{
 	Color: white;
-	background-color: rgba(0, 0, 0, 0.35);
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 .themeImageOverlay{
@@ -338,6 +345,41 @@ small-title{
 
 .themeBorder{
 	border: 1px solid var(--theme-border-color);
+}
+
+/* -------------------- EQUAL SPLIT LOGIC -------------------- */
+/* "We have CSS grid at home" */
+/* CSS grid at home: */
+
+.fEqSplit, .fEqSplitUp1, .fEqSplitUp2, .fEqSplitUp3{
+	flex-wrap: wrap;
+	gap: var(--theme-splitter-gap);
+	flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.fEqSplit{
+	flex-basis: var(--theme-splitter-basis);
+
+	background-color: var(--theme-front-bg-color);
+
+	border: 1px solid var(--theme-border-color);
+	box-shadow: 2px 2px 4px var(--theme-front-shadow-color);
+
+	padding: calc(var(--theme-padding) / 2);
+}
+
+.fEqSplitUp1{
+	flex-basis: calc(var(--theme-splitter-basis) * 2 + 2px + var(--theme-splitter-gap));
+}
+
+.fEqSplitUp2{
+	flex-basis: calc(var(--theme-splitter-basis) * 4 + 6px + var(--theme-splitter-gap) * 4);
+}
+
+.fEqSplitUp3{
+	flex-basis: calc(var(--theme-splitter-basis) * 8 + 14px + var(--theme-splitter-gap) * 8);
 }
 
 /* -------------------- SCROLL TO TOP -------------------- */
