@@ -3,23 +3,25 @@
 	--theme-secondary-color: rgb(194, 27, 103);
 	
 	/*
-	--theme-alt-bg-color: rgb(255, 255, 255);
-	--theme-alt-shadow-color: rgb(255, 255, 255);
-	--theme-alt-border-color: rgb(100, 100, 100);
-	--theme-alt-text-color: rgb(15, 15, 15);
+	--theme-front-bg-color: rgb(255, 255, 255);
+	--theme-front-shadow-color: rgb(255, 255, 255);
+	--theme-front-border-color: rgb(100, 100, 100);
+	--theme-front-text-color: rgb(15, 15, 15);
 	*/
 	--theme-icon-path: url("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png");
 	
-	--theme-bg-color: rgb(20, 20, 20);
+	--theme-bg-color: rgb(25, 25, 25);
 	--theme-tran-bg-color: rgb(20, 20, 20, 0.25);
 	--theme-shadow-color: rgb(0, 0, 0);
 	--theme-border-color: rgb(100, 100, 100);
 	--theme-text-color: rgb(255, 255, 255);
 	
-	--theme-alt-bg-color: rgb(30, 30, 30);
-	--theme-alt-shadow-color: rgb(0, 0, 0);
-	--theme-alt-border-color: rgb(100, 100, 100);
-	--theme-alt-text-color: rgb(255, 255, 255);
+	--theme-front-bg-color: rgb(35, 35, 35);
+	--theme-front-shadow-color: rgb(0, 0, 0);
+	--theme-front-border-color: rgb(100, 100, 100);
+	--theme-front-text-color: rgb(255, 255, 255);
+	
+	--theme-back-bg-color: rgb(15, 15, 15);
 
 	--theme-icon-filter: brightness(1);
 	
@@ -38,15 +40,17 @@
 /* theme is set with JS */
 [data-theme=light]{
 	--theme-bg-color: rgb(245, 245, 245);
-	--theme-tran-bg-color: rgb(245, 245, 245, 0.25);
+	--theme-tran-bg-color: rgb(255, 255, 255, 0.25);
 	--theme-shadow-color: rgb(0, 0, 0);
 	--theme-border-color: rgb(100, 100, 100);
 	--theme-text-color: rgb(0, 0, 0);
 	
-	--theme-alt-bg-color: rgb(255, 255, 255);
-	--theme-alt-shadow-color: rgb(0, 0, 0);
-	--theme-alt-border-color: rgb(100, 100, 100);
-	--theme-alt-text-color: rgb(0, 0, 0);
+	--theme-front-bg-color: rgb(255, 255, 255);
+	--theme-front-shadow-color: rgb(0, 0, 0);
+	--theme-front-border-color: rgb(100, 100, 100);
+	--theme-front-text-color: rgb(0, 0, 0);
+	
+	--theme-back-bg-color: rgb(235, 235, 235);
 	
 	--theme-icon-filter: invert(1);
 	
@@ -67,7 +71,7 @@ body {
 body {
 	background-color: var(--theme-bg-color);
     color: var(--theme-text-color);
-    font-family: sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
 	
@@ -89,6 +93,8 @@ body {
 }
 
 main {
+	margin: auto;
+	max-width: min(2000px, 100%); /* Widescreen? too bad */
     flex: 1 0 auto;
 	overflow: visible;
 }
@@ -102,6 +108,11 @@ main {
 flex-row{
     display: flex;
     flex-direction: row;
+}
+
+flex-row-reverse{
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 flex-column{
@@ -119,7 +130,7 @@ https://www.w3schools.com/howto/howto_css_loader.asp
 animation will stutter when display is changed to flex from css, or maybe it's caused by the fade in animation?
 */
 simple-loader, simple-loader-m {
-	border: 0.3em solid var(--theme-alt-border-color);
+	border: 0.3em solid var(--theme-front-border-color);
 	border-radius: 50%;
 	border-top: 0.3em solid var(--theme-secondary-color);
 	border-bottom: 0.3em solid var(--theme-primary-color);
@@ -146,7 +157,17 @@ console-mimic-anim{
 	animation: BlackWhiteFlash 1s steps(1) infinite;
 }
 
-chapter-title{
+big-title{
+	display:block;
+
+	text-align: center;
+	font-size: 4rem;
+	font-weight: bold;
+
+	border-bottom: 1px solid var(--theme-primary-color);
+}
+
+medium-title{
 	display:block;
 
 	text-align: center;
@@ -156,14 +177,14 @@ chapter-title{
 	border-bottom: 1px solid var(--theme-primary-color);
 }
 
-cta-title{
+small-title{
 	display:block;
 
 	text-align: left;
-	font-size: 2rem;
+	font-size: 1.5rem;
 	font-weight: bold;
 
-	border-bottom: 1px solid var(--theme-primary-color);
+	border-bottom: 1px solid var(--theme-secondary-color);
 }
 
 /* -------------------- SHORTHAND -------------------- */
@@ -250,6 +271,9 @@ cta-title{
 .defaultGapQuarter{
 	gap: calc(var(--theme-gap) / 4);
 }
+.defaultGapPlusHalf{
+	gap: calc(var(--theme-gap) * 1.5);
+}
 .defaultGapDouble{
 	gap: calc(var(--theme-gap) * 2);
 }
@@ -278,9 +302,14 @@ cta-title{
 	box-shadow: 4px 4px 8px var(--theme-shadow-color);
 }
 
-.themeAltBG{
-	Color: var(--theme-alt-text-color);
-	background-color: var(--theme-alt-bg-color);
+.themeFrontBG{
+	Color: var(--theme-front-text-color);
+	background-color: var(--theme-front-bg-color);
+}
+
+.themeBackBG{
+	Color: var(--theme-text-color);
+	background-color: var(--theme-back-bg-color);
 }
 
 .glowOnFocus:focus-visible{
@@ -289,7 +318,7 @@ cta-title{
 
 .darkImageOverlay{
 	Color: white;
-	background-color: rgba(0, 0, 0, 0.25);
+	background-color: rgba(0, 0, 0, 0.35);
 }
 
 .themeImageOverlay{
@@ -359,17 +388,17 @@ push-notifications-component{
 }
 
 push-notification{
-	box-shadow: 2px 2px 4px var(--theme-alt-shadow-color);
+	box-shadow: 2px 2px 4px var(--theme-front-shadow-color);
 
-	width: calc(10rem + 10%);
+	width: min(calc(10rem + 10%), 50vw);
 	min-height: min-content;
 
 	top: 0rem;
 	position:relative; /* Animations will rely on changing "top", which needs a specific position value */
 
-	background-color: var(--theme-alt-bg-color);
-	color: var(--theme-alt-text-color);
-	border:1px solid var(--theme-alt-border-color);
+	background-color: var(--theme-front-bg-color);
+	color: var(--theme-front-text-color);
+	border:1px solid var(--theme-front-border-color);
 
 	pointer-events: auto;
 	
@@ -391,7 +420,7 @@ push-notification-fail{
 }
 
 push-notification-content{
-	border-left: 1px solid var(--theme-alt-border-color);
+	border-left: 1px solid var(--theme-front-border-color);
 
 	display:block;
 	flex-grow: 1;
@@ -428,8 +457,8 @@ modal-component:not(:has(flex-column:hover)):hover{
 header {
 	overflow: hidden;
 
-	background-color: var(--theme-alt-bg-color);
-	color: var(--theme-alt-text-color);
+	background-color: var(--theme-front-bg-color);
+	color: var(--theme-front-text-color);
 
 	display: flex;
 	text-align: center;
@@ -466,13 +495,13 @@ nav-element {
 
 /* sne -> selectable nav element, the name was getting a touch too long */
 .sneBorderRight{
-	border-right: 1px solid var(--theme-alt-border-color);
+	border-right: 1px solid var(--theme-front-border-color);
 }
 .sneBorderLeft{
-	border-left: 1px solid var(--theme-alt-border-color);
+	border-left: 1px solid var(--theme-front-border-color);
 }
 .sneBorderBottom{
-	border-bottom: 1px solid var(--theme-alt-border-color);
+	border-bottom: 1px solid var(--theme-front-border-color);
 }
 
 .selectableNavElementChapter{
@@ -497,7 +526,7 @@ Otherwise color seems to be whatever is last in the .css file
 
 .selectableNavElement{
 	cursor: pointer !important;
-	border: 1px solid var(--theme-alt-border-color);
+	border: 1px solid var(--theme-front-border-color);
 }
 .selectableNavElement:hover{
 	background-color:var(--theme-primary-color);
@@ -525,9 +554,9 @@ footer{
 
 	text-align: center;
 
-	background-color: var(--theme-alt-bg-color);
-	color: var(--theme-alt-text-color);
-	border-top: 1px solid var(--theme-alt-border-color);
+	background-color: var(--theme-front-bg-color);
+	color: var(--theme-front-text-color);
+	border-top: 1px solid var(--theme-front-border-color);
 	padding: 2em;
 }
 

@@ -5,7 +5,7 @@
 
     <head>
         <title>
-            Algebra University - Home
+            Algebra University - About Us
         </title>
         
 		<link rel="icon" type="image/png" href="../res/img/favicon.png" />
@@ -30,7 +30,10 @@
 
         <script>
 			$(document).ready(function () {
-                
+                $( ".accordionPls" ).accordion({
+                    collapsible: true,
+                    active: null
+                });
             });
         </script>
 
@@ -40,7 +43,114 @@
         <header-component></header-component>
 
         <main>
-            
+            <flex-row class="jsLogicElementAnimationTarget"
+                style="min-height: 300px;
+                        background-image: url(../res/img/about_us/novosti_ZZKO.jpg);
+                        background-size: max(100%, 1100px) 400px; background-position: center;
+                        overflow: hidden;">
+                
+                <flex-column class="fEqGrow centered">
+                    <div class="fGrow"></div>
+
+                    <div class="darkImageOverlay defaultPaddingHalf centered" style="width: 100%;">
+                        <big-title>
+                            ABOUT US
+                        </big-title>
+                    </div>
+
+                    <div class="fGrow"></div>
+                </flex-column>
+            </flex-row>
+
+            <flex-row-reverse class="jsLogicElementAnimationTarget themeFrontBG fWrap">
+                <div class="fEqGrow defaultMargin roundedBorder defaultSpacing"
+                    style="background-image: url(../res/img/about_us/memorial_to_the_fallen_CROP.png); min-height: 14rem; max-height: 450px;
+                        background-position: center; background-size: max(100%, 800px) auto;">
+                </div>
+
+                <flex-column class="fEqGrow defaultPadding defaultGapPlusHalf defaultSpacing">
+                    <flex-row class="centered">
+                        <medium-title>Our Values</medium-title>
+                    </flex-row>
+        
+                    <div>
+                        Bacon ipsum dolor amet alcatra pig ball tip frankfurter, brisket tongue boudin filet mignon. Bacon drumstick chuck, shankle capicola pork belly buffalo frankfurter andouille. Drumstick swine bacon leberkas bresaola flank. Strip steak hamburger pastrami venison flank salami. Turkey jerky tri-tip, prosciutto pork sirloin kevin rump filet mignon ham. Picanha beef tongue hamburger meatball jerky pastrami short loin ball tip. Tail burgdoggen meatball sausage boudin buffalo ham bresaola spare ribs rump biltong.
+                    </div>
+        
+                    <div>
+                        Leberkas burgdoggen jerky, pig porchetta ribeye andouille flank salami ball tip meatball corned beef picanha swine tongue. Pancetta sausage hamburger tail. Drumstick corned beef shank pig meatball biltong buffalo sirloin tail shoulder jerky pastrami bacon bresaola meatloaf. Landjaeger short ribs tenderloin, hamburger pork belly meatball chislic. Sirloin cow burgdoggen meatball boudin chuck doner. Ball tip kielbasa jerky capicola pork chop landjaeger chuck. Swine ground round kielbasa landjaeger chuck.
+                    </div>
+                </flex-column>
+            </flex-row-reverse>
+
+            <flex-row class="jsLogicElementAnimationTarget themeBG fWrap defaultPadding defaultGap">
+                <div class="fEqGrow roundedBorder defaultSpacing"
+                    style="background-image: url(../res/img/home/data_tunnel_alt_CROP.png); min-height: 14rem;">
+                </div>
+                
+                <flex-column class="fEqGrow defaultGap defaultSpacing">
+                    <flex-row class="centered">
+                        <medium-title>Our History</medium-title>
+                    </flex-row>
+
+                    <div>
+                        Bacon ipsum dolor amet alcatra pig ball tip frankfurter, brisket tongue boudin filet mignon. Bacon drumstick chuck, shankle capicola pork belly buffalo frankfurter andouille. Drumstick swine bacon leberkas bresaola flank. Strip steak hamburger pastrami venison flank salami. Turkey jerky tri-tip, prosciutto pork sirloin kevin rump filet mignon ham. Picanha beef tongue hamburger meatball jerky pastrami short loin ball tip. Tail burgdoggen meatball sausage boudin buffalo ham bresaola spare ribs rump biltong.
+                    </div>
+        
+                    <div>
+                        Cow venison pork, strip steak turkey beef pork loin doner tongue jerky pastrami rump brisket ground round frankfurter. Beef ribs venison sausage, jowl boudin meatloaf jerky tail. Tail sirloin rump, tri-tip bacon t-bone pastrami andouille ground round filet mignon ball tip ribeye pork. Sirloin frankfurter drumstick, short loin tail boudin picanha sausage t-bone. Tenderloin brisket pig fatback andouille chuck meatball sausage pork kevin.            </div>
+                    </div>
+                </flex-column>
+            </flex-row>
+
+            <div class="accordionPls">
+                <h1>Test1</h1>
+                <div>TEST TEST TEST</div>
+                <h1>Test2</h1>
+                <div>TEST TEST TEST</div>
+                <h1>Test3</h1>
+                <div>TEST TEST TEST</div>
+            </div>
+
+            <flex-row-reverse class="jsLogicElementAnimationTarget themeFrontBG fWrap">
+                <div class="fEqGrow defaultMargin roundedBorder defaultSpacing"
+                    style="background-image: url(../res/img/home/data_tunnel_alt_CROP.png); min-height: 14rem;">
+                </div>
+
+                <flex-column class="fEqGrow defaultPadding defaultGapPlusHalf defaultSpacing">
+                    <flex-row class="centered">
+                        <medium-title>Mission and Vision</medium-title>
+                    </flex-row>
+
+                    <div>
+                        Cupim shankle alcatra turkey frankfurter cow. Capicola chuck meatball tail meatloaf bacon tri-tip pork chicken. Buffalo sausage ball tip, spare ribs burgdoggen jowl chislic pork chop tongue. Pig strip steak doner andouille. Strip steak beef landjaeger tail pork loin andouille bacon ham ground round spare ribs pig porchetta pork.
+                    </div>
+                        
+                    <div>
+                        Leberkas burgdoggen jerky, pig porchetta ribeye andouille flank salami ball tip meatball corned beef picanha swine tongue. Pancetta sausage hamburger tail. Drumstick corned beef shank pig meatball biltong buffalo sirloin tail shoulder jerky pastrami bacon bresaola meatloaf. Landjaeger short ribs tenderloin, hamburger pork belly meatball chislic. Sirloin cow burgdoggen meatball boudin chuck doner. Ball tip kielbasa jerky capicola pork chop landjaeger chuck. Swine ground round kielbasa landjaeger chuck.
+                    </div>
+                </flex-column>
+            </flex-row-reverse>
+
+            <flex-row class="jsLogicElementAnimationTarget themeBG fWrap defaultPadding defaultGap">
+                <div class="fEqGrow roundedBorder defaultSpacing"
+                    style="background-image: url(../res/img/home/data_tunnel_alt_CROP.png); min-height: 14rem;">
+                </div>
+
+                <flex-column class="fEqGrow defaultGap defaultSpacing">
+                    <flex-row class="centered">
+                        <medium-title>Location</medium-title>
+                    </flex-row>
+
+                    <div>
+                        Cupim shankle alcatra turkey frankfurter cow. Capicola chuck meatball tail meatloaf bacon tri-tip pork chicken. Buffalo sausage ball tip, spare ribs burgdoggen jowl chislic pork chop tongue. Pig strip steak doner andouille. Strip steak beef landjaeger tail pork loin andouille bacon ham ground round spare ribs pig porchetta pork.
+                    </div>
+        
+                    <div>
+                        Leberkas burgdoggen jerky, pig porchetta ribeye andouille flank salami ball tip meatball corned beef picanha swine tongue. Pancetta sausage hamburger tail. Drumstick corned beef shank pig meatball biltong buffalo sirloin tail shoulder jerky pastrami bacon bresaola meatloaf. Landjaeger short ribs tenderloin, hamburger pork belly meatball chislic. Sirloin cow burgdoggen meatball boudin chuck doner. Ball tip kielbasa jerky capicola pork chop landjaeger chuck. Swine ground round kielbasa landjaeger chuck.
+                    </div>
+                </flex-column>
+            </flex-row>
         </main>
 
         <footer-component></footer-component>
