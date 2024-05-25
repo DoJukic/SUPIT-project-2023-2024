@@ -10,18 +10,18 @@
 	*/
 	--theme-icon-path: url("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png");
 	
-	--theme-bg-color: rgb(25, 25, 25);
-	--theme-tran-bg-color: rgb(20, 20, 20, 0.5);
+	--theme-bg-color: rgb(35, 35, 35);
+	--theme-tran-bg-color: rgb(30, 30, 30, 0.5);
 	--theme-shadow-color: rgb(0, 0, 0);
 	--theme-border-color: rgb(100, 100, 100);
 	--theme-text-color: rgb(255, 255, 255);
 	
-	--theme-front-bg-color: rgb(35, 35, 35);
+	--theme-front-bg-color: rgb(40, 40, 40);
 	--theme-front-shadow-color: rgb(0, 0, 0);
 	--theme-front-border-color: rgb(100, 100, 100);
 	--theme-front-text-color: rgb(255, 255, 255);
 	
-	--theme-back-bg-color: rgb(15, 15, 15);
+	--theme-back-bg-color: rgb(25, 25, 25);
 
 	--theme-icon-filter: brightness(1);
 	
@@ -35,8 +35,8 @@
 	--theme-gap: 2rem;
 	--theme-basis: 26rem;
 	
-	--theme-splitter-gap: 0.5rem;
-	--theme-splitter-basis: 10rem;
+	--theme-splitter-gap: 1rem;
+	--theme-splitter-basis: 150px;
 }
 
 /* TODO, looks like shit - seperate header with other stuff */
@@ -351,35 +351,60 @@ small-title{
 /* "We have CSS grid at home" */
 /* CSS grid at home: */
 
-.fEqSplit, .fEqSplitUp1, .fEqSplitUp2, .fEqSplitUp3{
+.fEqSplit, .fEqSplitUp1, .fEqSplitUp2, .fEqSplitUp2MinusQuarter, .fEqSplitUp3{
 	flex-wrap: wrap;
 	gap: var(--theme-splitter-gap);
-	flex-grow: 1;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
 }
 
 .fEqSplit{
+	flex-grow: 1;
 	flex-basis: var(--theme-splitter-basis);
+
+	/*flex-basis: 150px;*/
 
 	background-color: var(--theme-front-bg-color);
 
 	border: 1px solid var(--theme-border-color);
-	box-shadow: 2px 2px 4px var(--theme-front-shadow-color);
+	box-shadow: 4px 4px 8px var(--theme-front-shadow-color);
 
 	padding: calc(var(--theme-padding) / 2);
 }
 
 .fEqSplitUp1{
-	flex-basis: calc(var(--theme-splitter-basis) * 2 + 2px + var(--theme-splitter-gap));
+	flex-grow: 2;
+	/*flex-basis: calc(var(--theme-splitter-basis) * 2 + 2px + var(--theme-splitter-gap));*/
+
+	/*flex-basis: 400px;*/
+
+	flex-basis: calc(var(--theme-splitter-basis) * 2 + 100px);
 }
 
 .fEqSplitUp2{
-	flex-basis: calc(var(--theme-splitter-basis) * 4 + 6px + var(--theme-splitter-gap) * 4);
+	flex-grow: 4;
+	/*flex-basis: calc(var(--theme-splitter-basis) * 4 + 6px + var(--theme-splitter-gap) * 4);*/
+
+	/*flex-basis: 900px;*/
+
+	flex-basis: calc((var(--theme-splitter-basis) * 2 + 100px) * 2 + 100px);
+}
+.fEqSplitUp2MinusQuarter{
+	flex-grow: 3;
+	/*flex-basis: calc(var(--theme-splitter-basis) * 4 + 6px + var(--theme-splitter-gap) * 4);*/
+
+	/*flex-basis: 900px;*/
+
+	flex-basis: calc((var(--theme-splitter-basis) * 2 + 100px) + var(--theme-splitter-basis) + 100px);
 }
 
 .fEqSplitUp3{
-	flex-basis: calc(var(--theme-splitter-basis) * 8 + 14px + var(--theme-splitter-gap) * 8);
+	flex-grow: 1;
+	/*flex-basis: calc(var(--theme-splitter-basis) * 8 + 14px + var(--theme-splitter-gap) * 8);*/
+
+	/*flex-basis: 1900px;*/
+
+	/*flex-basis: calc(((var(--theme-splitter-basis) * 2 + 100px) * 2 + 100px) * 2 + 100px);*/
 }
 
 /* -------------------- SCROLL TO TOP -------------------- */
