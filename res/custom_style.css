@@ -36,7 +36,7 @@
 	--theme-basis: 26rem;
 	
 	--theme-splitter-gap: 1rem;
-	--theme-splitter-basis: 150px;
+	--theme-splitter-elem-min-width: 150px;
 }
 
 /* TODO, looks like shit - seperate header with other stuff */
@@ -234,12 +234,6 @@ small-title{
 	flex-grow: 0;
 }
 
-/* -------------------- CHAPTER ANIMATIONS -------------------- */
-
-.jsLogicElementAnimationTarget{
-	will-change: auto;
-}
-
 /* -------------------- VALUES -------------------- */
 
 .defaultSpacing{
@@ -348,64 +342,64 @@ small-title{
 }
 
 /* -------------------- EQUAL SPLIT LOGIC -------------------- */
-/* "We have CSS grid at home" */
-/* CSS grid at home: */
-
-.fEqSplit, .fEqSplitUp1, .fEqSplitUp2, .fEqSplitUp2MinusQuarter, .fEqSplitUp3{
-	flex-wrap: wrap;
+/* Cases: 4, 5, 6, 7, and 8 */
+/* We need 4, 6 and 8 for eq wrapping */
+.eqSplit8, .eqSplit6, .eqSplit4{
 	gap: var(--theme-splitter-gap);
-    justify-content: center;
+	flex-wrap: wrap;
+	justify-content: center;
     align-items: stretch;
 }
 
-.fEqSplit{
+@media (min-width: 300px) { /* sort in ones */
+	.eqSplit8, .eqSplit6, .eqSplit4{
+		--theme-splitter-basis: 100%;
+	}
+}
+
+@media (min-width: 600px) { /* sort in twos */
+	.eqSplit8, .eqSplit6, .eqSplit4{
+		--theme-splitter-basis: calc(100% / 2 - var(--theme-splitter-gap));
+	}
+}
+
+@media (min-width: 1200px) {
+	.eqSplit8, .eqSplit4{ /* sort in fours */
+		--theme-splitter-basis: calc(100% / 4 - var(--theme-splitter-gap));
+	}
+
+	.eqSplit6{ /* sort in threes */
+		--theme-splitter-basis: calc(100% / 3 - var(--theme-splitter-gap));
+	}
+}
+
+@media (min-width: 1800px) {
+	.eqSplit8{
+		--theme-splitter-basis: calc(100% / 8 - var(--theme-splitter-gap));
+	}
+
+	.eqSplit6{
+		--theme-splitter-basis: calc(100% / 6 - var(--theme-splitter-gap));
+	}
+
+	.eqSplit4{
+		--theme-splitter-basis: calc(100% / 4 - var(--theme-splitter-gap));
+	}
+}
+
+.eqSplit{
 	flex-grow: 1;
-	flex-basis: var(--theme-splitter-basis);
 
-	/*flex-basis: 150px;*/
-
+	flex-basis: calc(var(--theme-splitter-basis) - 2 * calc(var(--theme-padding) / 2)); /* Account for padding */
+	max-width: calc(var(--theme-splitter-basis) - 2 * calc(var(--theme-padding) / 2)); /* Account for padding */
+	
 	background-color: var(--theme-front-bg-color);
-
 	border: 1px solid var(--theme-border-color);
 	box-shadow: 4px 4px 8px var(--theme-front-shadow-color);
 
 	padding: calc(var(--theme-padding) / 2);
 }
 
-.fEqSplitUp1{
-	flex-grow: 2;
-	/*flex-basis: calc(var(--theme-splitter-basis) * 2 + 2px + var(--theme-splitter-gap));*/
-
-	/*flex-basis: 400px;*/
-
-	flex-basis: calc(var(--theme-splitter-basis) * 2 + 100px);
-}
-
-.fEqSplitUp2{
-	flex-grow: 4;
-	/*flex-basis: calc(var(--theme-splitter-basis) * 4 + 6px + var(--theme-splitter-gap) * 4);*/
-
-	/*flex-basis: 900px;*/
-
-	flex-basis: calc((var(--theme-splitter-basis) * 2 + 100px) * 2 + 100px);
-}
-.fEqSplitUp2MinusQuarter{
-	flex-grow: 3;
-	/*flex-basis: calc(var(--theme-splitter-basis) * 4 + 6px + var(--theme-splitter-gap) * 4);*/
-
-	/*flex-basis: 900px;*/
-
-	flex-basis: calc((var(--theme-splitter-basis) * 2 + 100px) + var(--theme-splitter-basis) + 100px);
-}
-
-.fEqSplitUp3{
-	flex-grow: 1;
-	/*flex-basis: calc(var(--theme-splitter-basis) * 8 + 14px + var(--theme-splitter-gap) * 8);*/
-
-	/*flex-basis: 1900px;*/
-
-	/*flex-basis: calc(((var(--theme-splitter-basis) * 2 + 100px) * 2 + 100px) * 2 + 100px);*/
-}
 
 /* -------------------- SCROLL TO TOP -------------------- */
 
