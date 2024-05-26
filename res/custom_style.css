@@ -34,12 +34,8 @@
 
 	--theme-gap: 2rem;
 	--theme-basis: 26rem;
-	
-	--theme-splitter-gap: 1rem;
-	--theme-splitter-elem-min-width: 150px;
 }
 
-/* TODO, looks like shit - seperate header with other stuff */
 /* theme is set with JS */
 [data-theme=light]{
 	--theme-bg-color: rgb(245, 245, 245);
@@ -206,6 +202,9 @@ small-title{
 .noTopMargin{
 	margin-top: 0rem !important; 
 }
+.noBotMargin{
+	margin-bottom: 0rem !important; 
+}
 .noSideMargin{
 	margin-left: 0rem !important; 
 	margin-right: 0rem !important; 
@@ -349,64 +348,30 @@ small-title{
 }
 
 /* -------------------- EQUAL SPLIT LOGIC -------------------- */
-/* Cases: 4, 5, 6, 7, and 8 */
-/* We need 4, 6 and 8 for eq wrapping */
-/* Will not work right if we're not using the entire width of the screen, but it doesn't have to */
 
-.eqSplit8, .eqSplit6, .eqSplit4{
-	gap: var(--theme-splitter-gap);
+flex-row-eq-wrap-component{
+    display: flex;
+    flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: center;
-    align-items: stretch;
+    justify-content: center;
+	
+	background-color: var(--theme-back-bg-color);
 }
 
-@media (min-width: 300px) { /* sort in ones */
-	.eqSplit8, .eqSplit6, .eqSplit4{
-		--theme-splitter-basis: 100%;
-	}
-}
-
-@media (min-width: 600px) { /* sort in twos */
-	.eqSplit8, .eqSplit6, .eqSplit4{
-		--theme-splitter-basis: calc(100% / 2 - var(--theme-splitter-gap));
-	}
-}
-
-@media (min-width: 1200px) {
-	.eqSplit8, .eqSplit4{ /* sort in fours */
-		--theme-splitter-basis: calc(100% / 4 - var(--theme-splitter-gap));
-	}
-
-	.eqSplit6{ /* sort in threes */
-		--theme-splitter-basis: calc(100% / 3 - var(--theme-splitter-gap));
-	}
-}
-
-@media (min-width: 1800px) {
-	.eqSplit8{
-		--theme-splitter-basis: calc(100% / 8 - var(--theme-splitter-gap));
-	}
-
-	.eqSplit6{
-		--theme-splitter-basis: calc(100% / 6 - var(--theme-splitter-gap));
-	}
-
-	.eqSplit4{
-		--theme-splitter-basis: calc(100% / 4 - var(--theme-splitter-gap));
-	}
-}
-
-.eqSplit{
+flex-row-eq-wrap-component > *{
 	flex-grow: 1;
 
-	flex-basis: calc(var(--theme-splitter-basis) - 2 * calc(var(--theme-padding) / 2)); /* Account for padding */
-	max-width: calc(var(--theme-splitter-basis) - 2 * calc(var(--theme-padding) / 2)); /* Account for padding */
+	/* splitter vars set to parent style via js (could supply theme padding too) */
+	padding: calc(var(--theme-padding) / 2);
+	/* This isn't completely precise, but it also doesn't need to be (we're overcompensating for the gaps) */	
+	min-width: calc(var(--splitter-basis) - var(--theme-padding) - var(--splitter-gap)); /* Get ready for trouble */
+	max-width: calc(var(--splitter-basis) - var(--theme-padding) - var(--splitter-gap)); /* And make it double */
+	flex-basis: auto;
 	
 	background-color: var(--theme-front-bg-color);
 	border: 1px solid var(--theme-border-color);
-	box-shadow: 4px 4px 8px var(--theme-front-shadow-color);
+	box-shadow: 2px 2px 4px var(--theme-front-shadow-color);
 
-	padding: calc(var(--theme-padding) / 2);
 }
 
 
