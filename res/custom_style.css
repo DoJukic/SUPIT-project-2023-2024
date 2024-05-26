@@ -215,6 +215,13 @@ small-title{
 	mix-blend-mode: difference;
 }
 
+.primaryColor{
+	color: var(--theme-primary-color);
+}
+.secondaryColor{
+	color: var(--theme-secondary-color);
+}
+
 /* -------------------- TYPEWRITER -------------------- */
 
 .jsTypewriterRowTarget{
@@ -344,6 +351,8 @@ small-title{
 /* -------------------- EQUAL SPLIT LOGIC -------------------- */
 /* Cases: 4, 5, 6, 7, and 8 */
 /* We need 4, 6 and 8 for eq wrapping */
+/* Will not work right if we're not using the entire width of the screen, but it doesn't have to */
+
 .eqSplit8, .eqSplit6, .eqSplit4{
 	gap: var(--theme-splitter-gap);
 	flex-wrap: wrap;
