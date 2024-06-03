@@ -43,16 +43,9 @@ class equalFlexWrap extends HTMLElement {
         
         childrenAmountPerRow = Math.ceil(childrenAmountPerRow / 2) ;
         elementSizePx = availableWidth / childrenAmountPerRow - 5;
-
-        
-        console.log("*************************************")
-        console.log(childrenAmountPerRow)
-        console.log(availableWidth)
-        console.log(neededSize)
-        console.log(diff)
-        console.log(elementSizePx)
         
         this.style.setProperty("--splitter-basis", `${elementSizePx}px`);
+        this.style.setProperty("--splitter-elems-per-line", `${childrenAmountPerRow}`);
     }
 }
 

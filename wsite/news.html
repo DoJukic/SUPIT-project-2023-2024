@@ -19,6 +19,19 @@
 		<link rel="stylesheet" href="../res/jquery-ui-1.13.2.custom/jquery-ui.css">
 		<script src="../res/jquery-ui-1.13.2.custom/external/jquery/jquery.js"></script>
 		<script src="../res/jquery-ui-1.13.2.custom/jquery-ui.js"></script>
+        
+        <!-- Fancybox -->
+        <script src="../res/fancybox-5.0.36/dist/fancybox/fancybox.umd.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="../res/fancybox-5.0.36/dist/fancybox/fancybox.css">
+        
+        <script src="../res/fancybox-5.0.36/dist/carousel/carousel.umd.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="../res/fancybox-5.0.36/dist/carousel/carousel.css">
+        
+        <script src="../res/fancybox-5.0.36/dist/carousel/carousel.thumbs.umd.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="../res/fancybox-5.0.36/dist/carousel/carousel.thumbs.css">
+        
+        <script src="../res/fancybox-5.0.36/dist/carousel/carousel.autoplay.umd.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="../res/fancybox-5.0.36/dist/carousel/carousel.autoplay.css">
 
         <!-- Components, can be defered for ~speed~ -->
         <script src="components/modal.js" type="text/javascript" defer></script>
@@ -30,17 +43,109 @@
 
         <script>
 			$(document).ready(function () {
-                
+                $("#datepicker").datepicker();
+
+                Fancybox.bind('[data-fancybox="gallery"]', {
+                    // Your custom options
+                });
+
+                Fancybox.bind('[data-fancybox="carousel"]', {
+                    // Your custom options
+                });
+
+                Carousel.bind('.carouselPls', {
+                    // Your custom options
+                });
+
+                $('.carouselPls').each(function(){
+                    new Carousel(this,
+                        {
+                            infinite: false
+                        }
+                    );
+                })
+                $('.thumbCarouselPls').each(function(){
+                    new Carousel(this,
+                        {
+                            Dots: false,
+                            Autoplay : {
+                                timeout : 10000
+                            }
+                        },
+                        {Thumbs, Autoplay}
+                    );
+                })
             });
         </script>
 
     </head>
 
+    <style>
+        .thumbnail{
+            width: 300px;
+        }
+    </style>
+
     <body>
         <header-component></header-component>
 
         <main>
-            
+            Date:
+            <div id="datepicker" style="width: 100%;"></div>
+
+            <div class="f-carousel thumbCarouselPls has-thumbs is-ltr is-horizontal">
+                <div class="f-carousel__track">
+                    <div class="f-carousel__slide centered"
+                        data-thumb-src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg">
+
+                        <img src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg"
+                            data-fancybox="carousel" data-caption="THIS IS A CAPTIONNNN"/>
+                    </div>
+                    <div class="f-carousel__slide centered"
+                        data-thumb-src="../res/img/news/Novosti_1100x400-promocija.jpg">
+
+                        <img src="../res/img/news/Novosti_1100x400-promocija.jpg"
+                            data-fancybox="carousel" data-caption="THIS IS A CAPTIONNNN"/>
+                    </div>
+                    <div class="f-carousel__slide centered"
+                        data-thumb-src="../res/img/news/Novosti_DiR.jpg">
+
+                        <img src="../res/img/news/Novosti_DiR.jpg"
+                            data-fancybox="carousel" data-caption="THIS IS A CAPTIONNNN"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="f-carousel carouselPls defaultMargin noSideMargin" style="width: 100%;">
+                <div class="f-carousel__track">
+                    <div class="f-carousel__slide centered">1</div>
+                    <div class="f-carousel__slide centered">2</div>
+                    <div class="f-carousel__slide centered">3</div>
+                </div>
+            </div>
+
+            <div class="f-carousel carouselPls defaultMargin noSideMargin" style="width: 100%;">
+                <div class="f-carousel__track">
+                    <img src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg"/>
+                    <img src="../res/img/news/Novosti_1100x400-promocija.jpg"/>
+                    <img src="../res/img/news/Novosti_DiR.jpg"/>
+                </div>
+            </div>
+
+            <div class="f-carousel carouselPls centered">
+                <a class="thumbnail f-carousel__slide" href="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg" data-fancybox="gallery" data-caption="Caption #1">
+                    <img class="thumbnail" src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg"/>
+                </a>
+
+                <a class="thumbnail f-carousel__slide" href="../res/img/news/Novosti_1100x400-promocija.jpg" data-fancybox="gallery" data-caption="Caption #2">
+                    <img class="thumbnail" src="../res/img/news/Novosti_1100x400-promocija.jpg"/>
+                </a>
+
+                <a class="thumbnail f-carousel__slide" href="../res/img/news/Novosti_DiR.jpg" data-fancybox="gallery" data-fancybox data-caption="CAPTION THREE">
+                    <img class="thumbnail" src="../res/img/news/Novosti_DiR.jpg"/>
+                </a>
+            </div>
+
         </main>
 
         <footer-component></footer-component>

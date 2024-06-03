@@ -137,4 +137,4 @@ if(!Boolean(PushNotifs.singleton)){
 }
 
 ML.subscribeToAccessTokenExpired(() => {PushNotifs.pushNotificationInfo("TOKEN EXPIRED", "Your access token has expired, please log in again.")});
-ML.subscribeToThemeChange(() => {PushNotifs.pushNotificationInfo("THEME CHANGED", `Your theme has been set to [${ML.getCurrentTheme()}].`)});
+ML.subscribeToUserThemeChange(() => {PushNotifs.pushNotificationInfo("THEME CHANGED", `Your theme has been set to [${ML.getCurrentTheme()}].`)});

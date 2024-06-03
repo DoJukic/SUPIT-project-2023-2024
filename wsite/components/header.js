@@ -43,7 +43,7 @@ class Header extends HTMLElement {
                     onclick="location.href = '../wsite/home.html';"
                     tabindex="0">
 
-                    <div class="ui-icon ui-theme ui-icon-home"></div>
+                    <div class="ui-icon ui-theme ui-no-margin ui-icon-home"></div>
                     Home
                 </nav-element>
 
@@ -51,7 +51,7 @@ class Header extends HTMLElement {
                     onclick="location.href = '../wsite/about_us.html';"
                     tabindex="0">
 
-                    <div class="ui-icon ui-theme ui-icon-search"></div>
+                    <div class="ui-icon ui-theme ui-no-margin ui-icon-search"></div>
                     About us
                 </nav-element>
 
@@ -68,7 +68,7 @@ class Header extends HTMLElement {
                     onclick="location.href = '../wsite/contact_us.html';"
                     tabindex="0">
 
-                    <div class="ui-icon ui-theme ui-icon-transferthick-e-w"
+                    <div class="ui-icon ui-theme ui-no-margin ui-icon-transferthick-e-w"
                         style="transform: rotate(90deg);"></div>
                     Contact us
                 </nav-element>
@@ -77,7 +77,7 @@ class Header extends HTMLElement {
                     onclick="location.href = '../wsite/curriculum.html';"
                     tabindex="0">
 
-                    <div class="ui-icon ui-theme ui-icon-folder-open"></div>
+                    <div class="ui-icon ui-theme ui-no-margin ui-icon-folder-open"></div>
                     Curriculum
                 </nav-element>
             </flex-row>
@@ -90,7 +90,7 @@ class Header extends HTMLElement {
                         onclick="Header.logOut()">
                         
                         <flex-row class="fEqGrow centered">
-                            <div class="ui-icon ui-theme ui-icon-locked"></div>
+                            <div class="ui-icon ui-theme ui-no-margin ui-icon-locked"></div>
                             Log Out
                         </flex-row>
                     </nav-element>
@@ -101,7 +101,7 @@ class Header extends HTMLElement {
                         tabindex="0"
                         onclick="ML.cycleTheme(); this.blur();">
                         
-                        <div class="ui-icon ui-theme ui-icon-pencil"></div>
+                        <div class="ui-icon ui-theme ui-no-margin ui-icon-pencil"></div>
                         <div>Theme</div>
                     </nav-element>
                 </flex-row>
@@ -113,7 +113,7 @@ class Header extends HTMLElement {
                         tabindex="0">
                         
                         <flex-row class="jsHeaderLogInHideOnBusyTarget fGrow centered">
-                            <div class="ui-icon ui-theme ui-icon-unlocked"></div>
+                            <div class="ui-icon ui-theme ui-no-margin ui-icon-unlocked"></div>
                             <div>Log In</div>
                         </flex-row>
                         <simple-loader-m class="jsHeaderLogInShowOnBusyTarget"></simple-loader-m>
@@ -125,7 +125,7 @@ class Header extends HTMLElement {
                         tabindex="0">
 
                         <flex-row class="jsRegisterHideOnBusyTarget fGrow centered">
-                            <div class="ui-icon ui-theme ui-icon-person"></div>
+                            <div class="ui-icon ui-theme ui-no-margin ui-icon-person"></div>
                             <div>Register</div>
                         </flex-row>
                         <simple-loader-m class="jsRegisterShowOnBusyTarget"></simple-loader-m>
@@ -143,7 +143,7 @@ class Header extends HTMLElement {
                         <flex-column class="centered">
                             <div>Cycle</div>
                             <br-half></br-half>
-                            <div class="ui-icon ui-theme ui-icon-pencil"></div>
+                            <div class="ui-icon ui-theme ui-no-margin ui-icon-pencil"></div>
                             <br-half></br-half>
                             <div>Theme</div>
                         </flex-column>
@@ -179,7 +179,7 @@ class Header extends HTMLElement {
                 <flex-column class="jsHeaderCollapsibleTrigger glowOnFocus centered defaultPaddingHalf"
                     tabindex="0">
                     
-                    <img class="jsHeaderImageTarget ui-theme"
+                    <img class="jsHeaderImageTarget ui-theme ui-no-margin"
                         src="../res/img/navbar/icons8.com-hamburger-menu-50-white.png"
                         style="max-height: 3em;">
                 </flex-column>
@@ -195,7 +195,7 @@ class Header extends HTMLElement {
                         onclick="location.href = '../wsite/home.html';"
                         tabindex="0">
 
-                        <div class="ui-icon ui-theme ui-icon-home"></div>
+                        <div class="ui-icon ui-theme ui-no-margin ui-icon-home"></div>
                         Home
                     </nav-element>
 
@@ -203,7 +203,7 @@ class Header extends HTMLElement {
                         onclick="location.href = '../wsite/about_us.html';"
                         tabindex="0">
 
-                        <div class="ui-icon ui-theme ui-icon-search"></div>
+                        <div class="ui-icon ui-theme ui-no-margin ui-icon-search"></div>
                         About us
                     </nav-element>
                 </flex-row>
@@ -224,7 +224,7 @@ class Header extends HTMLElement {
                         onclick="location.href = '../wsite/contact_us.html';"
                         tabindex="0">
 
-                        <div class="ui-icon ui-theme ui-icon-transferthick-e-w"
+                        <div class="ui-icon ui-theme ui-no-margin ui-icon-transferthick-e-w"
                             style="transform: rotate(90deg);"></div>
                         Contact us
                     </nav-element>
@@ -235,7 +235,7 @@ class Header extends HTMLElement {
                         onclick="location.href = '../wsite/curriculum.html';"
                         tabindex="0">
 
-                        <div class="ui-icon ui-theme ui-icon-folder-open"></div>
+                        <div class="ui-icon ui-theme ui-no-margin ui-icon-folder-open"></div>
                         Curriculum
                     </nav-element>
 
@@ -244,7 +244,7 @@ class Header extends HTMLElement {
                         onclick="Header.logOut()">
                         
                         <flex-row class="fEqGrow centered">
-                            <div class="ui-icon ui-theme ui-icon-locked"></div>
+                            <div class="ui-icon ui-theme ui-no-margin ui-icon-locked"></div>
                             <div>Log Out</div>
                         </flex-row>
                     </nav-element>
@@ -257,7 +257,7 @@ class Header extends HTMLElement {
                         tabindex="0">
                         
                         <flex-row class="jsHeaderLogInHideOnBusyTarget fEqGrow centered">
-                            <div class="ui-icon ui-theme ui-icon-unlocked"></div>
+                            <div class="ui-icon ui-theme ui-no-margin ui-icon-unlocked"></div>
                             <div>Log In</div>
                         </flex-row>
                         <simple-loader-m class="jsHeaderLogInShowOnBusyTarget"></simple-loader-m>
@@ -267,7 +267,7 @@ class Header extends HTMLElement {
                         tabindex="0">
 
                         <flex-row class="jsRegisterHideOnBusyTarget fEqGrow centered">
-                            <div class="ui-icon ui-theme ui-icon-person"></div>
+                            <div class="ui-icon ui-theme ui-no-margin ui-icon-person"></div>
                             <div>Register</div>
                         </flex-row>
                         <simple-loader-m class="jsRegisterShowOnBusyTarget"></simple-loader-m>
@@ -279,7 +279,7 @@ class Header extends HTMLElement {
                         tabindex="0"
                         onclick="ML.cycleTheme(); this.blur();">
                         
-                        <div class="ui-icon ui-theme ui-icon-pencil"></div>
+                        <div class="ui-icon ui-theme ui-no-margin ui-icon-pencil"></div>
                         <div>Cycle Theme</div>
                     </nav-element>
                 </flex-row>

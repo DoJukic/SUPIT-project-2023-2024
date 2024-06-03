@@ -20,6 +20,7 @@ class ML{
   static tokenTimeout = null; // Holds the timeout ID which we can use to delete the timer when not necessary
 
   static themeChangeSubscriberFuncs = [];
+  static systemThemeChangeSubscriberFuncs = [];
   static themes = ["auto", "light", "dark"];
   
   static chapterObserver= null;
@@ -71,9 +72,21 @@ class ML{
     ML.imageLoadArray.push(img);
   }
 
-  static doLateLoad(){
-    document.querySelectorAll('.lateLoad').forEach(function(element) {
-      element.src = ML.getStringAttribute(element, "lateload-src"); // I'll make you load last if it's the last thing I do!
+  static initLateLoadSrc(){
+    document.querySelectorAll('.jsLogicLateLoadSrc').forEach(function(element) {
+      element.src = ML.getStringAttribute(element, "lateload-src"); // This is mostly just meant for videos which are really just too long
+    });
+  }
+
+  static initThemedBackgroundImages() {
+    ML.subscribeToUserThemeChange(ML.loadThemedBackgroundImages);
+    ML.subscribeToSystemThemeChange(ML.loadThemedBackgroundImages);
+    ML.loadThemedBackgroundImages();
+  }
+
+  static loadThemedBackgroundImages() { //data-theme_bg_img_url-[THEMENAME]
+    document.querySelectorAll('.jsLogicHasThemedBGImg').forEach(function(element) {
+      $(element).css("background-image", "url(" +  ML.getStringAttribute(element, `theme_bg_img_url-${ML.getCurrentThemeValue()}`) + ")");
     });
   }
 
@@ -103,9 +116,11 @@ class ML{
   /* -------------------- THEME LOGIC -------------------- */
 
   static initTheme(){
-    ML.subscribeToThemeChange(ML.updateTheme);
     window.matchMedia('(prefers-color-scheme: dark)')
-          .addEventListener('change', ML.updateTheme)
+          .addEventListener('change', ML.notifySystemThemeChanged);
+    
+    ML.subscribeToUserThemeChange(ML.updateTheme);
+    ML.subscribeToSystemThemeChange(ML.updateTheme);
     ML.updateTheme();
   }
 
@@ -155,12 +170,20 @@ class ML{
     $(document.documentElement).attr("data-theme", ML.getCurrentThemeValue())
   }
 
-  static subscribeToThemeChange(funct){
+  static subscribeToUserThemeChange(funct){
     ML.themeChangeSubscriberFuncs.push(funct);
   }
-
   static notifyThemeChanged(){
     $(ML.themeChangeSubscriberFuncs).each(function(){
+      this();
+    });
+  }
+
+  static subscribeToSystemThemeChange(funct){
+    ML.systemThemeChangeSubscriberFuncs.push(funct);
+  }
+  static notifySystemThemeChanged(){
+    $(ML.systemThemeChangeSubscriberFuncs).each(function(){
       this();
     });
   }
@@ -247,6 +270,7 @@ class ML{
   // Sometimes the simple solution is fine (and doesn't give you a headache!)
   static animateElement(element, visibility, isAbove){
     $(element).css("opacity", `${visibility}`);
+    // If printing the page didn't work before, it certainly does not work now. As they say, if you wanna make an omlette you gotta break some eggs
   }
 
   /* -------------------- TYPEWRITER ANIMATION -------------------- */
@@ -426,11 +450,12 @@ ML.checkTokenTimeout();
 ML.loadImage("../res/jquery-ui-1.13.2.custom/images/ui-icons_ffffff_256x240.png");
 
 // Runs once everything (external resources included) are loaded
-window.addEventListener('load', ML.doLateLoad, false);
+window.addEventListener('load', ML.initLateLoadSrc, false);
 
 $(document).ready(function(){
   ML.initChapterAnims();
   ML.initTypewriterAnims();
   ML.initTheme();
+  ML.initThemedBackgroundImages();
 });
 

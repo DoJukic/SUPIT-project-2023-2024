@@ -93,7 +93,7 @@ body {
 
 main {
 	margin: auto;
-	max-width: min(2000px, 100%); /* Widescreen support? In THIS economy? */
+	width: min(2000px, 100%); /* Widescreen support? In THIS economy? */
     flex: 1 0 auto;
 	overflow: visible;
 }
@@ -194,6 +194,9 @@ small-title{
 .fGrow{
 	flex-grow: 1;
 }
+.fShrink{
+	flex-shrink: 1;
+}
 .fEqGrow{
 	flex-basis: 0em;
 	flex-grow: 1;
@@ -208,6 +211,32 @@ small-title{
 .noSideMargin{
 	margin-left: 0rem !important; 
 	margin-right: 0rem !important; 
+}
+.onlyRightMargin{
+	margin-top: 0rem !important; 
+	margin-bottom: 0rem !important; 
+	margin-left: 0rem !important; 
+}
+.onlyBotMargin{
+	margin-top: 0rem !important; 
+	margin-left: 0rem !important; 
+	margin-right: 0rem !important; 
+}
+
+.noTopPadding{
+	padding-top: 0rem !important; 
+}
+.noBotPadding{
+	padding-bottom: 0rem !important; 
+}
+.noSidePadding{
+	padding-left: 0rem !important; 
+	padding-right: 0rem !important; 
+}
+.onlyTopPadding{
+	padding-left: 0rem !important; 
+	padding-bottom: 0rem !important; 
+	padding-right: 0rem !important; 
 }
 
 .blendDifference{
@@ -264,6 +293,9 @@ small-title{
 }
 .defaultMarginHalf{
 	margin: calc(var(--theme-margin) / 2);
+}
+.defaultMarginQuarter{
+	margin: calc(var(--theme-margin) / 4);
 }
 .defaultMarginDouble{
 	margin: calc(var(--theme-margin) * 2);
@@ -335,6 +367,10 @@ small-title{
 
 /* -------------------- BORDERS -------------------- */
 
+.roundedBorder, .roundedBorderHalf{
+	overflow: hidden;
+}
+
 .roundedBorder{
 	border-radius: 10px;
 }
@@ -359,19 +395,14 @@ flex-row-eq-wrap-component{
 }
 
 flex-row-eq-wrap-component > *{
-	flex-grow: 1;
-
 	/* splitter vars set to parent style via js (could supply theme padding too) */
 	padding: calc(var(--theme-padding) / 2);
-	/* This isn't completely precise, but it also doesn't need to be (we're overcompensating for the gaps) */	
-	min-width: calc(var(--splitter-basis) - var(--theme-padding) - var(--splitter-gap)); /* Get ready for trouble */
-	max-width: calc(var(--splitter-basis) - var(--theme-padding) - var(--splitter-gap)); /* And make it double */
-	flex-basis: auto;
+	/* This isn't completely precise, but it also doesn't need to be (we're overcompensating for the gaps) */
+	width: calc(var(--splitter-basis) - var(--theme-padding) - var(--splitter-gap));
 	
 	background-color: var(--theme-front-bg-color);
 	border: 1px solid var(--theme-border-color);
 	box-shadow: 2px 2px 4px var(--theme-front-shadow-color);
-
 }
 
 
@@ -650,8 +681,8 @@ textarea{
 .ui-icon{
     background-image: var(--theme-icon-path) !important;
 }
-.ui-margin{
-	margin-top: 2px !important;
+.ui-no-margin{
+	margin-top: 0px !important;
 }
 .ui-theme
 {
