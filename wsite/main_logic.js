@@ -37,7 +37,7 @@ class ML{
   }
 
   // https://stackoverflow.com/questions/5646279/get-object-class-from-string-name-in-javascript/53199720#53199720
-  // Ceremcem's answer (heavily modified), should be more secure than just using eval. Optimisations removed. Regex more strict. Purpose altered.
+  // Ceremcem's answer (heavily modified), should be more secure than just using eval. Optimisations removed, regex more strict, Purpose altered.
   static interrogatePrerequisite(stringName){
     var result = false;
 
