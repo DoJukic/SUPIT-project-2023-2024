@@ -212,6 +212,10 @@ small-title{
 	margin-left: 0rem !important; 
 	margin-right: 0rem !important; 
 }
+.noTopOrBotMargin{
+	margin-top: 0rem !important; 
+	margin-bottom: 0rem !important; 
+}
 .onlyRightMargin{
 	margin-top: 0rem !important; 
 	margin-bottom: 0rem !important; 
