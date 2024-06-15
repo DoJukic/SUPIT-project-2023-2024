@@ -85,7 +85,7 @@ class Header extends HTMLElement {
             <flex-column class="jsHeaderShowOnLoggedInTarget">
                 <flex-row class="fEqGrow">
                     <nav-element class="navElementVisual selectableNavElement defaultPaddingQuarter"
-                        style="flex-basis: 0em; min-width: 0em;"
+                        style="flex-basis: 0em; min-width: 7.5em;"
                         tabindex="0"
                         onclick="Header.logOut()">
                         
@@ -98,6 +98,7 @@ class Header extends HTMLElement {
                 
                 <flex-row class="fEqGrow">
                     <nav-element class="navElementVisual selectableNavElement defaultPaddingQuarter"
+                        style="min-width: 6em;"
                         tabindex="0"
                         onclick="ML.cycleTheme(); this.blur();">
                         
@@ -110,6 +111,7 @@ class Header extends HTMLElement {
             <flex-column class="jsHeaderHideOnLoggedInTarget">
                 <flex-row class="fGrow">
                     <nav-element class="jsLogInShowTrigger navElementVisual selectableNavElement defaultPaddingQuarter"
+                        style="min-width: 7.5em;"
                         tabindex="0">
                         
                         <flex-row class="jsHeaderLogInHideOnBusyTarget fGrow centered">
@@ -122,6 +124,7 @@ class Header extends HTMLElement {
 
                 <flex-row class="fGrow">
                     <nav-element class="jsRegisterShowTrigger navElementVisual selectableNavElement defaultPaddingQuarter"
+                        style="min-width: 7.5em;"
                         tabindex="0">
 
                         <flex-row class="jsRegisterHideOnBusyTarget fGrow centered">

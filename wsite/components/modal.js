@@ -10,8 +10,8 @@ class Modal extends HTMLElement {
     static dataFront =
     html`<!-- centering with flex tends to overflow the parent scroll for some reason, so sometimes we have to use auto margins instead -->
     <div style="margin: auto;">
-        <flex-column class="defaultMarginDouble defaultPadding defaultGapHalf themeBG roundedBorder themeBorder"
-            style="word-wrap: break-word">
+        <flex-column class="defaultMarginQuadruple defaultPadding defaultGapHalf themeFrontBG roundedBorder themeBorder"
+            style="word-wrap: break-word; min-width: 270px;">
     `
 
     static dataBack =

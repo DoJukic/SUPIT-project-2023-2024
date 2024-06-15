@@ -43,6 +43,7 @@
 
         <script>
 			$(document).ready(function () {
+                /*
                 Fancybox.bind('[data-fancybox="gallery"]', {
                     // Your custom options
                 });
@@ -62,6 +63,28 @@
                         }
                     );
                 })
+                */
+
+                // https://stackoverflow.com/questions/6042202/how-to-distinguish-mouse-click-and-drag
+                // andreyrd's answer, modified for this use case
+                $(document.querySelectorAll("[data-modal-id]")).each(function(){
+                    this.addEventListener('mousedown', function (event) {
+                        this.dragDetectionStartX = event.pageX;
+                        this.dragDetectionStartY = event.pageY; 
+                    });
+
+                    this.addEventListener('mouseup', function (event) {
+                        const delta = 6;
+                        const diffX = Math.abs(event.pageX - this.dragDetectionStartX);
+                        const diffY = Math.abs(event.pageY - this.dragDetectionStartY);
+
+                        if (diffX < delta && diffY < delta) {
+                            // Click!
+                            document.getElementById("MODALMODALMODAL " + ML.getIntAttribute(this, "modal-id")).showModal();
+                        }
+                    });
+                });
+
                 $('.thumbCarouselPls').each(function(){
                     new Carousel(this,
                         {
@@ -82,115 +105,339 @@
         <header-component></header-component>
 
         <main>
-            <flex-row class="jsLogicElementAnimationTarget themeBorder onlyBotBorder"
+            <div>
+                <modal-component id="MODALMODALMODAL 1">
+                    <flex-row class="themeFrontBG fWrap defaultGap">
+                        <div class="fEqGrow roundedBorder defaultSpacing"
+                            style="background-image: url(../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg); height: 400px;
+                                background-position: 70%; background-size: max(100%, 1100px) auto;">
+                        </div>
+        
+                        <flex-column class="fEqGrow defaultGap defaultSpacing centered">
+                            <flex-column class="centered">
+                                <medium-title>One man talks while another watches patiently</medium-title>
+                                <flex-row class="primaryColor bold">
+                                    25/05/2025
+                                </flex-row>
+                            </flex-column>
+                
+                            <div>
+                                Bacon ipsum dolor amet ball tip meatloaf landjaeger quis qui t-bone beef ribs swine mollit magna. Mollit spare ribs ea, cupidatat picanha ham sunt. Pork chop jowl nostrud, aliqua filet mignon pariatur fugiat doner tri-tip. Ea incididunt culpa, pig tenderloin elit sint minim laborum dolore consectetur ad pork belly bacon. Ground round cow ribeye, tenderloin burgdoggen chislic sed cillum frankfurter. Minim eu t-bone est commodo swine turkey.
+                            </div>
+                        </flex-column>
+                    </flex-row>
+                </modal-component>
+
+                <modal-component id="MODALMODALMODAL 2">
+                    <flex-row class="themeFrontBG fWrap defaultGap">
+                        <div class="fEqGrow roundedBorder defaultSpacing"
+                            style="background-image: url(../res/img/news/Novosti_1100x400-promocija.jpg); height: 400px;
+                            background-position: center; background-size: max(100%, 1100px) auto;">
+                        </div>
+        
+                        <flex-column class="fEqGrow defaultGap defaultSpacing centered">
+                            <flex-column class="centered">
+                                <medium-title>People make huge mess - janitors worldwide in shambles</medium-title>
+                                <flex-column class="primaryColor bold">
+                                    22/05/2025
+                                </flex-column>
+                            </flex-column>
+                
+                            <div>
+                                Corned beef ut est pig lorem t-bone ut ad. Venison ut do excepteur tempor mollit picanha pig landjaeger. In spare ribs t-bone picanha. Prosciutto burgdoggen nulla pork chop cow.
+                            </div>
+                
+                            <div>
+                                Boudin jowl ham capicola meatloaf adipisicing dolore in non turkey laborum. Id ullamco ex frankfurter burgdoggen. Brisket short loin ut, ut ullamco sirloin anim pastrami sint. Incididunt kevin aliqua, sunt velit pariatur dolor pastrami leberkas consequat ipsum pancetta corned beef prosciutto short ribs. Mollit adipisicing capicola consequat labore irure, short ribs tri-tip swine id reprehenderit aute laborum bresaola velit. Dolore commodo fugiat brisket non.
+                            </div>
+                        </flex-column>
+                    </flex-row>
+                </modal-component>
+                
+                <modal-component id="MODALMODALMODAL 3">
+                    <flex-row class="themeFrontBG fWrap defaultGap">
+                        <div class="fEqGrow roundedBorder defaultSpacing"
+                            style="background-image: url(../res/img/news/Novosti_DiR.jpg); height: 400px;
+                            background-position: 30%; background-size: max(100%, 1100px) auto;">
+                        </div>
+        
+                        <flex-column class="fEqGrow defaultGap defaultSpacing centered">
+                            <flex-column class="centered">
+                                <medium-title>Professors celebrate youtube stuff</medium-title>
+                                <flex-row class="primaryColor bold">
+                                    15/05/2025
+                                </flex-row>
+                            </flex-column>
+                
+                            <div>
+                                Corned beef ut est pig lorem t-bone ut ad. Venison ut do excepteur tempor mollit picanha pig landjaeger. In spare ribs t-bone picanha. Prosciutto burgdoggen nulla pork chop cow.
+                            </div>
+                
+                            <div>
+                                Boudin jowl ham capicola meatloaf adipisicing dolore in non turkey laborum. Id ullamco ex frankfurter burgdoggen. Brisket short loin ut, ut ullamco sirloin anim pastrami sint. Incididunt kevin aliqua, sunt velit pariatur dolor pastrami leberkas consequat ipsum pancetta corned beef prosciutto short ribs. Mollit adipisicing capicola consequat labore irure, short ribs tri-tip swine id reprehenderit aute laborum bresaola velit. Dolore commodo fugiat brisket non.
+                            </div>
+                        </flex-column>
+                    </flex-row>
+                </modal-component>
+
+                <modal-component id="MODALMODALMODAL 4">
+                    <div>I am not doing</div>
+                    <div>every single one</div>
+                </modal-component>
+                
+                <modal-component id="MODALMODALMODAL 5">
+                    <div>I am not doing</div>
+                    <div>every single one</div>
+                </modal-component>
+
+                <modal-component id="MODALMODALMODAL 6">
+                    <div>I am not doing</div>
+                    <div>every single one</div>
+                </modal-component>
+
+                <modal-component id="MODALMODALMODAL 7">
+                    <div>I am not doing</div>
+                    <div>every single one</div>
+                </modal-component>
+                
+                <modal-component id="MODALMODALMODAL 8">
+                    <div>I am not doing</div>
+                    <div>every single one</div>
+                </modal-component>
+
+                <modal-component id="MODALMODALMODAL 9">
+                    <div>I am not doing</div>
+                    <div>every single one</div>
+                </modal-component>
+            </div>
+
+            <flex-row class="jsLogicElementAnimationTarget"
                 style="min-height: 350px;
                         background-image: url(../res/img/news/VLAArrayNiteClouds_RGB.jpg);
                         background-size: max(100%, 2000px) 400px; background-position: center;
                         background-position-y: 0px;
                         overflow: hidden;">
                 
-                <flex-column class="fEqGrow centered">
-                    <div class="fGrow"></div>
-
+                <flex-column class="fEqGrow centered themeBorder noSideBorder">
                     <flex-column class="darkImageOverlay defaultPaddingHalf centered" style="width: 100%;">
                         <big-title>
                             NEWS
                         </big-title>
                     </flex-column>
-
-                    <div class="fGrow"></div>
                 </flex-column>
             </flex-row>
 
-            <div class="themeFrontBG">
-                <flex-row class="defaultPadding centered">
-                    <medium-title>RECENT</medium-title>
-                </flex-row>
-            </div>
+            <div class="jsLogicElementAnimationTarget"> <!-- "RECENT" (and narrow elements in general) looks weird when fading alone -->
+                <div class="themeFrontBG">
+                    <flex-row class="defaultPadding centered themeBorder onlyBotBorder">
+                        <medium-title>RECENT</medium-title>
+                    </flex-row>
+                </div>
+                
+                <div class="themeBG">
+                    <div class="f-carousel thumbCarouselPls">
+                        <div class="f-carousel__viewport is-draggable" style="cursor: pointer !important;">
+                            <div class="f-carousel__track">
+                                <div class="f-carousel__slide centered"
+                                    data-modal-id="1"
+                                    data-thumb-src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg">
+                                    
+                                    <flex-column class="themeFrontBG fWrap fGrow defaultPaddingDouble noTopOrBotPadding centered">
+                                        <flex-column class="fEqGrow defaultPadding onlyTopPadding defaultGap centered">
+                                            <flex-column class="centered">
+                                                <medium-title>One man talks while another watches patiently</medium-title>
+                                                <flex-row class="primaryColor bold">
+                                                    25/05/2025
+                                                </flex-row>
+                                            </flex-column>
+                                        </flex-column>
+                                        <div class="fEqGrow defaultMargin noSideMargin roundedBorder"
+                                            style="background-image: url(../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg);
+                                                min-height: 400px; max-width: 1100px; width: 100%;
+                                                background-position: 70%; background-size: max(100%, 1100px) auto;">
+                                        </div>
+                                    </flex-column>
+                                </div>
+                                <div class="f-carousel__slide centered"
+                                    data-modal-id="2"
+                                    data-thumb-src="../res/img/news/Novosti_1100x400-promocija.jpg">
+                                    
+                                    <flex-column class="themeFrontBG fWrap fGrow defaultPaddingDouble noTopOrBotPadding centered">
+                                        <flex-column class="fEqGrow defaultPadding onlyTopPadding defaultGap centered">
+                                            <flex-column class="centered">
+                                                <medium-title>People make huge mess - janitors worldwide in shambles</medium-title>
+                                                <flex-column class="primaryColor bold">
+                                                    22/05/2025
+                                                </flex-column>
+                                            </flex-column>
+                                        </flex-column>
 
-            <div class="themeBackBG">
-                <div class="f-carousel thumbCarouselPls has-thumbs is-ltr is-horizontal">
-                    <div class="f-carousel__track">
-                        <div class="f-carousel__slide centered defaultMargin noTopOrBotMargin"
-                            data-thumb-src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg">
-                            
-                            <flex-row class="jsLogicElementAnimationTarget themeBG fWrap">
-                                <div class="fEqGrow defaultMargin roundedBorder defaultSpacing"
-                                    style="background-image: url(../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg); height: 400px;
-                                        background-position: center; background-size: max(100%, 1100px) auto;">
+                                        <div class="fEqGrow defaultMargin noSideMargin roundedBorder"
+                                            style="background-image: url(../res/img/news/Novosti_1100x400-promocija.jpg);
+                                            min-height: 400px; max-width: 1100px; width: 100%;
+                                            background-position: center; background-size: 1100px auto;">
+                                        </div>
+                                    </flex-column>
                                 </div>
-                
-                                <flex-column class="fEqGrow defaultPadding defaultGapPlusHalf defaultSpacing centered">
-                                    <flex-row class="centered">
-                                        <medium-title>One man talks while another watches patiently</medium-title>
-                                    </flex-row>
-                        
-                                    <div>
-                                        Bacon ipsum dolor amet ball tip meatloaf landjaeger quis qui t-bone beef ribs swine mollit magna. Mollit spare ribs ea, cupidatat picanha ham sunt. Pork chop jowl nostrud, aliqua filet mignon pariatur fugiat doner tri-tip. Ea incididunt culpa, pig tenderloin elit sint minim laborum dolore consectetur ad pork belly bacon. Ground round cow ribeye, tenderloin burgdoggen chislic sed cillum frankfurter. Minim eu t-bone est commodo swine turkey.
-                                    </div>
-                                </flex-column>
-                            </flex-row>
-                        </div>
-                        <div class="f-carousel__slide centered themeBackBG defaultMargin noTopOrBotMargin"
-                            data-thumb-src="../res/img/news/Novosti_1100x400-promocija.jpg">
-                            
-                            <flex-row class="jsLogicElementAnimationTarget themeBG fWrap">
-                                <div class="fEqGrow defaultMargin roundedBorder defaultSpacing"
-                                    style="background-image: url(../res/img/news/Novosti_1100x400-promocija.jpg); height: 400px;
-                                    background-position: center; background-size: max(100%, 1100px) auto;">
+                                <div class="f-carousel__slide centered"
+                                    data-modal-id="3"
+                                    data-thumb-src="../res/img/news/Novosti_DiR.jpg">
+                                    
+                                    <flex-column class="themeFrontBG fWrap fGrow defaultPaddingDouble noTopOrBotPadding centered">
+                                        <flex-column class="fGrow defaultPadding onlyTopPadding defaultGap centered">
+                                            <flex-column class="centered">
+                                                <medium-title>Professors celebrate youtube stuff</medium-title>
+                                                <flex-row class="primaryColor bold">
+                                                    15/05/2025
+                                                </flex-row>
+                                            </flex-column>
+                                        </flex-column>
+
+                                        <div class="fGrow defaultMargin noSideMargin roundedBorder"
+                                            style="background-image: url(../res/img/news/Novosti_DiR.jpg);
+                                            min-height: 400px; max-width: 1100px; width: 100%;
+                                            background-position: 30%; background-size: 1100px auto;">
+                                        </div>
+                                    </flex-column>
                                 </div>
-                
-                                <flex-column class="fEqGrow defaultPadding defaultGapPlusHalf defaultSpacing centered">
-                                    <flex-row class="centered">
-                                        <medium-title>People make huge mess - janitors worldwide in shambles</medium-title>
-                                    </flex-row>
-                        
-                                    <div>
-                                        Corned beef ut est pig lorem t-bone ut ad. Venison ut do excepteur tempor mollit picanha pig landjaeger. In spare ribs t-bone picanha. Prosciutto burgdoggen nulla pork chop cow.
-                                    </div>
-                        
-                                    <div>
-                                        Boudin jowl ham capicola meatloaf adipisicing dolore in non turkey laborum. Id ullamco ex frankfurter burgdoggen. Brisket short loin ut, ut ullamco sirloin anim pastrami sint. Incididunt kevin aliqua, sunt velit pariatur dolor pastrami leberkas consequat ipsum pancetta corned beef prosciutto short ribs. Mollit adipisicing capicola consequat labore irure, short ribs tri-tip swine id reprehenderit aute laborum bresaola velit. Dolore commodo fugiat brisket non.
-                                    </div>
-                                </flex-column>
-                            </flex-row>
-                        </div>
-                        <div class="f-carousel__slide centered defaultMargin noTopOrBotMargin"
-                            data-thumb-src="../res/img/news/Novosti_DiR.jpg">
-                            
-                            <flex-row class="jsLogicElementAnimationTarget themeBG fWrap">
-                                <div class="fEqGrow defaultMargin roundedBorder defaultSpacing"
-                                    style="background-image: url(../res/img/news/Novosti_DiR.jpg); height: 400px;
-                                    background-position: center; background-size: max(100%, 1100px) auto;">
-                                </div>
-                
-                                <flex-column class="fEqGrow defaultPadding defaultGapPlusHalf defaultSpacing centered">
-                                    <flex-row class="centered">
-                                        <medium-title>Professors celebrate youtube stuff</medium-title>
-                                    </flex-row>
-                        
-                                    <div>
-                                        Bacon ipsum dolor amet alcatra pig ball tip frankfurter, brisket tongue boudin filet mignon. Bacon drumstick chuck, shankle capicola pork belly buffalo frankfurter andouille. Drumstick swine bacon leberkas bresaola flank. Strip steak hamburger pastrami venison flank salami. Turkey jerky tri-tip, prosciutto pork sirloin kevin rump filet mignon ham. Picanha beef tongue hamburger meatball jerky pastrami short loin ball tip. Tail burgdoggen meatball sausage boudin buffalo ham bresaola spare ribs rump biltong.
-                                    </div>
-                        
-                                    <div>
-                                        Leberkas burgdoggen jerky, pig porchetta ribeye andouille flank salami ball tip meatball corned beef picanha swine tongue. Pancetta sausage hamburger tail. Drumstick corned beef shank pig meatball biltong buffalo sirloin tail shoulder jerky pastrami bacon bresaola meatloaf. Landjaeger short ribs tenderloin, hamburger pork belly meatball chislic. Sirloin cow burgdoggen meatball boudin chuck doner. Ball tip kielbasa jerky capicola pork chop landjaeger chuck. Swine ground round kielbasa landjaeger chuck.
-                                    </div>
-                                </flex-column>
-                            </flex-row>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             
+            <style>
+                .standardBackBG{
+                    background-size: max(100%, 1100px)  max(100%, 400px);
+                    min-height: 300px;
+                    background-position: center;
+                }
 
-            <div class="themeFrontBG">
-                <flex-row class="defaultPadding centered">
-                    <!-- We would obviously lazyload more whenever we detect the user scrolls a bit, but that's out of scope for now -->
-                    <medium-title>ALL TIME</medium-title>
-                </flex-row>
+                .bold{
+                    font-weight: bold;
+                }
+            </style>
+
+            <div class="jsLogicElementAnimationTarget">
+                <div class="themeFrontBG  themeBorder noSideBorder">
+                    <flex-row class="defaultPadding centered">
+                        <!-- We would obviously lazyload more whenever we detect the user scrolls a bit, but that's out of scope -->
+                        <medium-title>ALL TIME</medium-title>
+                    </flex-row>
+                </div>
+
+                <flex-column class="defaultGap defaultMargin">
+                    <flex-row class="fWrap defaultGap">
+                        <flex-column class="fEqGrow defaultSpacing indicateClickable">
+                            <flex-row class="primaryColor bold">
+                                15/05/2025
+                            </flex-row>
+
+                            <flex-row class="standardBackBG themeShadow themeBorder centered jsLogicElementAnimationTarget"
+                                style="background-image: url(../res/img/news/novosti_MIT-Algebra_Culo_Adeyema_Balen.jpg); background-position-y: 10%;"
+                                data-modal-id="4">
+    
+                                <flex-column class="themeImageOverlay centered defaultPaddingHalf" style="width: 100%;">
+                                    <medium-title>
+                                        Several People Very Happy
+                                    </medium-title>
+                                </flex-column>
+                            </flex-row>
+                        </flex-column>
+
+                        <flex-column class="fEqGrow defaultSpacing indicateClickable">
+                            <flex-row class="primaryColor bold">
+                                11/05/2025
+                            </flex-row>
+
+                            <flex-row class="standardBackBG themeShadow themeBorder centered jsLogicElementAnimationTarget"
+                                style="background-image: url(../res/img/news/novosti_Wings-for-Life.jpg);"
+                                data-modal-id="5">
+
+                                <flex-column class="themeImageOverlay centered defaultPaddingHalf" style="width: 100%;">
+                                    <medium-title>
+                                        Man Sails the Seven Seas on Dolphin
+                                    </medium-title>
+                                </flex-column>
+                            </flex-row>
+                        </flex-column>
+                    </flex-row>
+
+                    <flex-row class="fWrap defaultGap">
+                        <flex-column class="fEqGrow defaultSpacing indicateClickable">
+                            <flex-row class="primaryColor bold">
+                                4/05/2025
+                            </flex-row>
+
+                            <flex-row class="standardBackBG themeShadow themeBorder centered jsLogicElementAnimationTarget"
+                                style="background-image: url(../res/img/news/novosti_ZZKO.jpg);"
+                                data-modal-id="6">
+
+                                <flex-column class="themeImageOverlay centered defaultPaddingHalf" style="width: 100%;">
+                                    <medium-title>
+                                        Scheduling Mistake - Several Complaints
+                                    </medium-title>
+                                </flex-column>
+                            </flex-row>
+                        </flex-column>
+
+                        <flex-column class="fEqGrow defaultSpacing indicateClickable">
+                            <flex-row class="primaryColor bold">
+                                25/04/2025
+                            </flex-row>
+
+                            <flex-row class="standardBackBG themeShadow themeBorder centered jsLogicElementAnimationTarget"
+                                style="background-image: url(../res/img/news/Petra-and-Rebeka-in-Paris.jpg); background-position-y: 0%; background-position-x: 30%;"
+                                data-modal-id="7">
+
+                                <flex-column class="themeImageOverlay centered defaultPaddingHalf" style="width: 100%;">
+                                    <medium-title>
+                                        Two people smile at camera
+                                    </medium-title>
+                                </flex-column>
+                            </flex-row>
+                        </flex-column>
+                    </flex-row>
+
+                    <flex-row class="fWrap defaultGap">  
+                        <flex-column class="fEqGrow defaultSpacing indicateClickable">
+                            <flex-row class="primaryColor bold">
+                                21/04/2025
+                            </flex-row>
+
+                            <flex-row class="standardBackBG themeShadow themeBorder centered jsLogicElementAnimationTarget"
+                                style="background-image: url(../res/img/news/Radionice-za-osobni-i-profesionalni-razvoj-za-skole.jpg);"
+                                data-modal-id="8">
+
+                                <flex-column class="themeImageOverlay centered defaultPaddingHalf" style="width: 100%;">
+                                    <medium-title>
+                                        Adults Also Avoid Sitting in the Front Row - Study Shows
+                                    </medium-title>
+                                </flex-column>
+                            </flex-row>
+                        </flex-column>
+
+                        <flex-column class="fEqGrow defaultSpacing indicateClickable">
+                            <flex-row class="primaryColor bold">
+                                17/04/2025
+                            </flex-row>
+
+                            <flex-row class="standardBackBG themeShadow themeBorder centered jsLogicElementAnimationTarget"
+                                style="background-image: url(../res/img/news/Rezultati-natjecanja-dani-mladih-informaticara.jpg);"
+                                data-modal-id="9">
+
+                                <flex-column class="themeImageOverlay centered defaultPaddingHalf" style="width: 100%;">
+                                    <medium-title>
+                                        Exam Survival Guide - do YOU Have What it Takes?
+                                    </medium-title>
+                                </flex-column>
+                            </flex-row>
+                        </flex-column>
+                    </flex-row>
+                </flex-column>
             </div>
 
+            <!--
             <div class="f-carousel thumbCarouselPls has-thumbs is-ltr is-horizontal">
                 <div class="f-carousel__track">
                     <div class="f-carousel__slide centered"
@@ -213,37 +460,7 @@
                     </div>
                 </div>
             </div>
-
-            <div class="f-carousel carouselPls defaultMargin noSideMargin" style="width: 100%;">
-                <div class="f-carousel__track">
-                    <div class="f-carousel__slide centered">1</div>
-                    <div class="f-carousel__slide centered">2</div>
-                    <div class="f-carousel__slide centered">3</div>
-                </div>
-            </div>
-
-            <div class="f-carousel carouselPls defaultMargin noSideMargin" style="width: 100%;">
-                <div class="f-carousel__track">
-                    <img src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg"/>
-                    <img src="../res/img/news/Novosti_1100x400-promocija.jpg"/>
-                    <img src="../res/img/news/Novosti_DiR.jpg"/>
-                </div>
-            </div>
-
-            <div class="f-carousel carouselPls centered">
-                <a class="thumbnail f-carousel__slide" href="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg" data-fancybox="gallery" data-caption="Caption #1">
-                    <img class="thumbnail" src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg"/>
-                </a>
-
-                <a class="thumbnail f-carousel__slide" href="../res/img/news/Novosti_1100x400-promocija.jpg" data-fancybox="gallery" data-caption="Caption #2">
-                    <img class="thumbnail" src="../res/img/news/Novosti_1100x400-promocija.jpg"/>
-                </a>
-
-                <a class="thumbnail f-carousel__slide" href="../res/img/news/Novosti_DiR.jpg" data-fancybox="gallery" data-fancybox data-caption="CAPTION THREE">
-                    <img class="thumbnail" src="../res/img/news/Novosti_DiR.jpg"/>
-                </a>
-            </div>
-
+            -->
         </main>
 
         <footer-component></footer-component>

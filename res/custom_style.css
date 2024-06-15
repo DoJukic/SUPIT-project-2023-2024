@@ -56,6 +56,10 @@
 	--theme-info-color: blue;
 }
 
+*{
+	box-sizing: border-box;
+}
+
 html{
 	color: var(--theme-text-color)
 }
@@ -83,12 +87,22 @@ body {
 }
 
 .fadeInSimple{
-    animation: fadeInExtraAnim ease 1s;
+    animation: fadeInExtraAnim ease 2s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 	transition: none;
 
 	will-change: auto;
+}
+
+.indicateClickable{
+	transform: scale(1);
+	transition: transform 0.25s;
+	cursor: pointer !important;
+}
+.indicateClickable:hover{
+	transform: scale(1.04);
+	transition: transform 0.5s;
 }
 
 main {
@@ -133,11 +147,13 @@ simple-loader, simple-loader-m {
 	border-radius: 50%;
 	border-top: 0.3em solid var(--theme-secondary-color);
 	border-bottom: 0.3em solid var(--theme-primary-color);
-	width: 1em;
-	height: 1em;
+	width: 1.3em;
+	height: 1.3em;
 	animation: spinAnim 2s linear infinite;
 }
 simple-loader-m {
+	width: 1.5em;
+	height: 1.5em;
 	margin: -0.2em;
 }
 
@@ -153,7 +169,7 @@ console-mimic, console-mimic-anim{
 }
 
 console-mimic-anim{
-	animation: BlackWhiteFlash 1s steps(1) infinite;
+	animation: blackWhiteFlashAnim 1s steps(1) infinite;
 }
 
 big-title{
@@ -212,6 +228,11 @@ small-title{
 	margin-left: 0rem !important; 
 	margin-right: 0rem !important; 
 }
+.onlyTopMargin{
+	margin-left: 0rem !important; 
+	margin-bottom: 0rem !important; 
+	margin-right: 0rem !important; 
+}
 .noTopOrBotMargin{
 	margin-top: 0rem !important; 
 	margin-bottom: 0rem !important; 
@@ -242,6 +263,10 @@ small-title{
 	padding-bottom: 0rem !important; 
 	padding-right: 0rem !important; 
 }
+.noTopOrBotPadding{
+	padding-top: 0rem !important; 
+	padding-bottom: 0rem !important; 
+}
 
 .blendDifference{
 	mix-blend-mode: difference;
@@ -254,6 +279,10 @@ small-title{
 	color: var(--theme-secondary-color);
 }
 
+.noSideBorder{
+	border-left: 0rem !important; 
+	border-right: 0rem !important; 
+}
 .onlyBotBorder{
 	border-left: 0px !important; 
 	border-top: 0px !important; 
@@ -310,6 +339,9 @@ small-title{
 .defaultMarginDouble{
 	margin: calc(var(--theme-margin) * 2);
 }
+.defaultMarginQuadruple{
+	margin: calc(var(--theme-margin) * 4);
+}
 
 .defaultGap{
 	gap: var(--theme-gap);
@@ -341,6 +373,11 @@ small-title{
 }
 
 /* -------------------- BACKGROUNDS -------------------- */
+
+.fauxBlackBG{
+	Color: white;
+	background-color: rgb(40, 40, 40);
+}
 
 .themeBG{
 	Color: var(--theme-text-color);
@@ -400,6 +437,9 @@ flex-row-eq-wrap-component{
     flex-direction: row;
 	flex-wrap: wrap;
     justify-content: center;
+
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 	
 	background-color: var(--theme-back-bg-color);
 }
@@ -408,7 +448,7 @@ flex-row-eq-wrap-component > *{
 	/* splitter vars set to parent style via js (could supply theme padding too) */
 	padding: calc(var(--theme-padding) / 2);
 	/* This isn't completely precise, but it also doesn't need to be (we're overcompensating for the gaps) */
-	width: calc(var(--splitter-basis) - var(--theme-padding) - var(--splitter-gap));
+	width: calc(var(--splitter-basis) - var(--splitter-gap));
 }
 
 .applyEqWrapStyle > *{
@@ -509,6 +549,11 @@ push-notification-content{
 modal-component{
 	position: fixed;
 	z-index: 2000;
+
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	
 	height: 100vh;
 	width: 100vw;
@@ -549,8 +594,8 @@ header {
 
 /* Seperate the visuals from the behaviour */
 nav-element {
-	flex: 1 1 7.5em;
-	min-width: 7.5em;
+	flex: 1 1 10em;
+	min-width: 10em;
 	white-space: nowrap;
 }
 .navElementVisual{
@@ -577,6 +622,9 @@ nav-element {
 }
 .sneBorderLeft{
 	border-left: 1px solid var(--theme-front-border-color);
+}
+.sneBorderTop{
+	border-top: 1px solid var(--theme-front-border-color);
 }
 .sneBorderBottom{
 	border-bottom: 1px solid var(--theme-front-border-color);
@@ -660,10 +708,15 @@ footer{
     100% { opacity: 0; }
 }
 
-@keyframes BlackWhiteFlash {
+@keyframes blackWhiteFlashAnim {
     0% { opacity: 0; }
     50% { opacity: 1; }
     100% { opacity: 0; }
+}
+
+@keyframes theBiggeningAnim {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.05); }
 }
 
 /* -------------------- OVERRIDES -------------------- */

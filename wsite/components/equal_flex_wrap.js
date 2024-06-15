@@ -23,7 +23,10 @@ class equalFlexWrap extends HTMLElement {
         this.style.setProperty("--splitter-gap", `${this.elementGapPx}px`);
         this.style.gap = `${this.elementGapPx}px`;
 
+        // Fires on any resize but is always a bit late
         equalFlexWrap.overflowResizeObserver.observe(this);
+        // Fires only on window resize but is never late
+        addEventListener("resize", (event) => {this.balanceDisplay();});
         this.balanceDisplay();
     }
 
@@ -41,8 +44,10 @@ class equalFlexWrap extends HTMLElement {
             childrenAmountPerRow = childrenAmountPerRow / 2;
         }
         
-        childrenAmountPerRow = Math.ceil(childrenAmountPerRow / 2) ;
+        childrenAmountPerRow = Math.floor(childrenAmountPerRow / 2);
         elementSizePx = availableWidth / childrenAmountPerRow - 5;
+
+        // The -5 gives us some breathing room - as we're tracking resire asynchronously we might sometimes be a bit behind
         
         this.style.setProperty("--splitter-basis", `${elementSizePx}px`);
         this.style.setProperty("--splitter-elems-per-line", `${childrenAmountPerRow}`);
