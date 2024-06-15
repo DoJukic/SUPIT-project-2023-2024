@@ -29,9 +29,47 @@
         
 
         <script>
+            var collapsibleFormIsHidden = true;
+            var collapsibleFormIsBusy = false;
+
 			$(document).ready(function () {
+                document.getElementById('dropdownFormTrigger').addEventListener('click', function(){
+                    toggleDropdownForm();
+                    this.blur();
+                });
+
+                $('#dropdownFormPrioritySelectMenu').selectmenu();
+                $('#dropdownFormPrioritySelectMenu').addClass("flexDefaultExplicit");
+                $("#dropdownFormPrioritySelectMenu").position({
+                    my: "center",
+                    at: "center",
+                    of: window
+                });
                 
-            });
+                $('#dropdownFormNewsletterSelect').checkboxradio();
+                $('#dropdownFormNewsletterSelect').removeAttr('checked');
+                
+			});
+
+            function toggleDropdownForm(){
+                if (collapsibleFormIsBusy) {
+                    return;
+                }
+
+                collapsibleFormIsBusy = true;
+
+                if (collapsibleFormIsHidden) {
+                    $('#dropdownForm').slideDown(500, function() { 
+                        collapsibleFormIsBusy = false;
+                    });
+                }else{
+                    $('#dropdownForm').slideUp(500, function() { 
+                        collapsibleFormIsBusy = false;
+                    });
+                }
+
+                collapsibleFormIsHidden = !collapsibleFormIsHidden;
+            };
         </script>
 
     </head>
@@ -42,7 +80,7 @@
         <main>
             <flex-row class="jsLogicElementAnimationTarget" 
                 style="min-height: 350px;
-                        background-image: url(../res/img/contact_us/switchboard-3089030594.jpg);
+                        background-image: url(../res/img/contact_us/SES-GS-NASA-CSP-3643387849_CROP.png);
                         background-size: max(100%, 2000px) auto; background-position: center 40%;
                         overflow: hidden;">
                 
@@ -56,12 +94,259 @@
             </flex-row>
             
             <flex-row class="fWrap themeBackBG defaultGap defaultPadding">
-                <flex-column class="jsLogicElementAnimationTarget fEqGrow themeFrontBG themeShadow defaultGap defaultSpacing defaultPadding centered roundedBorder">
-                    asd
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow secPrimLinearBG themeShadow defaultGap defaultSpacing defaultPadding centered">
+                    <small-title>
+                        ALGEBRA UNIVERSITY
+                    </small-title>
+
+                    <flex-column class="centered defaultGapHalf">
+                        <div>
+                            Email: email@algebra.com
+                        </div>
+                        <div>
+                            Phone number: [PHONE NUMBER]
+                        </div>
+                    </flex-column>
+
+                    <flex-column class="centered defaultGapHalf">
+                        <div>
+                            Working Hours:
+                        </div>
+                        <div>
+                            09:00 - 09:01 (Mon, Wed, Fri)
+                        </div>
+                        <div>
+                            21:00 - 21:01 (Tue, Thu, Sat)
+                        </div>
+                    </flex-column>
                 </flex-column>
 
-                <flex-column class="jsLogicElementAnimationTarget fEqGrow themeFrontBG themeShadow defaultGap defaultSpacing defaultPadding centered roundedBorder">
-                    asdasdasdasdas
+                <flex-column class="jsLogicElementAnimationTarget fEqGrow primSecLinearBG themeShadow defaultGap defaultSpacing defaultPadding centered">
+                    <small-title>
+                        STUDENT OFFICE
+                    </small-title>
+
+                    <flex-column class="centered defaultGapHalf">
+                        <div>
+                            Email: email@algebra.com
+                        </div>
+                        <div>
+                            Phone number: [PHONE NUMBER]
+                        </div>
+                    </flex-column>
+
+                    <flex-column class="centered defaultGapHalf">
+                        <div>
+                            Working Hours:
+                        </div>
+                        <div>
+                            09:00 - 09:01 (Mon, Wed, Fri)
+                        </div>
+                        <div>
+                            21:00 - 21:01 (Tue, Thu, Sat)
+                        </div>
+                    </flex-column>
+                </flex-column>
+            </flex-row>
+            
+            <div class="column themeBorder noSideBorder jsLogicElementAnimationTarget">
+                <div class="row themeBorder onlyBotBorder centered themeFrontBG"
+                    style="margin-bottom: -1px;"> <!-- Hide the double border, looks weird otherwise -->
+
+                    <div id="dropdownFormTrigger"
+                        class="navElement centered defaultMargin defaultPadding noTopOrBotPadding selectableNavElement"
+                        tabindex="0">
+
+                        <h1>
+                            Send a form - Contact us directly
+                        </h1>
+                    </div>
+                </div>
+
+                <div id="dropdownForm" class ="centered defaultPaddingHalf" style="display:none;">
+                    <form action="https://www.fulek.com/mvc/supit/project-contact-form" method="get" style="width:100vw;"
+                        onsubmit="FullName.value = fname.value + ' ' + lname.value; ReceiveNewsletter.value = true;">
+                    <!-- ReceiveNewsletter does not exist at all if false so we can just set it and let it fail -->
+
+                        <flex-column>
+                            <flex-row class="fGrow fWrap centered">
+                                <flex-column class="fGrow defaultSpacing defaultGap defaultMarginHalf"
+                                    style="max-width: 35em;">
+
+                                    <flex-column class="defaultGapHalf">
+                                        <input class="roundedBorderHalf"
+                                            type="text" name="fname"
+                                            placeholder="First Name" required>
+                                        <input class="roundedBorderHalf"
+                                            type="text" name="lname"
+                                            placeholder="Last Name" required>
+                                        
+                                        <input type="text" name="FullName"
+                                            style="display:none;"> <!-- Exclusively for combining fname and lname -->
+
+                                        <input class="roundedBorderHalf"
+                                            type="email" name="Email"
+                                            placeholder="Email@example.com" required>
+                                    </flex-column>
+
+                                    <flex-row class="centered fGrow fWrap defaultGapHalf">
+                                        <div>
+                                            <select id="dropdownFormPrioritySelectMenu"
+                                                class="flexDefaultExplicit"
+                                                name="Importance">
+
+                                                <option>Low Priority</option>
+                                                <option>Medium Priority</option>
+                                                <option>High Priority</option>
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label for="dropdownFormNewsletterSelect"
+                                                style="width:14em;">
+                                                
+                                                Recieve Newsletter
+                                            </label>
+                                            <input id="dropdownFormNewsletterSelect"
+                                                style="height: 2em !important;"
+                                                name="ReceiveNewsletter" type="checkbox">
+                                        </div>
+                                    </flex-row>
+                                </flex-column>
+
+                                <flex-column class="defaultMarginHalf fGrow defaultSpacing">
+                                    <textarea class="roundedBorderHalf"
+                                        name="message" rows="20" cols="auto" style="resize: none;"
+                                        placeholder="Write your message here:" required></textarea>
+                                </flex-column>
+                            </flex-row>
+
+                            <div class="row defaultMarginHalf noTopMargin fGrow centered">
+                                <input class="ui-button ui-widget ui-corner-all"
+                                    style="min-width: 50%;"
+                                    type="submit" value="Submit">
+                            </div>
+                        </flex-column>
+                    </form> 
+                </div>
+            </div>
+
+            <flex-row class="fGrow fWrap themeBackBG defaultPadding defaultGap">
+                <flex-column class="fEqGrow defaultSpacing defaultPadding defaultGapQuarter themeFrontBG themeShadow themeBorder roundedBorder">
+                    <div class="centered">
+                        <medium-title class="defaultMarginHalf">
+                            Important Person Title
+                        </medium-title>
+                    </div>
+
+                    <flex-row class="jsLogicElementAnimationTarget themeFrontBG fWrap centered">
+                        <flex-column class="fEqGrow defaultSpacing centered">
+                            <div class="roundedBorder defaultMarginHalf themeBorder"
+                                style="background-image: url(../res/img/contact_us/anomaly_no_data_CROP.jpg); width: 400px; height: 300px;
+                                    background-position: center; background-size: 400px 300px;">
+                            </div>
+                        </flex-column>
+    
+                        <flex-column class="fEqGrow defaultPadding noSidePadding defaultGapPlusHalf defaultSpacing">
+                            <flex-row class="centered fGrow">
+                                <small-title class="centered fGrow">Important Person Name</small-title>
+                            </flex-row>
+                
+                            <div>
+                                Pork belly short ribs brisket, burgdoggen jowl jerky andouille alcatra ham shoulder pancetta bresaola pork loin. Fatback short loin buffalo turkey. Drumstick filet mignon alcatra pastrami capicola shank pork belly salami fatback ball tip turkey pork chuck bacon. Pork belly ham boudin pastrami cupim ground round filet mignon kielbasa.
+                            </div>
+                        </flex-column>
+                    </flex-row>
+
+                    <flex-spacer></flex-spacer>
+
+                    <flex-column class="centered defaultGapHalf">
+                        <div>
+                            Email: email@algebra.com
+                        </div>
+    
+                        <div>
+                            Phone number: [PHONE NUMBER]
+                        </div>
+                    </flex-column>
+                </flex-column>
+                
+                <flex-column class="fEqGrow defaultSpacing defaultPadding defaultGapQuarter themeFrontBG themeShadow themeBorder roundedBorder">
+                    <div class="centered">
+                        <medium-title class="defaultMarginHalf">
+                            Important Person Title
+                        </medium-title>
+                    </div>
+
+                    <flex-row-reverse class="jsLogicElementAnimationTarget themeFrontBG fWrap centered">
+                        <flex-column class="fEqGrow defaultSpacing centered">
+                            <div class="roundedBorder defaultMarginHalf themeBorder"
+                                style="background-image: url(../res/img/contact_us/anomaly_no_data_CROP.jpg); width: 400px; height: 300px;
+                                    background-position: center; background-size: 400px 300px;">
+                            </div>
+                        </flex-column>
+    
+                        <flex-column class="fEqGrow defaultPadding noSidePadding defaultGapPlusHalf defaultSpacing">
+                            <flex-row class="centered fGrow">
+                                <small-title class="centered fGrow">Important Person Name</small-title>
+                            </flex-row>
+                
+                            <div>
+                                Pork loin pork chop frankfurter cow, turducken kevin flank pastrami bacon shank shoulder corned beef. Chuck picanha tri-tip alcatra landjaeger shank. Landjaeger short ribs tongue picanha pork belly, tail pancetta pork chop corned beef sirloin pork loin tri-tip short loin pork. Pork loin pancetta shoulder strip steak, pork ground round meatball bacon andouille. Shoulder short ribs chislic boudin, hamburger andouille cow. Tenderloin rump tail pork chop short loin turkey biltong shankle corned beef fatback flank ham hock. Ham swine buffalo bacon ribeye tail chislic porchetta strip steak.
+                            </div>
+                        </flex-column>
+                    </flex-row-reverse>
+                    
+                    <flex-spacer></flex-spacer>
+
+                    <flex-column class="centered defaultGapHalf">
+                        <div>
+                            Email: email@algebra.com
+                        </div>
+    
+                        <div>
+                            Phone number: [PHONE NUMBER]
+                        </div>
+                    </flex-column>
+                </flex-column>
+
+                <flex-column class="fEqGrow defaultSpacing defaultPadding defaultGapQuarter themeFrontBG themeShadow themeBorder roundedBorder">
+                    <div class="centered">
+                        <medium-title class="defaultMarginHalf">
+                            Important Person Title
+                        </medium-title>
+                    </div>
+
+                    <flex-row class="jsLogicElementAnimationTarget themeFrontBG fWrap centered">
+                        <flex-column class="fEqGrow defaultSpacing centered">
+                            <div class="roundedBorder defaultMarginHalf themeBorder"
+                                style="background-image: url(../res/img/contact_us/anomaly_no_data_CROP.jpg); width: 400px; height: 300px;
+                                    background-position: center; background-size: 400px 300px;">
+                            </div>
+                        </flex-column>
+    
+                        <flex-column class="fEqGrow defaultPadding noSidePadding defaultGapPlusHalf defaultSpacing">
+                            <flex-row class="centered fGrow">
+                                <small-title class="centered fGrow">Important Person Name</small-title>
+                            </flex-row>
+                
+                            <div>
+                                Salami pork alcatra beef ribs, biltong pig ham hock jerky doner venison. Brisket boudin prosciutto flank fatback ham hock buffalo short loin pig pork chop filet mignon picanha pork loin shank short ribs. Bacon porchetta sirloin, shoulder ribeye beef ribs pork chop burgdoggen kielbasa drumstick strip steak. Shank ball tip cow hamburger turkey pig. Cow ground round tenderloin pork loin, leberkas chicken chuck sausage kevin swine salami. Picanha chuck pancetta beef cow. Tail picanha leberkas beef strip steak sirloin beef ribs.
+                            </div>
+                        </flex-column>
+                    </flex-row>
+
+                    <flex-spacer></flex-spacer>
+
+                    <flex-column class="centered defaultGapHalf">
+                        <div>
+                            Email: email@algebra.com
+                        </div>
+    
+                        <div>
+                            Phone number: [PHONE NUMBER]
+                        </div>
+                    </flex-column>
                 </flex-column>
             </flex-row>
         </main>

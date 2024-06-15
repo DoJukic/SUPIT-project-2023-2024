@@ -87,7 +87,7 @@ body {
 }
 
 .fadeInSimple{
-    animation: fadeInExtraAnim ease 2s;
+    animation: fadeInExtraAnim ease-in 1s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
 	transition: none;
@@ -178,6 +178,8 @@ big-title{
 	text-align: center;
 	font-size: 4rem;
 	font-weight: bold;
+
+	word-break: break-all; /* These just get too big sometimes */
 
 	border-bottom: 3px solid var(--theme-primary-color);
 }
@@ -410,6 +412,16 @@ small-title{
 .themeImageOverlay{
 	Color: var(--theme-text-color);
 	background-color: var(--theme-tran-bg-color);
+}
+
+.primSecLinearBG{
+	Color: white;
+	background-image: linear-gradient(-135deg, var(--theme-secondary-color), var(--theme-primary-color));
+}
+
+.secPrimLinearBG{
+	Color: white;
+	background-image: linear-gradient(45deg, var(--theme-secondary-color), var(--theme-primary-color));
 }
 
 /* -------------------- BORDERS -------------------- */
@@ -666,8 +678,6 @@ Otherwise color seems to be whatever is last in the .css file
 	background-color:var(--theme-secondary-color) !important;
 	border-color: black !important;
 }
-
-
 
 /* -------------------- FOOTER -------------------- */
 
