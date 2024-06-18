@@ -67,11 +67,23 @@
 
                 // https://stackoverflow.com/questions/6042202/how-to-distinguish-mouse-click-and-drag
                 // andreyrd's answer, modified for this use case
-                $(document.querySelectorAll("[data-modal-id]")).each(function(){
+                $(document.querySelectorAll("[data-carousel-modal-id]")).each(function(){
                     this.addEventListener('mousedown', function (event) {
                         this.dragDetectionStartX = event.pageX;
-                        this.dragDetectionStartY = event.pageY; 
+                        this.dragDetectionStartY = event.pageY;
                     });
+
+                    /*
+                    If we trigger mousedown but don't trigger mouseup on the element, and then don't trigger mousedown but trigger mouseup in a similar spot
+                    the action will run anyways, we fix this by terminating the X and Y coords every time mouseup happens
+                    */
+                    let meMyself = this;
+                    window.addEventListener('mouseup', function (event) {
+                        requestAnimationFrame(function(){
+                            meMyself.dragDetectionStartX = Infinity;
+                            meMyself.dragDetectionStartY = Infinity; 
+                        })
+                    }, true); // true means we're ignoring bubbling cancelations. True also means this is triggered before anything else, so we need to defer by a frame
 
                     this.addEventListener('mouseup', function (event) {
                         const delta = 6;
@@ -80,21 +92,54 @@
 
                         if (diffX < delta && diffY < delta) {
                             // Click!
-                            document.getElementById("MODALMODALMODAL " + ML.getIntAttribute(this, "modal-id")).showModal();
+                            /*
+                            So originally I was going to have the darker area surrounding the arrows call slideNext() and slidePrev() on the carousel.
+                            Unfortunately as this area is still within the carousel, I believe there was an unfortunate interaction between slideNext()
+                            and the careousel detecting a mouse event, so it would just break.
+                            And that's why it now unfortunately now just does nothing when you click there.
+                            */
+                           // EDIT: Because of this we can simply request the slide change on the next animation frame!
+
+                            const paddingAvg = ($(this).innerWidth() - $(this).width()) / 2;
+                            if (event.pageX < paddingAvg){
+                                requestAnimationFrame(()=> {
+                                    this.customCarouselRef.slidePrev();
+                                });
+                                return;
+                            }
+                            if (event.pageX > ($(this).width() + paddingAvg)){
+                                requestAnimationFrame(()=> {
+                                    this.customCarouselRef.slideNext();
+                                });
+                                return;
+                            }
+                            
+                            document.getElementById("MODALMODALMODAL " + ML.getIntAttribute(this, "carousel-modal-id")).showModal();
                         }
                     });
                 });
 
+                $(document.querySelectorAll("[data-modal-id]")).each(function(){
+                    this.addEventListener('click', function (event) {
+                            document.getElementById("MODALMODALMODAL " + ML.getIntAttribute(this, "modal-id")).showModal();
+                    });
+                });
+
                 $('.thumbCarouselPls').each(function(){
-                    new Carousel(this,
+                    let customCarouselRef = new Carousel(this,
                         {
                             Dots: false,
                             Autoplay : {
-                                timeout : 5000
+                                timeout : 7500
                             }
                         },
                         {Thumbs, Autoplay}
                     );
+
+                    let slides = $(this).find("[data-carousel-modal-id]");
+                    slides.each(function(){
+                        this.customCarouselRef = customCarouselRef;
+                    });
                 })
             });
         </script>
@@ -213,8 +258,8 @@
 
             <flex-row class="jsLogicElementAnimationTarget"
                 style="min-height: 350px;
-                        background-image: url(../res/img/news/VLAArrayNiteClouds_RGB.jpg);
-                        background-size: max(100%, 2000px) 400px; background-position: center;
+                        background-image: url(../res/img/news/cZnbl_CROP.jpg);
+                        background-size: max(100%, 2000px) 350px; background-position: center;
                         background-position-y: 0px;
                         overflow: hidden;">
                 
@@ -227,77 +272,86 @@
                 </flex-column>
             </flex-row>
 
-            <div class="jsLogicElementAnimationTarget"> <!-- "RECENT" (and narrow elements in general) looks weird when fading alone -->
+            <div class="jsLogicElementAnimationTarget"> <!-- "RECENT" (and narrow elements in general) looks off when fading alone -->
                 <div class="themeFrontBG">
                     <flex-row class="defaultPadding centered themeBorder onlyBotBorder">
                         <medium-title>RECENT</medium-title>
                     </flex-row>
                 </div>
                 
-                <div class="themeBG">
-                    <div class="f-carousel thumbCarouselPls">
+                <div class="themeBackBG">
+                    <div class="f-carousel thumbCarouselPls themeBG themeBorder onlyBotBorder">
                         <div class="f-carousel__viewport is-draggable" style="cursor: pointer !important;">
                             <div class="f-carousel__track">
-                                <div class="f-carousel__slide centered"
-                                    data-modal-id="1"
+                                <div class="f-carousel__slide  centered forceAlignItemsStretch"
                                     data-thumb-src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg">
                                     
-                                    <flex-column class="themeFrontBG fWrap fGrow defaultPaddingDouble noTopOrBotPadding centered">
-                                        <flex-column class="fEqGrow defaultPadding onlyTopPadding defaultGap centered">
-                                            <flex-column class="centered">
-                                                <medium-title>One man talks while another watches patiently</medium-title>
-                                                <flex-row class="primaryColor bold">
-                                                    25/05/2025
-                                                </flex-row>
-                                            </flex-column>
-                                        </flex-column>
-                                        <div class="fEqGrow defaultMargin noSideMargin roundedBorder"
-                                            style="background-image: url(../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg);
-                                                min-height: 400px; max-width: 1100px; width: 100%;
-                                                background-position: 70%; background-size: max(100%, 1100px) auto;">
-                                        </div>
-                                    </flex-column>
-                                </div>
-                                <div class="f-carousel__slide centered"
-                                    data-modal-id="2"
-                                    data-thumb-src="../res/img/news/Novosti_1100x400-promocija.jpg">
-                                    
-                                    <flex-column class="themeFrontBG fWrap fGrow defaultPaddingDouble noTopOrBotPadding centered">
-                                        <flex-column class="fEqGrow defaultPadding onlyTopPadding defaultGap centered">
-                                            <flex-column class="centered">
-                                                <medium-title>People make huge mess - janitors worldwide in shambles</medium-title>
-                                                <flex-column class="primaryColor bold">
-                                                    22/05/2025
+                                    <flex-column class="fWrap fGrow defaultPaddingDouble noTopOrBotPadding"
+                                        data-carousel-modal-id="1">
+
+                                        <flex-column class="themeFrontBG fGrow defaultPadding centered">
+                                            <flex-column class="fEqGrow defaultPadding onlyTopPadding defaultGap centered">
+                                                <flex-column class="centered">
+                                                    <medium-title>One man talks while another watches patiently</medium-title>
+                                                    <flex-row class="primaryColor bold">
+                                                        25/05/2025
+                                                    </flex-row>
                                                 </flex-column>
                                             </flex-column>
+                                            <div class="fEqGrow defaultMargin noSideMargin roundedBorder"
+                                                style="background-image: url(../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg);
+                                                    min-height: 400px; max-width: 1100px; width: 100%;
+                                                    background-position: 70%; background-size: max(100%, 1100px) auto;">
+                                            </div>
                                         </flex-column>
-
-                                        <div class="fEqGrow defaultMargin noSideMargin roundedBorder"
-                                            style="background-image: url(../res/img/news/Novosti_1100x400-promocija.jpg);
-                                            min-height: 400px; max-width: 1100px; width: 100%;
-                                            background-position: center; background-size: 1100px auto;">
-                                        </div>
                                     </flex-column>
                                 </div>
-                                <div class="f-carousel__slide centered"
-                                    data-modal-id="3"
+                                <div class="f-carousel__slide centered forceAlignItemsStretch"
+                                    data-thumb-src="../res/img/news/Novosti_1100x400-promocija.jpg">
+                                    
+                                    <flex-column class="fWrap fGrow defaultPaddingDouble noTopOrBotPadding"
+                                        data-carousel-modal-id="2">
+
+                                        <flex-column class="themeFrontBG fGrow defaultPadding centered">
+                                            <flex-column class="fEqGrow defaultPadding onlyTopPadding defaultGap centered">
+                                                <flex-column class="centered">
+                                                    <medium-title>People make huge mess - janitors worldwide in shambles</medium-title>
+                                                    <flex-column class="primaryColor bold">
+                                                        22/05/2025
+                                                    </flex-column>
+                                                </flex-column>
+                                            </flex-column>
+
+                                            <div class="fEqGrow defaultMargin noSideMargin roundedBorder"
+                                                style="background-image: url(../res/img/news/Novosti_1100x400-promocija.jpg);
+                                                min-height: 400px; max-width: 1100px; width: 100%;
+                                                background-position: center; background-size: 1100px auto;">
+                                            </div>
+                                        </flex-column>
+                                    </flex-column>
+                                </div>
+                                <div class="f-carousel__slide centered forceAlignItemsStretch"
                                     data-thumb-src="../res/img/news/Novosti_DiR.jpg">
                                     
-                                    <flex-column class="themeFrontBG fWrap fGrow defaultPaddingDouble noTopOrBotPadding centered">
-                                        <flex-column class="fGrow defaultPadding onlyTopPadding defaultGap centered">
-                                            <flex-column class="centered">
-                                                <medium-title>Professors celebrate youtube stuff</medium-title>
-                                                <flex-row class="primaryColor bold">
-                                                    15/05/2025
-                                                </flex-row>
+                                    <flex-column class="fWrap fGrow defaultPaddingDouble noTopOrBotPadding"
+                                        data-carousel-modal-id="3">
+                                        
+                                        <flex-column class="themeFrontBG fGrow defaultPadding centered">
+                                            <flex-column class="fEqGrow defaultPadding onlyTopPadding defaultGap centered">
+                                                <flex-column class="centered">
+                                                    <medium-title>Professors celebrate youtube stuff</medium-title>
+                                                    <flex-row class="primaryColor bold">
+                                                        15/05/2025
+                                                    </flex-row>
+                                                </flex-column>
                                             </flex-column>
-                                        </flex-column>
 
-                                        <div class="fGrow defaultMargin noSideMargin roundedBorder"
-                                            style="background-image: url(../res/img/news/Novosti_DiR.jpg);
-                                            min-height: 400px; max-width: 1100px; width: 100%;
-                                            background-position: 30%; background-size: 1100px auto;">
-                                        </div>
+                                            <div class="fGrow defaultMargin noSideMargin roundedBorder"
+                                                style="background-image: url(../res/img/news/Novosti_DiR.jpg);
+                                                min-height: 400px; max-width: 1100px; width: 100%;
+                                                background-position: 30%; background-size: 1100px auto;">
+                                            </div>
+                                        </flex-column>
                                     </flex-column>
                                 </div>
                             </div>

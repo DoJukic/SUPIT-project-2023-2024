@@ -15,7 +15,7 @@ class equalFlexWrap extends HTMLElement {
         }
 
         temp = ML.getIntAttribute(this, "element-gap-px");
-        if(Boolean(temp)){
+        if(temp == 0 || Boolean(temp)){
             this.elementGapPx = temp;
         }
         
@@ -36,6 +36,10 @@ class equalFlexWrap extends HTMLElement {
 
         let availableWidth = $(this).width();
 
+        if (availableWidth < 1)
+            availableWidth = 2000; // WELP 2: Electric Boogaloo
+        // (This would cause an infinite loop is the balancer is hidden)
+
         let neededSize = childrenAmountPerRow * this.minElementSizePx;
         let diff = neededSize / availableWidth;
 
@@ -44,8 +48,12 @@ class equalFlexWrap extends HTMLElement {
             childrenAmountPerRow = childrenAmountPerRow / 2;
         }
         
-        childrenAmountPerRow = Math.floor(childrenAmountPerRow / 2);
-        elementSizePx = availableWidth / childrenAmountPerRow - 5;
+        childrenAmountPerRow = Math.floor(childrenAmountPerRow);
+
+        if (childrenAmountPerRow <= 0) // WELP
+            childrenAmountPerRow = 1;
+
+        elementSizePx = availableWidth / childrenAmountPerRow - 10.0 / childrenAmountPerRow;
 
         // The -5 gives us some breathing room - as we're tracking resire asynchronously we might sometimes be a bit behind
         

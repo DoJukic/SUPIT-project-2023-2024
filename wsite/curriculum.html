@@ -27,20 +27,259 @@
         <script src="components/footer.js" type="text/javascript" defer></script>
         <script src="components/scroll_to_top.js" type="text/javascript" defer></script>
         
+        <script src="components/equal_flex_wrap.js" type="text/javascript" defer></script>
+        
+        <script src="components/special/curriculum_components.js" type="text/javascript" defer></script>
+        
 
         <script>
+			var courseLookuplist;
+			var semesterTracker;
+
 			$(document).ready(function () {
-                
-            });
-        </script>
+                /*
+                var tgt = document.createElement("local-semester-container-component");
+                tgt.initialize("1");
+                document.getElementById("localCurriculumAllCoursesTarget").append(tgt);
+
+                tgt.addRow({
+                    course: "aaa",
+                    ects: 12,
+                    lectures: 7,
+                    exercises: 12,
+                    hours: 21,
+                    type: "Obavezni"
+                })
+
+                tgt.addRow({
+                    course: "bbb",
+                    ects: 12,
+                    lectures: 7,
+                    exercises: 12,
+                    hours: 21,
+                    type: "Obavezni"
+                })
+
+                tgt.filter("a");
+                tgt.filter("");*/
+
+				var accessCode = ML.getAccessToken();
+
+				if (!accessCode) {
+					curriculumReportError("No login token detected");
+					return;
+				}
+
+				courseLookuplist = $('#courseLookup');
+				getCurriculumData(accessCode);
+
+				// Hide or show table data based on inputted text
+				$('#jsCurriculumSearchBarTarget').on('input', function () {
+					curriculumDataFilter($('#jsCurriculumSearchBarTarget').val());
+				}).change();
+
+			});
+
+			function getCurriculumData(accessCode) {
+				$.ajax({
+					url: "https://www.fulek.com/data/api/supit/curriculum-list/en",
+					type: "GET",
+					contentType: "application/json",
+					headers: {
+						Authorization: 'Bearer ' + accessCode
+					},
+					success: function (response) {
+						if (response.isSuccess == true) {
+                            //return;
+							getCurriculumDataSuccess(response.data);
+							curriculumFinalizeLoad(); // This should be here because it's async.
+						}
+						else {
+							curriculumReportError("Unknown Error");
+						};
+					},
+					error: function () {
+						// Fails here if the connection fails
+						// Sometimes also fails here if the token expires, but that's not in the project's scope
+						curriculumReportError("Connection Failed");
+					}
+				});
+			}
+
+			function getCurriculumDataSuccess(data) {
+				// https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values -> very cool
+				data.sort((a, b) => parseInt(a.semester) - parseInt(b.semester));
+
+
+				courseLookuplist.empty();
+
+                let selectedCoursesTable = document.getElementById("localCurriculumSelectedCoursesTarget");
+                let allCoursesTable = document.getElementById("localCurriculumAllCoursesTarget");
+				currentSemester = -Infinity;
+
+                let currentSelectedCoursesSemester = null;
+                let currentAllCoursesSemester = null;
+
+				$(data).each(function () {
+                    if (this.semester > currentSemester){
+                        currentSemester = this.semester;
+
+                        currentSelectedCoursesSemester = document.createElement("local-semester-container-component");
+                        currentSelectedCoursesSemester.initialize(currentSemester);
+                        selectedCoursesTable.append(currentSelectedCoursesSemester);
+
+                        currentAllCoursesSemester = document.createElement("local-semester-container-component");
+                        currentAllCoursesSemester.initialize(currentSemester);
+                        allCoursesTable.append(currentAllCoursesSemester);
+                    }
+
+                    let currentSelectedCoursesRow = currentSelectedCoursesSemester.addRow(this);
+                    let currentAllCoursesRow = currentAllCoursesSemester.addRow(this);
+
+                    currentSelectedCoursesRow.addEventListener("click", function(){
+                        currentSelectedCoursesRow.hide();
+                    });
+                    currentAllCoursesRow.addEventListener("click", function(){
+                        currentSelectedCoursesRow.show();
+                    });
+				});
+
+                $(selectedCoursesTable.children).each(function(){
+                    this.hideAll();
+                })
+			}
+
+			function createDataRow(data, alternator) {
+                /*
+				html += getDataColumn(data.course, BGType, 1);
+				html += getDataColumn(data.ects, BGType);
+				html += getDataColumn(data.lectures, BGType);
+				html += getDataColumn(data.exercises, BGType);
+				html += getDataColumn(data.hours, BGType);
+				//html += getDataColumn(data.semester, BGType);
+				html += getDataColumn(data.type, BGType);
+                */
+			}
+
+			function getDataColumn(value, BGType, track = 0) {
+			}
+
+			function curriculumDataFilter(filter) {
+			}
+
+			function curriculumFinalizeLoad(){
+				$("#jsCurriculumLoaderTarget").css("display", "none");
+			}
+
+			function curriculumReportError(message){
+				$("#jsCurriculumLoadingIconTarget").text(message);
+			}
+		</script>
 
     </head>
+
+    <style>
+        .noTopAndLeftBorderForChildren > *{
+            border-top: 0px;
+            border-left: 0px;
+        }
+
+        .growChildren > *{
+            flex-grow: 1 !important;
+        }
+    </style>
 
     <body>
         <header-component></header-component>
 
         <main>
+            <div class="defaultPadding secPrimLinearBG centered">
+                <h1 style="font-weight: normal; text-align: center;">
+                    Algebra Course Lookup
+                </h1>
+            </div>
             
+            <!-- If min-height: 100vh; doesn't exist the course name search's options may not be displayed correctly -->
+            <!--
+                To clarify: if our search has nothing it would scroll all the way up and move the position of the autocomplete input,
+                but its selection menu's position doesn't update.
+                It can still happen sometimes but this makes it way less likely.
+            -->
+            <div style="min-height: 100vh;">
+                <flex-column class="sticky defaultPadding noBotPadding themeBG defaultGapHalf themeBorder noSideBorder"
+                    style="max-height: 30vh; overflow-y: auto;">
+
+                    <flex-row>
+                        <input id="jsCurriculumSearchBarTarget" class="fGrow roundedBorderHalf centeredText"
+                        type="text" placeholder="Course Name Search" list="courseLookup">
+            
+                        <datalist id="courseLookup">
+                        </datalist>
+                    </flex-row>
+        
+                    <div class="themeBorder noBotBorder">
+                        <flex-row-eq-wrap-component class="themeBorder noRightBorder noBotBorder themeFrontBG
+                            themeBorderChildren noTopAndLeftBorderForChildren growChildren centeredChildren"
+                            data-min-element-size-px="200" data-element-gap-px="0">
+            
+                            <div>Course Name</div>
+                            <div class="themePrimaryBG">ECTS</div>
+                            <div>Lectures</div>
+                            <div class="themePrimaryBG">Exercises</div>
+                            <div>Total Hours</div>
+                            <div class="themePrimaryBG">Type</div>
+                        </flex-row-eq-wrap-component>
+                    </div>
+                </flex-column>
+    
+                <flex-column class="centered themeBG">
+                    <medium-title class="defaultMargin"
+                        style="min-width: 100%;">
+
+                        All Courses
+                    </medium-title>
+
+                    <flex-column id="localCurriculumAllCoursesTarget"
+                        style="min-width: 100%;">
+
+                    </flex-column>
+                </flex-column>
+    
+                <flex-column class="centered themeBG">
+                    <medium-title class="defaultMargin"
+                        style="min-width: 100%;">
+                        
+                        Selected Courses
+                    </medium-title>
+
+                    <flex-column id="localCurriculumSelectedCoursesTarget"
+                        style="min-width: 100%;">
+
+                    </flex-column>
+
+                    <small-title class="defaultMarginHalf">
+                        Total:
+                    </small-title>
+                
+                    <div class="defaultPadding noTopPadding"
+                        style="min-width: 100%;">
+
+                        <div class="themeBorder">
+                            <flex-row-eq-wrap-component class="fGrow themeBorder noRightBorder noBotBorder themeFrontBG
+                                themeBorderChildren noTopAndLeftBorderForChildren growChildren centeredChildren"
+                                data-min-element-size-px="200" data-element-gap-px="0">
+                                
+                                <div id="localCourseCounterTarget">0</div> <!-- total number of selected thingies -->
+                                <div id="localEctsCounterTarget" class="themePrimaryBG">0</div>
+                                <div id="localLecturesCounterTarget">0</div>
+                                <div id="localExercisesCounterTarget" class="themePrimaryBG">0</div>
+                                <div id="localTotalHoursCounterTarget">0</div>
+                                <div class="themePrimaryBG">N/A</div>
+                            </flex-row-eq-wrap-component>
+                        </div>
+                    </div>
+                </flex-column>
+            </div>
         </main>
 
         <footer-component></footer-component>

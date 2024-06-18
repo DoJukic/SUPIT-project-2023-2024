@@ -7,6 +7,7 @@ Lit-html tag override so they don't throw errors
 Should probably be removed in production, but it's largely harmless
 (jquery's html() is called on a selector, so there is no conflict)
 */
+// EDIT: using this breaks template literals, so only temporarily use it in such cases
 function html(str){return str};
 
 // I don't want to ever deal with function conflicts, so we're shoving everything into ML (no affiliation with machine learning)
@@ -430,7 +431,6 @@ class ML{
       ML.tokenTimeout = setTimeout(ML.notifyTokenExpired, tokenExpiration * 1000);
     }
   }
-    
 }
 
 /* ---------------------------------------- INIT ---------------------------------------- */
@@ -439,6 +439,7 @@ class ML{
 $(document).on('keydown',function(e){
   if(Boolean(this.activeElement) && (e.code=="Enter" || e.code=="Space") && this.activeElement.hasAttribute("tabindex")){
     $(this.activeElement).click();
+    $(this.activeElement).blur();
     e.preventDefault();
   }
 });
