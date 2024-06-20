@@ -490,7 +490,7 @@ small-title{
 
 /* -------------------- EQUAL SPLIT LOGIC -------------------- */
 
-flex-row-eq-wrap-component{
+flex-row-eq-wrap-component, alt-flex-row-eq-wrap-component{
     display: flex;
     flex-direction: row;
 	flex-wrap: wrap;
@@ -502,7 +502,7 @@ flex-row-eq-wrap-component{
 	background-color: var(--theme-back-bg-color);
 }
 
-flex-row-eq-wrap-component > *{
+flex-row-eq-wrap-component > *, alt-flex-row-eq-wrap-component > *{
 	/* splitter vars set to parent style via js (could supply theme padding too) */
 	padding: calc(var(--theme-padding) / 2);
 	/* This isn't completely precise, but it also doesn't need to be (we're overcompensating for the gaps) */

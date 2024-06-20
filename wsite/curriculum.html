@@ -33,7 +33,7 @@
         
 
         <script>
-			var courseLookuplist;
+			var jsCourseLookupTargetlist;
 			var semesterTracker;
 
 			$(document).ready(function () {
@@ -70,7 +70,7 @@
 					return;
 				}
 
-				courseLookuplist = $('#courseLookup');
+				jsCourseLookupTargetlist = $('#jsCourseLookupTarget');
 				getCurriculumData(accessCode);
 
 				// Hide or show table data based on inputted text
@@ -111,10 +111,10 @@
 				data.sort((a, b) => parseInt(a.semester) - parseInt(b.semester));
 
 
-				courseLookuplist.empty();
+				jsCourseLookupTargetlist.empty();
 
-                let selectedCoursesTable = document.getElementById("localCurriculumSelectedCoursesTarget");
-                let allCoursesTable = document.getElementById("localCurriculumAllCoursesTarget");
+                let selectedCoursesTable = document.getElementById("jsCurriculumSelectedCoursesTarget");
+                let allCoursesTable = document.getElementById("jsCurriculumAllCoursesTarget");
 				currentSemester = -Infinity;
 
                 let currentSelectedCoursesSemester = null;
@@ -129,7 +129,7 @@
                         selectedCoursesTable.append(currentSelectedCoursesSemester);
 
                         currentAllCoursesSemester = document.createElement("local-semester-container-component");
-                        currentAllCoursesSemester.initialize(currentSemester);
+                        currentAllCoursesSemester.initialize(currentSemester, true);
                         allCoursesTable.append(currentAllCoursesSemester);
                     }
 
@@ -211,9 +211,9 @@
 
                     <flex-row>
                         <input id="jsCurriculumSearchBarTarget" class="fGrow roundedBorderHalf centeredText"
-                        type="text" placeholder="Course Name Search" list="courseLookup">
+                        type="text" placeholder="Course Name Search" list="jsCourseLookupTarget">
             
-                        <datalist id="courseLookup">
+                        <datalist id="jsCourseLookupTarget">
                         </datalist>
                     </flex-row>
         
@@ -236,10 +236,10 @@
                     <medium-title class="defaultMargin"
                         style="min-width: 100%;">
 
-                        All Courses
+                        ALL COURSES
                     </medium-title>
 
-                    <flex-column id="localCurriculumAllCoursesTarget"
+                    <flex-column id="jsCurriculumAllCoursesTarget"
                         style="min-width: 100%;">
 
                     </flex-column>
@@ -249,10 +249,10 @@
                     <medium-title class="defaultMargin"
                         style="min-width: 100%;">
                         
-                        Selected Courses
+                        SELECTED COURSES
                     </medium-title>
 
-                    <flex-column id="localCurriculumSelectedCoursesTarget"
+                    <flex-column id="jsCurriculumSelectedCoursesTarget"
                         style="min-width: 100%;">
 
                     </flex-column>
@@ -269,11 +269,11 @@
                                 themeBorderChildren noTopAndLeftBorderForChildren growChildren centeredChildren"
                                 data-min-element-size-px="200" data-element-gap-px="0">
                                 
-                                <div id="localCourseCounterTarget">0</div> <!-- total number of selected thingies -->
-                                <div id="localEctsCounterTarget" class="themePrimaryBG">0</div>
-                                <div id="localLecturesCounterTarget">0</div>
-                                <div id="localExercisesCounterTarget" class="themePrimaryBG">0</div>
-                                <div id="localTotalHoursCounterTarget">0</div>
+                                <div id="jsCourseCounterTarget">0</div> <!-- total number of selected thingies -->
+                                <div id="jsEctsCounterTarget" class="themePrimaryBG">0</div>
+                                <div id="jsLecturesCounterTarget">0</div>
+                                <div id="jsExercisesCounterTarget" class="themePrimaryBG">0</div>
+                                <div id="jsTotalHoursCounterTarget">0</div>
                                 <div class="themePrimaryBG">N/A</div>
                             </flex-row-eq-wrap-component>
                         </div>

@@ -32,33 +32,33 @@ class equalFlexWrap extends HTMLElement {
 
     balanceDisplay() {
         let elementSizePx = 0;
-        let childrenAmountPerRow = this.children.length
+        this.childrenAmountPerRow = this.children.length
 
         let availableWidth = $(this).width();
 
         if (availableWidth < 1)
             availableWidth = 2000; // WELP 2: Electric Boogaloo
-        // (This would cause an infinite loop is the balancer is hidden)
+            // (This would cause an infinite loop if for example our display is set to none)
 
-        let neededSize = childrenAmountPerRow * this.minElementSizePx;
+        let neededSize = this.childrenAmountPerRow * this.minElementSizePx;
         let diff = neededSize / availableWidth;
 
         while(diff > 1){
             diff = diff / 2;
-            childrenAmountPerRow = childrenAmountPerRow / 2;
+            this.childrenAmountPerRow = this.childrenAmountPerRow / 2;
         }
         
-        childrenAmountPerRow = Math.floor(childrenAmountPerRow);
+        this.childrenAmountPerRow = Math.floor(this.childrenAmountPerRow);
 
-        if (childrenAmountPerRow <= 0) // WELP
-            childrenAmountPerRow = 1;
+        if (this.childrenAmountPerRow <= 0) // WELP
+            this.childrenAmountPerRow = 1;
 
-        elementSizePx = availableWidth / childrenAmountPerRow - 10.0 / childrenAmountPerRow;
+        elementSizePx = availableWidth / this.childrenAmountPerRow - 10.0 / this.childrenAmountPerRow;
 
         // The -5 gives us some breathing room - as we're tracking resire asynchronously we might sometimes be a bit behind
         
         this.style.setProperty("--splitter-basis", `${elementSizePx}px`);
-        this.style.setProperty("--splitter-elems-per-line", `${childrenAmountPerRow}`);
+        this.style.setProperty("--splitter-elems-per-line", `${this.childrenAmountPerRow}`);
     }
 }
 

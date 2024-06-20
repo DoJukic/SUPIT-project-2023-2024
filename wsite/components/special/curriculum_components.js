@@ -5,11 +5,14 @@ class LocalSemesterContainer extends HTMLElement {
 
     bgAlternator = 0;
     currentFilter = "";
+    useAltComponent = false;
 
     connectedCallback() {
     }
 
-    initialize(semesterNum){
+    initialize(semesterNum, useAltComponent = false){
+        this.useAltComponent = useAltComponent;
+
         ML.setIntAttribute(this, "semester-number", semesterNum)
 
         this.innerHTML =
@@ -36,7 +39,7 @@ class LocalSemesterContainer extends HTMLElement {
         this.bgAlternator += 1;
         
         var tgt = document.createElement("local-data-row-component");
-        tgt.initialize(data, background);
+        tgt.initialize(data, background, this.useAltComponent);
         this.getElementsByClassName("jsRowHolderTarget")[0].append(tgt);
 
         tgt.setFilter(this.currentFilter);
@@ -102,21 +105,23 @@ class LocalDataRowContainer extends HTMLElement {
 
     stateChangeSubscriberFuncs = [];
 
-    initialize(data, background){
+    initialize(data, background, useAltComponent = false){
+        let component = useAltComponent ? "alt-flex-row-eq-wrap-component" : "flex-row-eq-wrap-component"
+        
         this.innerHTML =
         `
-            <flex-row-eq-wrap-component class="${background} glowOnHover glowOnFocus
+            <${component} class="${background} glowOnHover glowOnFocus
                 themeBorderChildren noTopAndLeftBorderForChildren growChildren centeredChildren"
                 data-min-element-size-px="200" data-element-gap-px="0"
                 tabindex="0">
 
-                <div>${data.course}</div>
+                <div class="centeredText">${data.course}</div>
                 <div>${data.ects}</div>
                 <div>${data.lectures}</div>
                 <div>${data.exercises}</div>
                 <div>${data.hours}</div>
                 <div>${data.type}</div>
-            </flex-row-eq-wrap-component>
+            </${component}>
         `
     }
 
@@ -158,3 +163,26 @@ class LocalDataRowContainer extends HTMLElement {
 }
 
 customElements.define('local-data-row-component', LocalDataRowContainer);
+
+class alternateEqualFlexWrap extends equalFlexWrap {
+    balanceDisplay() {
+        super.balanceDisplay();
+        if (this.childrenAmountPerRow <= 1){
+            let first = true;
+
+            $(this.children).each(function() {
+                if (first){
+                    first = false;
+                }else{
+                    $(this).css("display", "none")
+                }
+            });
+        }else{
+            $(this.children).each(function() {
+                $(this).css("display", "flex")
+            });
+        }
+    }
+}
+
+customElements.define('alt-flex-row-eq-wrap-component', alternateEqualFlexWrap);

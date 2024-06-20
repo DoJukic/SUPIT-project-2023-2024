@@ -68,22 +68,13 @@
                 // https://stackoverflow.com/questions/6042202/how-to-distinguish-mouse-click-and-drag
                 // andreyrd's answer, modified for this use case
                 $(document.querySelectorAll("[data-carousel-modal-id]")).each(function(){
-                    this.addEventListener('mousedown', function (event) {
-                        this.dragDetectionStartX = event.pageX;
-                        this.dragDetectionStartY = event.pageY;
-                    });
-
-                    /*
-                    If we trigger mousedown but don't trigger mouseup on the element, and then don't trigger mousedown but trigger mouseup in a similar spot
-                    the action will run anyways, we fix this by terminating the X and Y coords every time mouseup happens
-                    */
                     let meMyself = this;
-                    window.addEventListener('mouseup', function (event) {
-                        requestAnimationFrame(function(){
-                            meMyself.dragDetectionStartX = Infinity;
-                            meMyself.dragDetectionStartY = Infinity; 
-                        })
-                    }, true); // true means we're ignoring bubbling cancelations. True also means this is triggered before anything else, so we need to defer by a frame
+                    // This part is "wrong" in the SO solution, if this isn't the window we risk a rare error
+                    // I'm also not checking if we did lots of dragging around between mousedown and mouseup, but oh well
+                    window.addEventListener('mousedown', function (event) {
+                        meMyself.dragDetectionStartX = event.pageX;
+                        meMyself.dragDetectionStartY = event.pageY;
+                    }, true); // true means we're ignoring bubbling cancelations. 
 
                     this.addEventListener('mouseup', function (event) {
                         const delta = 6;
@@ -98,7 +89,7 @@
                             and the careousel detecting a mouse event, so it would just break.
                             And that's why it now unfortunately now just does nothing when you click there.
                             */
-                           // EDIT: Because of this we can simply request the slide change on the next animation frame!
+                           // EDIT: If we request the slide change on the next anim frame it removes the issue
 
                             const paddingAvg = ($(this).innerWidth() - $(this).width()) / 2;
                             if (event.pageX < paddingAvg){
@@ -113,7 +104,6 @@
                                 });
                                 return;
                             }
-                            
                             document.getElementById("MODALMODALMODAL " + ML.getIntAttribute(this, "carousel-modal-id")).showModal();
                         }
                     });
