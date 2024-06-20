@@ -36,32 +36,17 @@
 			var jsCourseLookupTargetlist;
 			var semesterTracker;
 
+            function removeScrollbarOffset(targetElement){
+                requestAnimationFrame(() => {removeScrollbarOffset(targetElement)});
+
+                let scrollBarWidth = targetElement.offsetWidth - targetElement.clientWidth;
+                $(targetElement).css("padding-right", `calc(2rem - ${scrollBarWidth}px)`);
+            }
+
 			$(document).ready(function () {
-                /*
-                var tgt = document.createElement("local-semester-container-component");
-                tgt.initialize("1");
-                document.getElementById("localCurriculumAllCoursesTarget").append(tgt);
-
-                tgt.addRow({
-                    course: "aaa",
-                    ects: 12,
-                    lectures: 7,
-                    exercises: 12,
-                    hours: 21,
-                    type: "Obavezni"
-                })
-
-                tgt.addRow({
-                    course: "bbb",
-                    ects: 12,
-                    lectures: 7,
-                    exercises: 12,
-                    hours: 21,
-                    type: "Obavezni"
-                })
-
-                tgt.filter("a");
-                tgt.filter("");*/
+                // The table legend is displayed wrong without this if it triggers the second scrollbar on desktop (not mobile as mobile scrollbars dont affect width).
+                let tableLegendElement = document.getElementById("jsTableLegendTarget");
+                requestAnimationFrame(() => {removeScrollbarOffset(tableLegendElement)});
 
 				var accessCode = ML.getAccessToken();
 
@@ -77,7 +62,6 @@
 				$('#jsCurriculumSearchBarTarget').on('input', function () {
 					curriculumDataFilter($('#jsCurriculumSearchBarTarget').val());
 				}).change();
-
 			});
 
 			function getCurriculumData(accessCode) {
@@ -149,21 +133,6 @@
                 })
 			}
 
-			function createDataRow(data, alternator) {
-                /*
-				html += getDataColumn(data.course, BGType, 1);
-				html += getDataColumn(data.ects, BGType);
-				html += getDataColumn(data.lectures, BGType);
-				html += getDataColumn(data.exercises, BGType);
-				html += getDataColumn(data.hours, BGType);
-				//html += getDataColumn(data.semester, BGType);
-				html += getDataColumn(data.type, BGType);
-                */
-			}
-
-			function getDataColumn(value, BGType, track = 0) {
-			}
-
 			function curriculumDataFilter(filter) {
 			}
 
@@ -206,7 +175,8 @@
                 It can still happen sometimes but this makes it way less likely.
             -->
             <div style="min-height: 100vh;">
-                <flex-column class="sticky defaultPadding noBotPadding themeBG defaultGapHalf themeBorder noSideBorder"
+                <flex-column id="jsTableLegendTarget"
+                    class="sticky defaultPadding noBotPadding themeBG defaultGapHalf themeBorder noSideBorder"
                     style="max-height: 30vh; overflow-y: auto;">
 
                     <flex-row>
