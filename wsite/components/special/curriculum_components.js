@@ -17,29 +17,38 @@ class LocalSemesterContainer extends HTMLElement {
 
         this.innerHTML =
         `
-            <flex-row class="centered">
+            <flex-row class="centered defaultMargin noTopOrBotMargin noSideMargin defaultPaddingHalf themeFrontBG themeBorder onlyBotBorder jsCollapsibleTrigger">
                 <medium-title>
                     Semester ${semesterNum}
                 </medium-title>
+
+                <div style="width: 10px;"></div>
+
+                <div class="glowOnFocus"
+                    style="width: 1em; height: 1em;"
+                    tabindex=0>
+
+                    <div class="ui-icon ui-theme ui-icon-caret-1-w rotate90LeftOnTrigger rotate90LeftOnTriggerTriggered jsCollapsibleIconTarget"></div>
+                </div>
             </flex-row>
-            <div class="jsRowHolderTarget defaultMargin themeBorder"
-                style="border-top-width: 2px; border-left-width: 2px;">
+            <div class="jsCollapsibleTarget"
+                style="width: 100%; overflow: hidden;">
+
+                <div class="defaultPadding onlyTopPadding"></div>
+                
+                <div class="jsRowHolderTarget defaultMarginDouble noTopMargin themeBorder"
+                    style="border-top-width: 2px; border-left-width: 2px;">
+                </div>
+
+                <div class="themeBorder onlyBotBorder"></div>
             </div>
+            <collapsible-logic-component></collapsible-logic-component>
         `
     }
 
     addRow(data){
-        var background;
-        if (this.bgAlternator % 2 == 0){
-            background = "themeFrontBG";
-        }
-        else{
-            background = "themeBackBG";
-        }
-        this.bgAlternator += 1;
-        
         var tgt = document.createElement("local-data-row-component");
-        tgt.initialize(data, background, this.useAltComponent);
+        tgt.initialize(data, this.useAltComponent);
         this.getElementsByClassName("jsRowHolderTarget")[0].append(tgt);
 
         tgt.setFilter(this.currentFilter);
@@ -75,6 +84,30 @@ class LocalSemesterContainer extends HTMLElement {
         this.checkState();
     }
 
+    assignBackgrounds(){
+        this.bgAlternator = 0;
+
+        let meMyself = this;
+        
+        $(this.getElementsByClassName("jsRowHolderTarget")[0].children).each(function(){
+            if ($(this).css("display") == "none"){
+                return;
+            }
+
+            let background = "";
+
+            if (meMyself.bgAlternator % 2 == 0){
+                background = "themeFrontBG";
+            }
+            else{
+                background = "themeBG";
+            }
+            meMyself.bgAlternator += 1;
+
+            this.classList = background;
+        });
+    }
+
     checkState(){
         // If nothing is being displayed we hide the semester as well.
         let meMyself = this;
@@ -89,7 +122,35 @@ class LocalSemesterContainer extends HTMLElement {
 
         if (hideSelf){
             meMyself.hide();
+            return;
         }
+
+        this.assignBackgrounds();
+    }
+    
+    getTotals(){
+        let result = {
+            totalAmount: 0,
+            totalEcts: 0,
+            totalLectures: 0,
+            totalExercises: 0,
+            totalHours: 0,
+        }
+
+        $(this.getElementsByClassName("jsRowHolderTarget")[0].children).each(function(){
+            if ($(this).css("display") == "none")
+                return;
+
+            let rowResult = this.getValues();
+
+            result.totalAmount += 1;
+            result.totalEcts += rowResult.ects;
+            result.totalLectures += rowResult.lectures;
+            result.totalExercises += rowResult.exercises;
+            result.totalHours += rowResult.hours;
+        });
+
+        return result;
     }
 }
 
@@ -105,23 +166,23 @@ class LocalDataRowContainer extends HTMLElement {
 
     stateChangeSubscriberFuncs = [];
 
-    initialize(data, background, useAltComponent = false){
-        let component = useAltComponent ? "alt-flex-row-eq-wrap-component" : "flex-row-eq-wrap-component"
+    initialize(data, useAltComponent = false){
+        let componentType = useAltComponent ? "alt-flex-row-eq-wrap-component" : "flex-row-eq-wrap-component"
         
         this.innerHTML =
         `
-            <${component} class="${background} glowOnHover glowOnFocus
+            <${componentType} class="glowOnHover glowOnFocus
                 themeBorderChildren noTopAndLeftBorderForChildren growChildren centeredChildren"
                 data-min-element-size-px="200" data-element-gap-px="0"
                 tabindex="0">
 
-                <div class="centeredText">${data.course}</div>
-                <div>${data.ects}</div>
-                <div>${data.lectures}</div>
-                <div>${data.exercises}</div>
-                <div>${data.hours}</div>
-                <div>${data.type}</div>
-            </${component}>
+                <div class="courseName centeredText">${data.course}</div>
+                <div class="ectsAmount">${data.ects}</div>
+                <div class="lecturesAmount">${data.lectures}</div>
+                <div class="exercisesAmount">${data.exercises}</div>
+                <div class="hoursAmount">${data.hours}</div>
+                <div class="typeName">${data.type}</div>
+            </${componentType}>
         `
     }
 
@@ -143,7 +204,7 @@ class LocalDataRowContainer extends HTMLElement {
         this.checkFilter();
     }
     checkFilter(){
-        if (this.isShowable && this.children[0].children[0].innerText.indexOf(this.filter) > -1)
+        if (this.isShowable && this.children[0].children[0].innerText.toLowerCase().indexOf(this.filter.toLowerCase()) > -1)
             $(this).css("display", "block");
         else
             $(this).css("display", "none");
@@ -160,11 +221,23 @@ class LocalDataRowContainer extends HTMLElement {
         this.checkFilter();
         this.notifyStateChanged();
     }
+
+    getValues(){
+        let result = {
+            ects: (Number)(this.getElementsByClassName("ectsAmount")[0].innerText),
+            lectures: (Number)(this.getElementsByClassName("lecturesAmount")[0].innerText),
+            exercises: (Number)(this.getElementsByClassName("exercisesAmount")[0].innerText),
+            hours: (Number)(this.getElementsByClassName("hoursAmount")[0].innerText),
+        }
+
+        return result;
+    }
 }
 
 customElements.define('local-data-row-component', LocalDataRowContainer);
 
 class alternateEqualFlexWrap extends equalFlexWrap {
+    // Override
     balanceDisplay() {
         super.balanceDisplay();
         if (this.childrenAmountPerRow <= 1){
@@ -186,3 +259,68 @@ class alternateEqualFlexWrap extends equalFlexWrap {
 }
 
 customElements.define('alt-flex-row-eq-wrap-component', alternateEqualFlexWrap);
+
+class collapsibleLogicController extends equalFlexWrap {
+    constructor() {
+        super();
+    }
+
+    triggerClass = "jsCollapsibleTrigger";
+    targetClass = "jsCollapsibleTarget";
+    iconClass = "jsCollapsibleIconTarget";
+
+    iconTransformClass = "rotate90LeftOnTriggerTriggered"; // defined in curriculum.html
+
+    trigger = null;
+    target = null;
+    icon = null;
+
+    isBusy = false;
+
+    connectedCallback() {
+        this.trigger = this.parentElement.getElementsByClassName(this.triggerClass)[0];
+        this.target = this.parentElement.getElementsByClassName(this.targetClass)[0];
+        this.icon = this.parentElement.getElementsByClassName(this.iconClass)[0];
+
+        $(this.trigger).css("cursor", "pointer");
+
+        let meMyself = this;
+
+        $(meMyself.trigger).on("click", function(){
+            
+            if ($(meMyself.target).css("max-height") == "0px"){
+                $(meMyself.icon).addClass(meMyself.iconTransformClass);
+                $(meMyself.target).css("max-height", "initial");
+                // if inert is true, we will not tab through child elements
+                meMyself.target.removeAttribute("inert")
+            }else{
+                $(meMyself.icon).removeClass(meMyself.iconTransformClass);
+                $(meMyself.target).css("max-height", "0px");
+                meMyself.target.setAttribute("inert", "true")
+            }
+
+            // I would've preferred to use slide up and down, but there's some unfortunate interactions with the balanced flex display.
+
+            /*
+            if (meMyself.isBusy)
+                return;
+            
+                meMyself.isBusy = true;
+            
+            if ($(meMyself.target).css("display") == "none"){
+                $(meMyself.icon).addClass(meMyself.iconTransformClass);
+                $(meMyself.target).slideDown(400, function() { 
+                    meMyself.isBusy = false;
+                });
+            }else{
+                $(meMyself.icon).removeClass(meMyself.iconTransformClass);
+                $(meMyself.target).slideUp(300, function() { 
+                    meMyself.isBusy = false;
+                });
+            }
+            */
+        });
+    }
+}
+
+customElements.define('collapsible-logic-component', collapsibleLogicController);

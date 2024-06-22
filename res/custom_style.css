@@ -498,8 +498,6 @@ flex-row-eq-wrap-component, alt-flex-row-eq-wrap-component{
 
 	padding-left: 0 !important;
 	padding-right: 0 !important;
-	
-	background-color: var(--theme-back-bg-color);
 }
 
 flex-row-eq-wrap-component > *, alt-flex-row-eq-wrap-component > *{
@@ -508,7 +506,9 @@ flex-row-eq-wrap-component > *, alt-flex-row-eq-wrap-component > *{
 	/* This isn't completely precise, but it also doesn't need to be (we're overcompensating for the gaps) */
 	width: calc(var(--splitter-basis) - var(--splitter-gap));
 }
-
+.applyEqWrapStyle{
+	background-color: var(--theme-back-bg-color);
+}
 .applyEqWrapStyle > *{
 	background-color: var(--theme-front-bg-color);
 	border: 1px solid var(--theme-border-color);

@@ -31,22 +31,27 @@
         
         <script src="components/special/curriculum_components.js" type="text/javascript" defer></script>
         
-
         <script>
-			var jsCourseLookupTargetlist;
-			var semesterTracker;
+			var jsCourseLookupTargetlist = null;
+            var jsTableLegendResizeObserver = null;
 
             function removeScrollbarOffset(targetElement){
-                requestAnimationFrame(() => {removeScrollbarOffset(targetElement)});
-
                 let scrollBarWidth = targetElement.offsetWidth - targetElement.clientWidth;
-                $(targetElement).css("padding-right", `calc(2rem - ${scrollBarWidth}px)`);
+                $(targetElement).css("padding-right", `calc(var(--theme-padding) * 2 - ${scrollBarWidth}px)`); // Will break if element padding is changed from default!
             }
 
 			$(document).ready(function () {
                 // The table legend is displayed wrong without this if it triggers the second scrollbar on desktop (not mobile as mobile scrollbars dont affect width).
                 let tableLegendElement = document.getElementById("jsTableLegendTarget");
-                requestAnimationFrame(() => {removeScrollbarOffset(tableLegendElement)});
+
+                var observerCallback = (entries, observer) => {
+                    entries.forEach((entry) => {
+                        removeScrollbarOffset(entry.target);
+                    });
+                };
+
+                jsTableLegendResizeObserver = new ResizeObserver(observerCallback);
+                jsTableLegendResizeObserver.observe(tableLegendElement);
 
 				var accessCode = ML.getAccessToken();
 
@@ -57,11 +62,6 @@
 
 				jsCourseLookupTargetlist = $('#jsCourseLookupTarget');
 				getCurriculumData(accessCode);
-
-				// Hide or show table data based on inputted text
-				$('#jsCurriculumSearchBarTarget').on('input', function () {
-					curriculumDataFilter($('#jsCurriculumSearchBarTarget').val());
-				}).change();
 			});
 
 			function getCurriculumData(accessCode) {
@@ -94,7 +94,6 @@
 				// https://stackoverflow.com/questions/979256/sorting-an-array-of-objects-by-property-values -> very cool
 				data.sort((a, b) => parseInt(a.semester) - parseInt(b.semester));
 
-
 				jsCourseLookupTargetlist.empty();
 
                 let selectedCoursesTable = document.getElementById("jsCurriculumSelectedCoursesTarget");
@@ -122,18 +121,42 @@
 
                     currentSelectedCoursesRow.addEventListener("click", function(){
                         currentSelectedCoursesRow.hide();
+                        curriculumUpdateTotalsTable();
                     });
                     currentAllCoursesRow.addEventListener("click", function(){
                         currentSelectedCoursesRow.show();
+                        curriculumUpdateTotalsTable();
                     });
+                    
+				    jsCourseLookupTargetlist.append('<option value="' + this.course + '">');
 				});
 
                 $(selectedCoursesTable.children).each(function(){
                     this.hideAll();
                 })
+
+                // Hide or show table data based on inputted text
+                $('#jsCurriculumSearchBarTarget').on('input', function () {
+                    curriculumDataFilter($('#jsCurriculumSearchBarTarget').val());
+                }).change();
+
+                // As the data is now filled up, we can apply filters
+                curriculumDataFilter($('#jsCurriculumSearchBarTarget').val());
+
+                // This shouldn't have to run, but why not?
+                curriculumUpdateTotalsTable();
 			}
 
 			function curriculumDataFilter(filter) {
+                let selectedCoursesTable = document.getElementById("jsCurriculumSelectedCoursesTarget");
+                let allCoursesTable = document.getElementById("jsCurriculumAllCoursesTarget");
+
+                $(selectedCoursesTable.children).each(function(){
+                    this.filter(filter);
+                });
+                $(allCoursesTable.children).each(function(){
+                    this.filter(filter);
+                });
 			}
 
 			function curriculumFinalizeLoad(){
@@ -143,6 +166,34 @@
 			function curriculumReportError(message){
 				$("#jsCurriculumLoadingIconTarget").text(message);
 			}
+
+            function curriculumUpdateTotalsTable(){
+                let selectedCoursesTable = document.getElementById("jsCurriculumSelectedCoursesTarget");
+
+                let result = {
+                    totalAmount: 0,
+                    totalEcts: 0,
+                    totalLectures: 0,
+                    totalExercises: 0,
+                    totalHours: 0,
+                }
+
+                $(selectedCoursesTable.children).each(function(){
+                    let semesterResult = this.getTotals();
+
+                    result.totalAmount += semesterResult.totalAmount;
+                    result.totalEcts += semesterResult.totalEcts;
+                    result.totalLectures += semesterResult.totalLectures;
+                    result.totalExercises += semesterResult.totalExercises;
+                    result.totalHours += semesterResult.totalHours;
+                });
+
+                $("#jsCourseCounterTarget").html(result.totalAmount);
+                $("#jsEctsCounterTarget").html(result.totalEcts);
+                $("#jsLecturesCounterTarget").html(result.totalLectures);
+                $("#jsExercisesCounterTarget").html(result.totalExercises);
+                $("#jsTotalHoursCounterTarget").html(result.totalHours);
+            }
 		</script>
 
     </head>
@@ -155,6 +206,16 @@
 
         .growChildren > *{
             flex-grow: 1 !important;
+        }
+        
+        /* Update curriculum_components if changing! */
+        .rotate90LeftOnTrigger {
+            transform: rotate(0deg);
+            transition: transform 0.2s;
+            will-change: auto !important;
+        }
+        .rotate90LeftOnTrigger.rotate90LeftOnTriggerTriggered {
+            transform: rotate(-90deg) !important;
         }
     </style>
 
@@ -176,10 +237,10 @@
             -->
             <div style="min-height: 100vh;">
                 <flex-column id="jsTableLegendTarget"
-                    class="sticky defaultPadding noBotPadding themeBG defaultGapHalf themeBorder noSideBorder"
+                    class="sticky defaultPaddingDouble noTopOrBotPadding themeFrontBG defaultGapHalf themeBorder noSideBorder"
                     style="max-height: 30vh; overflow-y: auto; border-bottom-width: 2px;">
 
-                    <flex-row>
+                    <flex-row class="defaultPadding onlyTopPadding">
                         <input id="jsCurriculumSearchBarTarget" class="fGrow roundedBorderHalf centeredText"
                         type="text" placeholder="Course Name Search" list="jsCourseLookupTarget">
             
@@ -202,8 +263,8 @@
                     </div>
                 </flex-column>
     
-                <flex-column class="centered themeBG">
-                    <medium-title class="defaultMargin"
+                <flex-column class="centered themeBackBG">
+                    <medium-title class="defaultPadding themeFrontBG"
                         style="min-width: 100%;">
 
                         ALL COURSES
@@ -215,8 +276,8 @@
                     </flex-column>
                 </flex-column>
     
-                <flex-column class="centered themeBG">
-                    <medium-title class="defaultMargin"
+                <flex-column class="centered themeBackBG">
+                    <medium-title class="defaultPadding themeFrontBG"
                         style="min-width: 100%;">
                         
                         SELECTED COURSES
@@ -227,27 +288,31 @@
 
                     </flex-column>
 
-                    <small-title class="defaultMarginHalf">
-                        Total:
-                    </small-title>
-                
-                    <div class="defaultPadding noTopPadding"
+                    <flex-column class="centered themeFrontBG"
                         style="min-width: 100%;">
+                        
+                        <small-title class="defaultMarginHalf">
+                            Total:
+                        </small-title>
 
-                        <div class="themeBorder">
-                            <flex-row-eq-wrap-component class="fGrow themeBorder noRightBorder noBotBorder themeFrontBG
-                                themeBorderChildren noTopAndLeftBorderForChildren growChildren centeredChildren"
-                                data-min-element-size-px="200" data-element-gap-px="0">
-                                
-                                <div id="jsCourseCounterTarget">0</div> <!-- total number of selected thingies -->
-                                <div id="jsEctsCounterTarget" class="themePrimaryBG">0</div>
-                                <div id="jsLecturesCounterTarget">0</div>
-                                <div id="jsExercisesCounterTarget" class="themePrimaryBG">0</div>
-                                <div id="jsTotalHoursCounterTarget">0</div>
-                                <div class="themePrimaryBG">N/A</div>
-                            </flex-row-eq-wrap-component>
+                        <div class="defaultPaddingDouble noTopPadding"
+                            style="min-width: 100%;">
+    
+                            <div class="themeBorder">
+                                <flex-row-eq-wrap-component class="fGrow themeBorder noRightBorder noBotBorder themeFrontBG
+                                    themeBorderChildren noTopAndLeftBorderForChildren growChildren centeredChildren"
+                                    data-min-element-size-px="200" data-element-gap-px="0">
+                                    
+                                    <div id="jsCourseCounterTarget">0</div> <!-- total number of selected thingies -->
+                                    <div id="jsEctsCounterTarget" class="themePrimaryBG">0</div>
+                                    <div id="jsLecturesCounterTarget">0</div>
+                                    <div id="jsExercisesCounterTarget" class="themePrimaryBG">0</div>
+                                    <div id="jsTotalHoursCounterTarget">0</div>
+                                    <div class="themePrimaryBG">N/A</div>
+                                </flex-row-eq-wrap-component>
+                            </div>
                         </div>
-                    </div>
+                    </flex-column>
                 </flex-column>
             </div>
         </main>
