@@ -473,16 +473,76 @@ class ML{
       ML.tokenTimeout = setTimeout(ML.notifyTokenExpired, tokenExpiration * 1000);
     }
   }
+
+  /* -------------------- EVENT SIMULATION LOGIC -------------------- */
+
+  // https://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript
+  // accepted answer, but slightly modified to avoid depreceated methods.
+  static simulateEvent(element, eventName)
+  {
+    var options = ML.extend(ML.defaultEventOptions, arguments[2] || {});
+    var oEvent, eventType = null;
+
+    for (var name in ML.eventMatchers)
+    {
+      if (ML.eventMatchers[name].test(eventName)) { eventType = name; break; }
+    }
+
+    if (!eventType)
+      throw new SyntaxError('Only HTMLEvents and MouseEvents interfaces are supported');
+
+    oEvent = null;
+    if (eventType == 'HTMLEvents')
+    {
+      oEvent = new Event(eventName, options);
+    }
+    else
+    {
+      oEvent = new MouseEvent(eventName, options);
+    }
+    element.dispatchEvent(oEvent);
+
+    return element;
+}
+
+static extend(destination, source) {
+    for (var property in source)
+      destination[property] = source[property];
+    return destination;
+}
+
+static eventMatchers = {
+    'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+    'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
+}
+static defaultEventOptions = {
+    pointerX: 0,
+    pointerY: 0,
+    button: 0,
+    ctrlKey: false,
+    altKey: false,
+    shiftKey: false,
+    metaKey: false,
+    bubbles: true,
+    cancelable: true
+}
 }
 
 /* ---------------------------------------- INIT ---------------------------------------- */
 
 // https://stackoverflow.com/questions/13637223/how-do-you-make-a-div-tabbable (awokeKnowing's answer, slightly modified to avoid depreciated methods)
-$(document).on('keydown',function(e){
-  if(Boolean(this.activeElement) && (e.code=="Enter" || e.code=="Space") && this.activeElement.hasAttribute("tabindex")){
-    $(this.activeElement).click();
+$(document).on('keydown',function(event){
+  if(Boolean(this.activeElement) && (event.code=="Enter" || event.code=="Space") && this.activeElement.hasAttribute("tabindex")){
+    // if blur is called later any event listener callback which made an element focused is for naught
+    let target = this.activeElement;
     $(this.activeElement).blur();
-    e.preventDefault();
+
+    ML.simulateEvent(target, 'mouseover');
+    ML.simulateEvent(target, 'mousedown');
+    ML.simulateEvent(target, 'mouseup');
+    ML.simulateEvent(target, 'click');
+    
+    event.preventDefault();
   }
 });
 
