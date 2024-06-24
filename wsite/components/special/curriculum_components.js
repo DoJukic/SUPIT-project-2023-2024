@@ -297,15 +297,11 @@ class collapsibleLogicController extends equalFlexWrap {
             if ($(meMyself.target).css("max-height") == "0px"){
                 if (meMyself.startAnimReveal(400)){
                     $(meMyself.icon).addClass(meMyself.iconTransformClass);
-                    //meMyself.kickOffShowAnim(400);
-                    //$(meMyself.target).css("max-height", "");
                     meMyself.target.removeAttribute("inert");
                 }
             }else{
                 if (meMyself.startAnimHide(300)){
                     $(meMyself.icon).removeClass(meMyself.iconTransformClass);
-                    //$(meMyself.target).css("max-height", "0px");
-                    //meMyself.kickOffHideAnim(300);
                     // if inert is true, we will not tab through child elements
                     meMyself.target.setAttribute("inert", "true");
                 }
@@ -381,32 +377,6 @@ class collapsibleLogicController extends equalFlexWrap {
         requestAnimationFrame(() => collapsibleLogicController.animHide(element, startTimeMS, endTimeMS, startHeight, callback));
     }
 
-    kickOffHideAnim(duration){
-        if (this.animationIsLocked())
-            return;
-        this.lockAnimation();
-
-        let meMyself = this;
-
-        collapsibleLogicController.heightAnimStepEaseIn(this.target, ML.getMilisecondsSinceEpoch(), ML.getMilisecondsSinceEpoch() + duration, 0,
-        function(){
-            meMyself.unlockAnimation()
-        });
-    }
-    kickOffShowAnim(duration){
-        if (this.animationIsLocked())
-            return;
-        this.lockAnimation();
-
-        let meMyself = this;
-
-        collapsibleLogicController.heightAnimStepEaseIn(this.target, ML.getMilisecondsSinceEpoch(), ML.getMilisecondsSinceEpoch() + duration, ML.getHeightFromChildren(this.target),
-        function(){
-            $(meMyself.target).css("max-height", "");
-            meMyself.unlockAnimation();
-        });
-    }
-
     animationIsLocked(){
         return this.animationLocked;
     }
@@ -415,31 +385,6 @@ class collapsibleLogicController extends equalFlexWrap {
     }
     unlockAnimation(){
         this.animationLocked = false;
-    }
-
-    static heightAnimStepEaseIn(element, startTimeMS, endTimeMS, targetHeight, callback){
-        targetHeight = ML.getHeightFromChildren(element);
-
-        let timePassed = ML.getMilisecondsSinceEpoch() - startTimeMS;
-        let timePassedFactor = (timePassed > 1 ? timePassed : 1) / (endTimeMS - startTimeMS);
-        //console.log(timePassedFactor);
-        if (timePassedFactor >= 1){
-            $(element).css("max-height", (String)(targetHeight) + "px");
-            callback();
-            return;
-        }
-
-        let incrementMultiplier = 0.5 + timePassedFactor / 2;
-
-        let currentHeight = (Number)($(element).css("max-height"));
-        currentHeight = (Boolean(currentHeight) ? currentHeight : 0);
-        let heightToAdd = (targetHeight * timePassedFactor -  currentHeight)* (incrementMultiplier == 0.5 ? 1 : incrementMultiplier);
-
-        console.log(heightToAdd)
-
-        $(element).css("max-height", (String)(currentHeight + heightToAdd) + "px");
-
-        requestAnimationFrame(() => collapsibleLogicController.heightAnimStepEaseIn(element, startTimeMS, endTimeMS, targetHeight, callback));
     }
 }
 

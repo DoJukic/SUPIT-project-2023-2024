@@ -21,9 +21,6 @@
 		<script src="../res/jquery-ui-1.13.2.custom/jquery-ui.js"></script>
         
         <!-- Fancybox -->
-        <script src="../res/fancybox-5.0.36/dist/fancybox/fancybox.umd.js" type="text/javascript"></script>
-		<link rel="stylesheet" href="../res/fancybox-5.0.36/dist/fancybox/fancybox.css">
-        
         <script src="../res/fancybox-5.0.36/dist/carousel/carousel.umd.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="../res/fancybox-5.0.36/dist/carousel/carousel.css">
         
@@ -43,10 +40,6 @@
 
         <script>
 			$(document).ready(function () {
-                Fancybox.bind('[data-fancybox="gallery"]', {
-                    // Your custom options
-                });
-
                 // https://stackoverflow.com/questions/6042202/how-to-distinguish-mouse-click-and-drag
                 // andreyrd's answer, modified for this use case
                 $(document.querySelectorAll("[data-carousel-modal-id]")).each(function(){
@@ -446,29 +439,6 @@
                         </flex-column>
                     </flex-row>
                 </flex-column>
-            </div>
-
-            <div class="f-carousel thumbCarouselPls has-thumbs is-ltr is-horizontal">
-                <div class="f-carousel__track">
-                    <div class="f-carousel__slide centered"
-                        data-thumb-src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg">
-
-                        <img src="../res/img/news/Nagrada-„Toso-Dabac-profesoru-Vladimiru-Simunicu.jpg"
-                            data-fancybox="carousel" data-caption="THIS IS A CAPTIONNNN"/>
-                    </div>
-                    <div class="f-carousel__slide centered"
-                        data-thumb-src="../res/img/news/Novosti_1100x400-promocija.jpg">
-
-                        <img src="../res/img/news/Novosti_1100x400-promocija.jpg"
-                            data-fancybox="carousel" data-caption="THIS IS A CAPTIONNNN"/>
-                    </div>
-                    <div class="f-carousel__slide centered"
-                        data-thumb-src="../res/img/news/Novosti_DiR.jpg">
-
-                        <img src="../res/img/news/Novosti_DiR.jpg"
-                            data-fancybox="carousel" data-caption="THIS IS A CAPTIONNNN"/>
-                    </div>
-                </div>
             </div>
         </main>
 
