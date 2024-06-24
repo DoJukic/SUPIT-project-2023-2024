@@ -17,7 +17,9 @@ class LocalSemesterContainer extends HTMLElement {
 
         this.innerHTML =
         `
-            <flex-row class="centered defaultMargin noTopOrBotMargin noSideMargin defaultPaddingHalf themeFrontBG themeBorder onlyBotBorder jsCollapsibleTrigger">
+            <flex-row class="centered defaultMargin noTopOrBotMargin noSideMargin defaultPaddingHalf themeFrontBG themeBorder onlyBotBorder jsCollapsibleTrigger"
+                style="user-select: none;">
+
                 <medium-title>
                     Semester ${semesterNum}
                 </medium-title>
@@ -275,7 +277,7 @@ class collapsibleLogicController extends equalFlexWrap {
     target = null;
     icon = null;
 
-    isBusy = false;
+    animationLocked = false;
 
     connectedCallback() {
         this.trigger = this.parentElement.getElementsByClassName(this.triggerClass)[0];
@@ -286,40 +288,158 @@ class collapsibleLogicController extends equalFlexWrap {
 
         let meMyself = this;
 
-        $(meMyself.trigger).on("click", function(){
-            
+        $(meMyself.icon).removeClass(meMyself.iconTransformClass);
+        $(meMyself.target).css("max-height", "0px");
+        // if inert is true, we will not tab through child elements
+        meMyself.target.setAttribute("inert", "true")
+
+        ML.attachSmartClickListener(meMyself.trigger, function(){
             if ($(meMyself.target).css("max-height") == "0px"){
-                $(meMyself.icon).addClass(meMyself.iconTransformClass);
-                $(meMyself.target).css("max-height", "initial");
-                // if inert is true, we will not tab through child elements
-                meMyself.target.removeAttribute("inert")
+                if (meMyself.startAnimReveal(400)){
+                    $(meMyself.icon).addClass(meMyself.iconTransformClass);
+                    //meMyself.kickOffShowAnim(400);
+                    //$(meMyself.target).css("max-height", "");
+                    meMyself.target.removeAttribute("inert");
+                }
             }else{
-                $(meMyself.icon).removeClass(meMyself.iconTransformClass);
-                $(meMyself.target).css("max-height", "0px");
-                meMyself.target.setAttribute("inert", "true")
+                if (meMyself.startAnimHide(300)){
+                    $(meMyself.icon).removeClass(meMyself.iconTransformClass);
+                    //$(meMyself.target).css("max-height", "0px");
+                    //meMyself.kickOffHideAnim(300);
+                    // if inert is true, we will not tab through child elements
+                    meMyself.target.setAttribute("inert", "true");
+                }
             }
-
-            // I would've preferred to use slide up and down, but there's some unfortunate interactions with the balanced flex display.
-
-            /*
-            if (meMyself.isBusy)
-                return;
-            
-                meMyself.isBusy = true;
-            
-            if ($(meMyself.target).css("display") == "none"){
-                $(meMyself.icon).addClass(meMyself.iconTransformClass);
-                $(meMyself.target).slideDown(400, function() { 
-                    meMyself.isBusy = false;
-                });
-            }else{
-                $(meMyself.icon).removeClass(meMyself.iconTransformClass);
-                $(meMyself.target).slideUp(300, function() { 
-                    meMyself.isBusy = false;
-                });
-            }
-            */
         });
+    }
+
+    startAnimReveal(duration){
+        if (this.animationIsLocked())
+            return false;
+        this.lockAnimation();
+
+        let meMyself = this;
+
+        collapsibleLogicController.animReveal(this.target, ML.getMilisecondsSinceEpoch(), ML.getMilisecondsSinceEpoch() + duration,
+        function(){
+            meMyself.unlockAnimation();
+            $(meMyself.target).css("max-height", "");
+        });
+
+        return true;
+    }
+
+    static animReveal(element, startTimeMS, endTimeMS, callback){
+        let targetHeight = ML.getHeightFromChildren(element);
+
+        let timePassed = ML.getMilisecondsSinceEpoch() - startTimeMS;
+        let timePassedFactor = timePassed / (endTimeMS - startTimeMS);
+
+        if (timePassedFactor >= 1){
+            $(element).css("max-height", (String)(targetHeight) + "px");
+            callback();
+            return;
+        }
+        
+        let resultingHeight = targetHeight * Math.log10(timePassedFactor * 100 + 1) / 2;
+
+        $(element).css("max-height", (String)(resultingHeight) + "px");
+
+        requestAnimationFrame(() => collapsibleLogicController.animReveal(element, startTimeMS, endTimeMS, callback));
+    }
+
+    startAnimHide(duration){
+        if (this.animationIsLocked())
+            return false;
+        this.lockAnimation();
+
+        let meMyself = this;
+
+        collapsibleLogicController.animHide(this.target, ML.getMilisecondsSinceEpoch(), ML.getMilisecondsSinceEpoch() + duration, ML.getHeightFromChildren(this.target),
+        function(){
+            meMyself.unlockAnimation();
+            $(meMyself.target).css("max-height", "0px");
+        });
+
+        return true;
+    }
+
+    static animHide(element, startTimeMS, endTimeMS, startHeight, callback){
+
+        let timePassed = ML.getMilisecondsSinceEpoch() - startTimeMS;
+        let timePassedFactor = timePassed / (endTimeMS - startTimeMS);
+
+        if (timePassedFactor >= 1){
+            callback();
+            return;
+        }
+        
+        let resultingHeight = startHeight - startHeight * Math.log10(timePassedFactor * 100 + 1) / 2;
+
+        $(element).css("max-height", (String)(resultingHeight) + "px");
+
+        requestAnimationFrame(() => collapsibleLogicController.animHide(element, startTimeMS, endTimeMS, startHeight, callback));
+    }
+
+    kickOffHideAnim(duration){
+        if (this.animationIsLocked())
+            return;
+        this.lockAnimation();
+
+        let meMyself = this;
+
+        collapsibleLogicController.heightAnimStepEaseIn(this.target, ML.getMilisecondsSinceEpoch(), ML.getMilisecondsSinceEpoch() + duration, 0,
+        function(){
+            meMyself.unlockAnimation()
+        });
+    }
+    kickOffShowAnim(duration){
+        if (this.animationIsLocked())
+            return;
+        this.lockAnimation();
+
+        let meMyself = this;
+
+        collapsibleLogicController.heightAnimStepEaseIn(this.target, ML.getMilisecondsSinceEpoch(), ML.getMilisecondsSinceEpoch() + duration, ML.getHeightFromChildren(this.target),
+        function(){
+            $(meMyself.target).css("max-height", "");
+            meMyself.unlockAnimation();
+        });
+    }
+
+    animationIsLocked(){
+        return this.animationLocked;
+    }
+    lockAnimation(){
+        this.animationLocked = true;
+    }
+    unlockAnimation(){
+        this.animationLocked = false;
+    }
+
+    static heightAnimStepEaseIn(element, startTimeMS, endTimeMS, targetHeight, callback){
+        targetHeight = ML.getHeightFromChildren(element);
+
+        let timePassed = ML.getMilisecondsSinceEpoch() - startTimeMS;
+        let timePassedFactor = (timePassed > 1 ? timePassed : 1) / (endTimeMS - startTimeMS);
+        //console.log(timePassedFactor);
+        if (timePassedFactor >= 1){
+            $(element).css("max-height", (String)(targetHeight) + "px");
+            callback();
+            return;
+        }
+
+        let incrementMultiplier = 0.5 + timePassedFactor / 2;
+
+        let currentHeight = (Number)($(element).css("max-height"));
+        currentHeight = (Boolean(currentHeight) ? currentHeight : 0);
+        let heightToAdd = (targetHeight * timePassedFactor -  currentHeight)* (incrementMultiplier == 0.5 ? 1 : incrementMultiplier);
+
+        console.log(heightToAdd)
+
+        $(element).css("max-height", (String)(currentHeight + heightToAdd) + "px");
+
+        requestAnimationFrame(() => collapsibleLogicController.heightAnimStepEaseIn(element, startTimeMS, endTimeMS, targetHeight, callback));
     }
 }
 

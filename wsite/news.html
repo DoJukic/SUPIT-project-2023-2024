@@ -43,69 +43,36 @@
 
         <script>
 			$(document).ready(function () {
-                /*
                 Fancybox.bind('[data-fancybox="gallery"]', {
                     // Your custom options
                 });
 
-                Fancybox.bind('[data-fancybox="carousel"]', {
-                    // Your custom options
-                });
-
-                Carousel.bind('.carouselPls', {
-                    // Your custom options
-                });
-
-                $('.carouselPls').each(function(){
-                    new Carousel(this,
-                        {
-                            infinite: false
-                        }
-                    );
-                })
-                */
-
                 // https://stackoverflow.com/questions/6042202/how-to-distinguish-mouse-click-and-drag
                 // andreyrd's answer, modified for this use case
                 $(document.querySelectorAll("[data-carousel-modal-id]")).each(function(){
-                    let meMyself = this;
-                    // This part is "wrong" in the SO solution, if this isn't the window we risk a rare error
-                    // I'm also not checking if we did lots of dragging around between mousedown and mouseup, but oh well
-                    window.addEventListener('mousedown', function (event) {
-                        meMyself.dragDetectionStartX = event.pageX;
-                        meMyself.dragDetectionStartY = event.pageY;
-                    }, true); // true means we're ignoring bubbling cancelations. 
+                    ML.attachSmartClickListener(this, function(event, target){
+                        /*
+                        So originally I was going to have the darker area surrounding the arrows call slideNext() and slidePrev() on the carousel.
+                        Unfortunately as this area is still within the carousel, I believe there was an unfortunate interaction between slideNext()
+                        and the careousel detecting a mouse event, so it would just break.
+                        And that's why it now unfortunately now just does nothing when you click there.
+                        */
+                        // EDIT: If we request the slide change on the next anim frame it removes the issue
 
-                    this.addEventListener('mouseup', function (event) {
-                        const delta = 6;
-                        const diffX = Math.abs(event.pageX - this.dragDetectionStartX);
-                        const diffY = Math.abs(event.pageY - this.dragDetectionStartY);
-
-                        if (diffX < delta && diffY < delta) {
-                            // Click!
-                            /*
-                            So originally I was going to have the darker area surrounding the arrows call slideNext() and slidePrev() on the carousel.
-                            Unfortunately as this area is still within the carousel, I believe there was an unfortunate interaction between slideNext()
-                            and the careousel detecting a mouse event, so it would just break.
-                            And that's why it now unfortunately now just does nothing when you click there.
-                            */
-                           // EDIT: If we request the slide change on the next anim frame it removes the issue
-
-                            const paddingAvg = ($(this).innerWidth() - $(this).width()) / 2;
-                            if (event.pageX < paddingAvg){
-                                requestAnimationFrame(()=> {
-                                    this.customCarouselRef.slidePrev();
-                                });
-                                return;
-                            }
-                            if (event.pageX > ($(this).width() + paddingAvg)){
-                                requestAnimationFrame(()=> {
-                                    this.customCarouselRef.slideNext();
-                                });
-                                return;
-                            }
-                            document.getElementById("MODALMODALMODAL " + ML.getIntAttribute(this, "carousel-modal-id")).showModal();
+                        const paddingAvg = ($(target).innerWidth() - $(target).width()) / 2;
+                        if (event.pageX < paddingAvg){
+                            requestAnimationFrame(()=> {
+                                target.customCarouselRef.slidePrev();
+                            });
+                            return;
                         }
+                        if (event.pageX > ($(target).width() + paddingAvg)){
+                            requestAnimationFrame(()=> {
+                                target.customCarouselRef.slideNext();
+                            });
+                            return;
+                        }
+                        document.getElementById("MODALMODALMODAL " + ML.getIntAttribute(target, "carousel-modal-id")).showModal();
                     });
                 });
 
@@ -481,7 +448,6 @@
                 </flex-column>
             </div>
 
-            <!--
             <div class="f-carousel thumbCarouselPls has-thumbs is-ltr is-horizontal">
                 <div class="f-carousel__track">
                     <div class="f-carousel__slide centered"
@@ -504,7 +470,6 @@
                     </div>
                 </div>
             </div>
-            -->
         </main>
 
         <footer-component></footer-component>

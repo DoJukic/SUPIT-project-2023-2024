@@ -15,6 +15,9 @@ class ML{
   constructor() {
       throw new Exception("What are you doing?");
   }
+  
+  static dragDetectionStartX = 0;
+  static dragDetectionStartY = 0;
 
   static tokenChangeSubscriberFuncs = []; // These contain functions we need to call when the appropriate trigger is activated
   static tokenExpiredSubscriberFuncs = [];
@@ -112,6 +115,42 @@ class ML{
   }
   static getStringAttribute(element, attribute){
     return element.getAttribute("data-" + attribute);
+  }
+
+  static getHeightFromChildren(element){
+    let counter = 0;
+
+    $(element.children).each(function(){
+      counter += $(this).outerHeight(true);
+    });
+
+    return counter;
+  }
+
+  /* -------------------- CLICK LISTENER LOGIC -------------------- */
+
+  // https://stackoverflow.com/questions/6042202/how-to-distinguish-mouse-click-and-drag
+  // andreyrd's answer, heavily modified for this use case
+  static initSmartClickListener(){
+    // This part is "wrong" in the SO solution, if this isn't the window we risk a rare error
+    // I'm also not checking if we did lots of dragging around between mousedown and mouseup, but oh well
+    window.addEventListener('mousedown', function (event) {
+        ML.dragDetectionStartX = event.pageX;
+        ML.dragDetectionStartY = event.pageY;
+    }, true); // true means we're ignoring bubbling cancelations. 
+  }
+  
+  static attachSmartClickListener(target, callback){
+    target.addEventListener('mouseup', function (event) {
+        const delta = 6;
+        const diffX = Math.abs(event.pageX - ML.dragDetectionStartX);
+        const diffY = Math.abs(event.pageY - ML.dragDetectionStartY);
+
+        if (diffX < delta && diffY < delta) {
+          // Click!
+          callback(event, target);
+        }
+    });
   }
 
   /* -------------------- THEME LOGIC -------------------- */
@@ -416,7 +455,10 @@ class ML{
 
   // https://stackoverflow.com/questions/9456138/how-can-i-get-seconds-since-epoch-in-javascript
   static getSecondsSinceEpoch(){
-    return Math.ceil( Date.now() / 1000 )
+    return Math.ceil( Date.now() / 1000 );
+  }
+  static getMilisecondsSinceEpoch(){
+    return Date.now();
   }
 
   static checkTokenTimeout(){
@@ -458,5 +500,6 @@ $(document).ready(function(){
   ML.initTypewriterAnims();
   ML.initTheme();
   ML.initThemedBackgroundImages();
+  ML.initSmartClickListener();
 });
 

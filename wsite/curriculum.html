@@ -35,6 +35,8 @@
 			var jsCourseLookupTargetlist = null;
             var jsTableLegendResizeObserver = null;
 
+            ML.subscribeToAccessTokenExpired(() => {Header.logInModal.showModal();});
+
             function removeScrollbarOffset(targetElement){
                 let scrollBarWidth = targetElement.offsetWidth - targetElement.clientWidth;
                 $(targetElement).css("padding-right", `calc(var(--theme-padding) * 2 - ${scrollBarWidth}px)`); // Will break if element padding is changed from default!
@@ -76,7 +78,7 @@
 						if (response.isSuccess == true) {
                             //return;
 							getCurriculumDataSuccess(response.data);
-							curriculumFinalizeLoad(); // This should be here because it's async.
+							curriculumReportSuccess(); // This should be here because it's async.
 						}
 						else {
 							curriculumReportError("Unknown Error");
@@ -119,11 +121,11 @@
                     let currentSelectedCoursesRow = currentSelectedCoursesSemester.addRow(this);
                     let currentAllCoursesRow = currentAllCoursesSemester.addRow(this);
 
-                    currentSelectedCoursesRow.addEventListener("click", function(){
+                    ML.attachSmartClickListener(currentSelectedCoursesRow, function(){
                         currentSelectedCoursesRow.hide();
                         curriculumUpdateTotalsTable();
                     });
-                    currentAllCoursesRow.addEventListener("click", function(){
+                    ML.attachSmartClickListener(currentAllCoursesRow, function(){
                         currentSelectedCoursesRow.show();
                         curriculumUpdateTotalsTable();
                     });
@@ -158,13 +160,18 @@
                     this.filter(filter);
                 });
 			}
+			function curriculumReportSuccess(message){
+                PushNotifs.pushNotificationSuccess(`FETCH SUCCESS`, "You can click on a course to add it to the selected courses list.");
+                curriculumFinalizeLoad();
+			}
+
+            function curriculumReportError(message){
+                PushNotifs.pushNotificationFail(`FETCH FAILED`, message);
+                curriculumFinalizeLoad();
+            }
 
 			function curriculumFinalizeLoad(){
 				$("#jsCurriculumLoaderTarget").css("display", "none");
-			}
-
-			function curriculumReportError(message){
-				$("#jsCurriculumLoadingIconTarget").text(message);
 			}
 
             function curriculumUpdateTotalsTable(){
@@ -199,6 +206,10 @@
     </head>
 
     <style>
+        body{
+            overflow-anchor: none;
+        }
+
         .noTopAndLeftBorderForChildren > *{
             border-top: 0px;
             border-left: 0px;
@@ -223,7 +234,7 @@
         <header-component></header-component>
 
         <main>
-            <div class="defaultPadding secPrimLinearBG centered">
+            <div class="secPrimLinearBG centered">
                 <h1 style="font-weight: normal; text-align: center;">
                     Algebra Course Lookup
                 </h1>
@@ -235,7 +246,9 @@
                 but its selection menu's position doesn't update.
                 It can still happen sometimes but this makes it way less likely.
             -->
-            <div style="min-height: 100vh;">
+            <flex-column class="themeBG fGrow"
+                style="min-height: 100vh;">
+                
                 <flex-column id="jsTableLegendTarget"
                     class="sticky defaultPaddingDouble noTopOrBotPadding themeFrontBG defaultGapHalf themeBorder noSideBorder"
                     style="max-height: 30vh; overflow-y: auto; border-bottom-width: 2px;">
@@ -263,28 +276,42 @@
                     </div>
                 </flex-column>
     
-                <flex-column class="centered themeBackBG">
-                    <medium-title class="defaultPadding themeFrontBG"
+                <flex-column class="centered themeBackBG jsLogicElementAnimationTarget">
+                    <medium-title class="defaultPadding noBotPadding themeFrontBG centered"
                         style="min-width: 100%;">
 
-                        ALL COURSES
+                        <flex-row class="defaultMarginHalf onlyBotMargin">
+                            ALL COURSES
+                        </flex-row>
                     </medium-title>
 
                     <flex-column id="jsCurriculumAllCoursesTarget"
-                        style="min-width: 100%;">
+                        style="min-width: 100%; overflow: hidden;">
 
                     </flex-column>
                 </flex-column>
+
+                <flex-spacer></flex-spacer>
+                <flex-column id="jsCurriculumLoaderTarget" class="centered defaultMargin defaultGapHalf">
+                    <simple-loader-m></simple-loader-m>
+                    <div>
+                        Please wait...
+                    </div>
+                </flex-column>
+                <flex-spacer></flex-spacer>
     
-                <flex-column class="centered themeBackBG">
-                    <medium-title class="defaultPadding themeFrontBG"
+                <flex-column class="centered themeBackBG themeBorder onlyTopBorder jsLogicElementAnimationTarget">
+                    <medium-title class="defaultPadding noBotPadding themeFrontBG centered"
                         style="min-width: 100%;">
-                        
-                        SELECTED COURSES
+
+                        <flex-row class="defaultMarginHalf onlyBotMargin">
+                            SELECTED COURSES
+                        </flex-row>
                     </medium-title>
 
                     <flex-column id="jsCurriculumSelectedCoursesTarget"
-                        style="min-width: 100%;">
+                        class=""
+                        style="min-width: 100%; overflow: hidden;">
 
                     </flex-column>
 
@@ -314,10 +341,10 @@
                         </div>
                     </flex-column>
                 </flex-column>
-            </div>
-        </main>
 
-        <footer-component></footer-component>
+                <footer-component></footer-component>
+            </flex-column>
+        </main>
         
     </body>
 

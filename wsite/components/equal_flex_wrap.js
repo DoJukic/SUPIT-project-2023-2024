@@ -24,10 +24,9 @@ class equalFlexWrap extends HTMLElement {
         this.style.gap = `${this.elementGapPx}px`;
 
         // Fires on any resize but is always a bit late
-        if (!ML.getBooleanAttribute(this, "do-not-use-observer"))
-            equalFlexWrap.overflowResizeObserver.observe(this);
+        equalFlexWrap.overflowResizeObserver.observe(this);
         // Fires only on window resize but is never late
-        addEventListener("resize", (event) => {this.balanceDisplay();});
+        //addEventListener("resize", (event) => {this.balanceDisplay();});
         this.balanceDisplay();
     }
 

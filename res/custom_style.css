@@ -316,6 +316,11 @@ small-title{
 	border-top: 0px !important; 
 	border-right: 0px !important; 
 }
+.onlyTopBorder{
+	border-left: 0px !important; 
+	border-bottom: 0px !important; 
+	border-right: 0px !important; 
+}
 
 /* -------------------- TYPEWRITER -------------------- */
 
@@ -414,6 +419,7 @@ small-title{
 
 .themeShadow{
 	box-shadow: 4px 4px 8px var(--theme-shadow-color);
+	z-index: 10 !important;
 }
 
 .themeFrontBG{
