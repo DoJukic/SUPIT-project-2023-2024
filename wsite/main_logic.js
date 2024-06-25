@@ -32,6 +32,22 @@ class ML{
   
   static imageLoadArray = [];
 
+  static eventMatchers = {
+    'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+    'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
+  }
+  static defaultEventOptions = {
+    pointerX: 0,
+    pointerY: 0,
+    button: 0,
+    ctrlKey: false,
+    altKey: false,
+    shiftKey: false,
+    metaKey: false,
+    bubbles: true,
+    cancelable: true
+  }
+
   // https://stackoverflow.com/questions/9333379/check-if-an-elements-content-is-overflowing
   static isOverflown(element) {
     return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
@@ -477,10 +493,10 @@ class ML{
   /* -------------------- EVENT SIMULATION LOGIC -------------------- */
 
   // https://stackoverflow.com/questions/6157929/how-to-simulate-a-mouse-click-using-javascript
-  // accepted answer, but slightly modified to avoid depreceated methods.
+  // accepted answer, but heavily modified to avoid depreceated methods.
   static simulateEvent(element, eventName)
   {
-    var options = ML.extend(ML.defaultEventOptions, arguments[2] || {});
+    var options = ML.defaultEventOptions;
     var oEvent, eventType = null;
 
     for (var name in ML.eventMatchers)
@@ -491,7 +507,6 @@ class ML{
     if (!eventType)
       throw new SyntaxError('Only HTMLEvents and MouseEvents interfaces are supported');
 
-    oEvent = null;
     if (eventType == 'HTMLEvents')
     {
       oEvent = new Event(eventName, options);
@@ -503,29 +518,7 @@ class ML{
     element.dispatchEvent(oEvent);
 
     return element;
-}
-
-static extend(destination, source) {
-    for (var property in source)
-      destination[property] = source[property];
-    return destination;
-}
-
-static eventMatchers = {
-    'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
-    'MouseEvents': /^(?:click|dblclick|mouse(?:down|up|over|move|out))$/
-}
-static defaultEventOptions = {
-    pointerX: 0,
-    pointerY: 0,
-    button: 0,
-    ctrlKey: false,
-    altKey: false,
-    shiftKey: false,
-    metaKey: false,
-    bubbles: true,
-    cancelable: true
-}
+  }
 }
 
 /* ---------------------------------------- INIT ---------------------------------------- */

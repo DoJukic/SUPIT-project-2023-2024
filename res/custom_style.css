@@ -196,7 +196,8 @@ big-title{
 	font-size: 4rem;
 	font-weight: bold;
 
-	word-break: break-all; /* These just get too big sometimes */
+	word-wrap: break-word; /* These just get too big sometimes */
+	word-break: break-word;
 
 	border-bottom: 3px solid var(--theme-primary-color);
 }
@@ -496,7 +497,7 @@ small-title{
 
 /* -------------------- EQUAL SPLIT LOGIC -------------------- */
 
-flex-row-eq-wrap-component, alt-flex-row-eq-wrap-component{
+flex-row-eq-wrap-component{
     display: flex;
     flex-direction: row;
 	flex-wrap: wrap;
@@ -506,7 +507,7 @@ flex-row-eq-wrap-component, alt-flex-row-eq-wrap-component{
 	padding-right: 0 !important;
 }
 
-flex-row-eq-wrap-component > *, alt-flex-row-eq-wrap-component > *{
+flex-row-eq-wrap-component > *{
 	/* splitter vars set to parent style via js (could supply theme padding too) */
 	padding: calc(var(--theme-padding) / 2);
 	/* This isn't completely precise, but it also doesn't need to be (we're overcompensating for the gaps) */

@@ -34,17 +34,37 @@
         <script>
 			var jsCourseLookupTargetlist = null;
             var jsTableLegendResizeObserver = null;
+            var jsTableIsPopulated = false;
 
-            ML.subscribeToAccessTokenExpired(() => {Header.logInModal.showModal();});
+            function accessTokenChanged(){
+                var accessCode = ML.getAccessToken();
+
+                if (!accessCode) {
+                    showHeaderModal();
+                    return;
+                }
+
+                if (!jsTableIsPopulated){
+				    getCurriculumData(accessCode);
+                }
+            }
+
+            ML.subscribeToAccessTokenChange(() => {accessTokenChanged()});
 
             function removeScrollbarOffset(targetElement){
                 let scrollBarWidth = targetElement.offsetWidth - targetElement.clientWidth;
                 $(targetElement).css("padding-right", `calc(var(--theme-padding) * 2 - ${scrollBarWidth}px)`); // Will break if element padding is changed from default!
             }
 
+            function showHeaderModal(){
+                Header.logInModal.showModal();
+            }
+
 			$(document).ready(function () {
                 // The table legend is displayed wrong without this if it triggers the second scrollbar on desktop (not mobile as mobile scrollbars dont affect width).
                 let tableLegendElement = document.getElementById("jsTableLegendTarget");
+
+				jsCourseLookupTargetlist = $('#jsCourseLookupTarget');
 
                 var observerCallback = (entries, observer) => {
                     entries.forEach((entry) => {
@@ -59,10 +79,10 @@
 
 				if (!accessCode) {
 					curriculumReportError("No login token detected");
+                    showHeaderModal();
 					return;
 				}
 
-				jsCourseLookupTargetlist = $('#jsCourseLookupTarget');
 				getCurriculumData(accessCode);
 			});
 
@@ -114,7 +134,7 @@
                         selectedCoursesTable.append(currentSelectedCoursesSemester);
 
                         currentAllCoursesSemester = document.createElement("local-semester-container-component");
-                        currentAllCoursesSemester.initialize(currentSemester, true);
+                        currentAllCoursesSemester.initialize(currentSemester);
                         allCoursesTable.append(currentAllCoursesSemester);
                     }
 
@@ -159,10 +179,12 @@
                 $(allCoursesTable.children).each(function(){
                     this.filter(filter);
                 });
+
+                curriculumUpdateTotalsTable();
 			}
 			function curriculumReportSuccess(message){
-                PushNotifs.pushNotificationSuccess(`FETCH SUCCESS`, "You can click on a course to add it to the selected courses list.");
                 curriculumFinalizeLoad();
+                jsTableIsPopulated = true;
 			}
 
             function curriculumReportError(message){
@@ -234,7 +256,7 @@
         <header-component></header-component>
 
         <main>
-            <div class="secPrimLinearBG centered">
+            <div class="secPrimLinearBG centered jsLogicElementAnimationTarget">
                 <h1 style="font-weight: normal; text-align: center;">
                     Algebra Course Lookup
                 </h1>
@@ -251,7 +273,7 @@
                 
                 <flex-column id="jsTableLegendTarget"
                     class="sticky defaultPaddingDouble noTopOrBotPadding themeFrontBG defaultGapHalf themeBorder noSideBorder"
-                    style="max-height: 30vh; overflow-y: auto; border-bottom-width: 2px;">
+                    style="max-height: 20vh; overflow-y: auto; border-bottom-width: 2px;">
 
                     <flex-row class="defaultPadding onlyTopPadding">
                         <input id="jsCurriculumSearchBarTarget" class="fGrow roundedBorderHalf centeredText"
@@ -276,7 +298,7 @@
                     </div>
                 </flex-column>
     
-                <flex-column class="centered themeBackBG jsLogicElementAnimationTarget">
+                <flex-column class="centered themeBackBG">
                     <medium-title class="defaultPadding noBotPadding themeFrontBG centered"
                         style="min-width: 100%;">
 
@@ -291,16 +313,14 @@
                     </flex-column>
                 </flex-column>
 
-                <flex-spacer></flex-spacer>
                 <flex-column id="jsCurriculumLoaderTarget" class="centered defaultMargin defaultGapHalf">
                     <simple-loader-m></simple-loader-m>
                     <div>
                         Please wait...
                     </div>
                 </flex-column>
-                <flex-spacer></flex-spacer>
     
-                <flex-column class="centered themeBackBG themeBorder onlyTopBorder jsLogicElementAnimationTarget">
+                <flex-column class="centered themeBackBG">
                     <medium-title class="defaultPadding noBotPadding themeFrontBG centered"
                         style="min-width: 100%;">
 
@@ -314,32 +334,34 @@
                         style="min-width: 100%; overflow: hidden;">
 
                     </flex-column>
+                </flex-column>
+                    
+                <flex-spacer></flex-spacer>
 
-                    <flex-column class="centered themeFrontBG"
+                <flex-column class="centered themeFrontBG themeBorder onlyTopBorder jsLogicElementAnimationTarget"
+                    style="min-width: 100%;">
+                    
+                    <small-title class="defaultMarginHalf">
+                        Total:
+                    </small-title>
+
+                    <div class="defaultPaddingDouble noTopPadding"
                         style="min-width: 100%;">
-                        
-                        <small-title class="defaultMarginHalf">
-                            Total:
-                        </small-title>
 
-                        <div class="defaultPaddingDouble noTopPadding"
-                            style="min-width: 100%;">
-    
-                            <div class="themeBorder">
-                                <flex-row-eq-wrap-component class="fGrow themeBorder noRightBorder noBotBorder themeFrontBG
-                                    themeBorderChildren noTopAndLeftBorderForChildren growChildren centeredChildren"
-                                    data-min-element-size-px="200" data-element-gap-px="0">
-                                    
-                                    <div id="jsCourseCounterTarget">0</div> <!-- total number of selected thingies -->
-                                    <div id="jsEctsCounterTarget" class="themePrimaryBG">0</div>
-                                    <div id="jsLecturesCounterTarget">0</div>
-                                    <div id="jsExercisesCounterTarget" class="themePrimaryBG">0</div>
-                                    <div id="jsTotalHoursCounterTarget">0</div>
-                                    <div class="themePrimaryBG">N/A</div>
-                                </flex-row-eq-wrap-component>
-                            </div>
+                        <div class="themeBorder">
+                            <flex-row-eq-wrap-component class="fGrow themeBorder noRightBorder noBotBorder themeFrontBG
+                                themeBorderChildren noTopAndLeftBorderForChildren growChildren centeredChildren"
+                                data-min-element-size-px="200" data-element-gap-px="0">
+                                
+                                <div id="jsCourseCounterTarget">0</div> <!-- total number of selected thingies -->
+                                <div id="jsEctsCounterTarget" class="themePrimaryBG">0</div>
+                                <div id="jsLecturesCounterTarget">0</div>
+                                <div id="jsExercisesCounterTarget" class="themePrimaryBG">0</div>
+                                <div id="jsTotalHoursCounterTarget">0</div>
+                                <div class="themePrimaryBG">N/A</div>
+                            </flex-row-eq-wrap-component>
                         </div>
-                    </flex-column>
+                    </div>
                 </flex-column>
 
                 <footer-component></footer-component>

@@ -5,14 +5,11 @@ class LocalSemesterContainer extends HTMLElement {
 
     bgAlternator = 0;
     currentFilter = "";
-    useAltComponent = false;
 
     connectedCallback() {
     }
 
-    initialize(semesterNum, useAltComponent = false){
-        this.useAltComponent = useAltComponent;
-
+    initialize(semesterNum){
         ML.setIntAttribute(this, "semester-number", semesterNum)
 
         this.innerHTML =
@@ -50,7 +47,7 @@ class LocalSemesterContainer extends HTMLElement {
 
     addRow(data){
         var tgt = document.createElement("local-data-row-component");
-        tgt.initialize(data, this.useAltComponent);
+        tgt.initialize(data);
         this.getElementsByClassName("jsRowHolderTarget")[0].append(tgt);
 
         tgt.setFilter(this.currentFilter);
@@ -168,8 +165,8 @@ class LocalDataRowContainer extends HTMLElement {
 
     stateChangeSubscriberFuncs = [];
 
-    initialize(data, useAltComponent = false){
-        let componentType = useAltComponent ? "alt-flex-row-eq-wrap-component" : "flex-row-eq-wrap-component"
+    initialize(data){
+        let componentType = "flex-row-eq-wrap-component"
         
         this.innerHTML =
         `
@@ -237,30 +234,6 @@ class LocalDataRowContainer extends HTMLElement {
 }
 
 customElements.define('local-data-row-component', LocalDataRowContainer);
-
-class alternateEqualFlexWrap extends equalFlexWrap {
-    // Override
-    balanceDisplay() {
-        super.balanceDisplay();
-        if (this.childrenAmountPerRow <= 1){
-            let first = true;
-
-            $(this.children).each(function() {
-                if (first){
-                    first = false;
-                }else{
-                    $(this).css("display", "none")
-                }
-            });
-        }else{
-            $(this.children).each(function() {
-                $(this).css("display", "flex")
-            });
-        }
-    }
-}
-
-customElements.define('alt-flex-row-eq-wrap-component', alternateEqualFlexWrap);
 
 class collapsibleLogicController extends equalFlexWrap {
     constructor() {

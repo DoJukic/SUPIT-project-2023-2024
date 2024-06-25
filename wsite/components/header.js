@@ -233,7 +233,9 @@ class Header extends HTMLElement {
                     </nav-element>
                 </flex-row>
                 
-                <flex-row class="jsHeaderShowOnLoggedInTarget fEqGrow">
+                <flex-row class="jsHeaderShowOnLoggedInTarget fEqGrow"
+                    style="flex-wrap: wrap;">
+                    
                     <nav-element class="jsHeaderShowOnLoggedInTarget navElementVisual selectableNavElement defaultPaddingHalf"
                         onclick="location.href = '../wsite/curriculum.html';"
                         tabindex="0">
